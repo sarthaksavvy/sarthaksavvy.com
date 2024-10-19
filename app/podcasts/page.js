@@ -48,20 +48,20 @@ export default function Podcasts() {
                   Latest Episode: 2 days ago
                 </span> */}
               </div>
-              <div className="flex gap-4">
-                <a
-                  href="https://open.spotify.com/show/3XuNgni6Q0yLMmgLnoRoib"
-                  target="_blank"
-                  className="bg-[#D1F366] text-black hover:bg-[#bde052] transition-colors px-6 py-3 rounded-full"
-                >
-                  Spotify
-                </a>
+              <div className="flex flex-wrap gap-4">
                 <a
                   href="https://podcasts.apple.com/in/podcast/laravel-india-podcast/id1528388091"
                   target="_blank"
                   className="bg-[#D1F366] text-black hover:bg-[#bde052] transition-colors px-6 py-3 rounded-full"
                 >
                   Apple Podcasts
+                </a>
+                <a
+                  href="https://open.spotify.com/show/3XuNgni6Q0yLMmgLnoRoib"
+                  target="_blank"
+                  className="bg-[#D1F366] text-black hover:bg-[#bde052] transition-colors px-6 py-3 rounded-full"
+                >
+                  Spotify
                 </a>
                 <a
                   href="https://www.youtube.com/playlist?list=PLe30vg_FG4ORc-DFXDwqYojn75HKeHZLA"

@@ -6,7 +6,7 @@ export default function Home() {
       <main className="container mx-auto px-6 flex items-center gap-12 mt-20">
         {/* Left Column */}
         <div className="flex-1">
-          <h1 className="text-6xl font-bold leading-tight mb-6">
+          <h1 className="text-5xl sm:text-6xl md:text-6xl font-bold leading-tight mb-6">
             HI, I AM
             <br />
             SARTHAK SHRIVASTAVA.

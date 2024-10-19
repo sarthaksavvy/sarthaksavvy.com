@@ -36,10 +36,13 @@ export default function SpeakingTimeline() {
           <p className="text-gray-300 mb-6">
             I'm available for conferences, meetups, and workshops worldwide.
           </p>
-          <button className="bg-[#D1F366] text-black px-8 py-3 rounded-full font-medium hover:bg-[#bde052] transition-colors inline-flex items-center gap-2">
+          <a
+            href="mailto:sarthak@bitfumes.com"
+            className="bg-[#D1F366] text-black px-8 py-3 rounded-full font-medium hover:bg-[#bde052] transition-colors inline-flex items-center gap-2"
+          >
             Get in Touch
             <ArrowRight size={20} />
-          </button>
+          </a>
         </div>
       </div>
     </div>
