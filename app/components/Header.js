@@ -52,17 +52,20 @@ export default function Header() {
       )}
 
       <div className="md:flex gap-8 hidden">
-        <Link href="/podcasts" className="hover:text-gray-300">
+        <Link href="/podcasts" className="hover:text-gray-300 text-center">
           Podcasts
         </Link>
 
-        <Link href="/public-speaking" className="hover:text-gray-300">
+        <Link
+          href="/public-speaking"
+          className="hover:text-gray-300 w-32 text-center"
+        >
           Public Speaking
         </Link>
 
         <Link
           href="https://youtube.com/bitfumes"
-          className="hover:text-gray-300"
+          className="hover:text-gray-300 w-24 text-center"
           target="_blank"
         >
           Youtube
@@ -70,7 +73,7 @@ export default function Header() {
 
         <Link
           href="https://bitfumes.com"
-          className="hover:text-gray-300"
+          className="hover:text-gray-300 w-24 text-center"
           target="_blank"
         >
           Courses

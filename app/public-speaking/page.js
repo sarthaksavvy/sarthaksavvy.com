@@ -1,8 +1,21 @@
-"use client";
-
 import { ArrowRight } from "lucide-react";
 import SingleEvent from "../components/PublicSpeaking/SingleEvent";
 import speakingEvents from "../events.json";
+
+export const metadata = {
+  title: "Sarthak Shrivastava - Public Speaking",
+  description: "Public Speaking by Sarthak Shrivastava",
+  alternates: {
+    canonical: "https://sarthaksavvy.com/public-speaking",
+  },
+  openGraph: {
+    title: "Sarthak Shrivastava - Public Speaking",
+    description: "Public Speaking by Sarthak Shrivastava",
+    url: "https://sarthaksavvy.com/public-speaking",
+    siteName: "Sarthak Shrivastava - Public Speaking",
+    images: "/sarthak.jpg",
+  },
+};
 
 export default function SpeakingTimeline() {
   return (
