@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "year": "2024",
+    "title": "Function calling in OpenAI",
+    "conference": "AI/ML Indore Meetup",
+    "location": "Indore, India",
+    "date": "October 18, 2024",
+    "audience": "20+ attendees",
+    "description": "Discussing the fundamentals of AI, Prompt Engineering, and Function calling in OpenAI",
+    "images": [
+      "/images/events/indore-ai/indore-ai-meetup1.jpg",
+      "/images/events/indore-ai/indore-ai-meetup2.jpg",
+      "/images/events/indore-ai/indore-ai-meetup5.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "year": "2024",
+    "title": "Mastering the Learning",
+    "conference": "Pfizer Community Event 2024",
+    "location": "London, UK",
+    "date": "September 24, 2024",
+    "audience": "100+ attendees",
+    "description": "Learn and master anything along with your day job. How you can improve your learning skills and become an expert in your field.",
+    "images": [
+      "/images/events/pfizer-london-event/london-event1.jpg",
+      "/images/events/pfizer-london-event/london-event2.jpg",
+      "/images/events/pfizer-london-event/london-event3.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "year": "2024",
+    "title": "Deploy Laravel with Docker ",
+    "conference": "Laravel Kozhikode Meetup",
+    "location": "Kozhikode, India",
+    "date": "July 27, 2024",
+    "audience": "100+ attendees",
+    "description": "How to use Docker to deploy Laravel application",
+    "images": [
+      "/images/events/laravel-kozhikode/laravel-kozhikode-event1.jpg",
+      "/images/events/laravel-kozhikode/laravel-kozhikode-event2.jpg",
+      "/images/events/laravel-kozhikode/laravel-kozhikode-event3.jpg"
+    ]
+  }
+]
