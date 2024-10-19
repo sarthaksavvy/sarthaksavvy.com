@@ -20,7 +20,10 @@ export default function Header() {
           SARTHAK SHRIVASTAVA
         </a>
         <div className="">
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden text-3xl -mt-2"
+          >
             &#9776;
           </button>
         </div>
