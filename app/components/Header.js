@@ -14,6 +14,22 @@ export default function Header() {
         <Link href="/public-speaking" className="hover:text-gray-300">
           Public Speaking
         </Link>
+
+        <Link
+          href="https://youtube.com/bitfumes"
+          className="hover:text-gray-300"
+          target="_blank"
+        >
+          Youtube
+        </Link>
+
+        <Link
+          href="https://bitfumes.com"
+          className="hover:text-gray-300"
+          target="_blank"
+        >
+          Courses
+        </Link>
       </div>
     </nav>
   );

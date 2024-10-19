@@ -18,9 +18,12 @@ export default function Home() {
 
           {/* Contact and Social Links */}
           <div className="flex items-center gap-4">
-            <button className="bg-[#D1F366] text-black px-6 py-3 rounded-full font-medium hover:bg-[#bde052] transition-colors">
-              CONTACT ME
-            </button>
+            <a
+              href="mailto:sarthak@bitfumes.com"
+              className="bg-[#D1F366] text-black px-6 py-3 rounded-full font-medium hover:bg-[#bde052] transition-colors"
+            >
+              EMAIL ME
+            </a>
             <a
               href="https://linkedin.com/in/sarthaksavvy"
               target="_blank"
@@ -41,6 +44,18 @@ export default function Home() {
               <Image
                 src="/images/icons/github.svg"
                 alt="Github"
+                width={24}
+                height={24}
+              />
+            </a>
+            <a
+              href="https://instagram.com/sarthaksavvy"
+              target="_blank"
+              className="p-2 bg-gray-800 rounded-full"
+            >
+              <Image
+                src="/images/icons/instagram.svg"
+                alt="Instagram"
                 width={24}
                 height={24}
               />

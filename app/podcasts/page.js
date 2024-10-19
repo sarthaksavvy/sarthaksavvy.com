@@ -2,42 +2,8 @@
 
 import { Clock } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 
 export default function Podcasts() {
-  const [activeEpisode, setActiveEpisode] = useState(null);
-
-  const podcastEpisodes = [
-    {
-      id: 1,
-      title: "The Future of Web Development",
-      description:
-        "Exploring modern web technologies and future trends in development",
-      date: "Mar 15, 2024",
-      duration: "45 min",
-      guests: "Sarah Johnson, Tech Lead at Google",
-      thumbnail: "/api/placeholder/400/400",
-    },
-    {
-      id: 2,
-      title: "Building Accessible Websites",
-      description: "Best practices for creating inclusive web experiences",
-      date: "Mar 08, 2024",
-      duration: "38 min",
-      guests: "Alex Chen, Accessibility Expert",
-      thumbnail: "/api/placeholder/400/400",
-    },
-    {
-      id: 3,
-      title: "From Junior to Senior Dev",
-      description: "Career growth strategies in software development",
-      date: "Mar 01, 2024",
-      duration: "42 min",
-      guests: "Michael Rodriguez, Senior Engineer",
-      thumbnail: "/api/placeholder/400/400",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-black text-white py-16 px-6">
       <div className="container mx-auto max-w-6xl">
@@ -96,6 +62,13 @@ export default function Podcasts() {
                   className="bg-[#D1F366] text-black hover:bg-[#bde052] transition-colors px-6 py-3 rounded-full"
                 >
                   Apple Podcasts
+                </a>
+                <a
+                  href="https://www.youtube.com/playlist?list=PLe30vg_FG4ORc-DFXDwqYojn75HKeHZLA"
+                  target="_blank"
+                  className="bg-[#D1F366] text-black hover:bg-[#bde052] transition-colors px-6 py-3 rounded-full"
+                >
+                  Youtube
                 </a>
               </div>
             </div>
