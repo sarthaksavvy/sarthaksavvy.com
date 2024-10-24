@@ -18,7 +18,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <main className="container mx-auto px-6 flex items-center gap-12 mt-20">
+      <main className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12 mt-20">
         {/* Left Column */}
         <div className="flex-1">
           <h1 className="text-5xl sm:text-6xl md:text-6xl font-bold leading-tight mb-6">
@@ -79,14 +79,14 @@ export default function Home() {
         </div>
 
         {/* Right Column - Image */}
-        <div className="flex-1">
+        <div className="flex-1 mt-8 md:mt-0">
           <div className="rounded-3xl overflow-hidden bg-gray-200">
             <Image
               src="/images/sarthak.jpg"
               alt="Professional portrait"
               width={500}
               height={600}
-              className="w-full h-full object-cover"
+              className="w-full h-auto object-cover"
             />
           </div>
         </div>
