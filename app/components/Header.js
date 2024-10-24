@@ -16,9 +16,9 @@ export default function Header() {
   return (
     <nav className="flex flex-col sm:flex-row justify-between items-center p-4 sm:p-6 w-full">
       <div className="flex justify-between w-full">
-        <a href="/" className="text-2xl sm:text-xl font-bold">
+        <Link href="/" className="text-2xl sm:text-xl font-bold">
           SARTHAK SHRIVASTAVA
-        </a>
+        </Link>
         <div className="">
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -51,6 +51,9 @@ export default function Header() {
           >
             Courses
           </Link>
+          <Link href="/about-me" className="hover:text-gray-300">
+            About Me
+          </Link>
         </div>
       )}
 
@@ -80,6 +83,10 @@ export default function Header() {
           target="_blank"
         >
           Courses
+        </Link>
+
+        <Link href="/about-me" className="hover:text-gray-300 w-20 text-center">
+          About Me
         </Link>
       </div>
     </nav>
