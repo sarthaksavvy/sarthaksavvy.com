@@ -3,12 +3,13 @@
 import { useState } from "react";
 
 export default function PhotoStack({ event }) {
-  const [hoveredImage, setHoveredImage] = useState(null);
+  const [image, setImage] = useState(null);
+
 
   return (
     <div
       className={`relative w-full ${
-        hoveredImage ? "h-[400px]" : "h-20"
+        image ? "h-[400px]" : "h-20"
       } overflow-hidden`}
     >
       <div className="flex space-x-2 overflow-x-auto">
@@ -18,23 +19,23 @@ export default function PhotoStack({ event }) {
             src={image}
             alt={`Thumbnail ${index + 1}`}
             className={`h-20 w-20 object-cover rounded-lg cursor-pointer`}
-            onMouseEnter={() => setHoveredImage(image)}
-            onMouseLeave={() => setHoveredImage(null)}
+            onMouseEnter={() => setImage(image)}
+            onMouseLeave={() => setImage(null)}
           />
         ))}
       </div>
 
-      {hoveredImage && (
+      {image && (
         <div className="absolute left-0 right-0 mt-2 rounded-xl overflow-hidden shadow-2xl transition-all duration-500">
-          {hoveredImage.endsWith(".mpg") ? (
+          {image.endsWith(".mpg") ? (
             <video
-              src={hoveredImage}
+              src={image}
               alt={`Event photo`}
               className="w-full h-[400px] object-cover"
             />
           ) : (
             <img
-              src={hoveredImage}
+              src={image}
               alt={`Event photo`}
               className="w-full h-[400px] object-cover"
             />

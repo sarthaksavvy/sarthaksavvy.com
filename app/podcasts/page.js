@@ -19,23 +19,6 @@ export const metadata = {
 export default function Podcasts() {
   return (
     <div>
-      {/* <Head>
-        <title>Sarthak Shrivastava - Podcasts</title>
-        <meta name="description" content="Podcasts by Sarthak Shrivastava" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="Sarthak Shrivastava - Podcasts" />
-        <meta
-          property="og:description"
-          content="Podcasts by Sarthak Shrivastava"
-        />
-        <meta
-          property="og:image"
-          content="https://sarthaksavvy.com/laravel-india-podcast.png"
-        />
-        <meta property="og:url" content="https://sarthaksavvy.com/podcasts" />
-        <link rel="canonical" href="https://sarthaksavvy.com/podcasts" />
-        <meta property="og:type" content="website" />
-      </Head> */}
       <div className="min-h-screen bg-black text-white py-16 px-6">
         <div className="container mx-auto max-w-6xl">
           {/* Header Section */}
@@ -49,7 +32,7 @@ export default function Podcasts() {
           </div>
 
           {/* Featured Episode */}
-          <div className="bg-[#1A1A1A] rounded-3xl p-8 mb-16">
+          <div className="bg-[#1A1A1A] rounded-3xl p-8 mb-16 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div className="rounded-2xl overflow-hidden">
                 <Image
