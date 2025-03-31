@@ -35,7 +35,7 @@ export default function SpeakingTimeline() {
           <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-[#D1F366] to-transparent" />
 
           <div className="space-y-16">
-            {speakingEvents.map((event) => (
+            {[...speakingEvents].reverse().map((event) => (
               <SingleEvent key={event.id} event={event} />
             ))}
           </div>

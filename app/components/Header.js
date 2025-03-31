@@ -37,6 +37,9 @@ export default function Header() {
           <Link href="/public-speaking" className="hover:text-gray-300">
             Public Speaking
           </Link>
+          <Link href="/side-projects" className="hover:text-gray-300">
+            Side Projects
+          </Link>
           <Link
             href="https://youtube.com/bitfumes"
             className="hover:text-gray-300"
@@ -67,6 +70,13 @@ export default function Header() {
           className="hover:text-gray-300 w-32 text-center"
         >
           Public Speaking
+        </Link>
+
+        <Link
+          href="/side-projects"
+          className="hover:text-gray-300 w-28 text-center"
+        >
+          Side Projects
         </Link>
 
         <Link

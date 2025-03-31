@@ -2,21 +2,6 @@
   {
     "id": 1,
     "year": "2024",
-    "title": "Function calling in OpenAI",
-    "conference": "AI/ML Indore Meetup",
-    "location": "Indore, India",
-    "date": "October 18, 2024",
-    "audience": "20+ attendees",
-    "description": "Discussing the fundamentals of AI, Prompt Engineering, and Function calling in OpenAI",
-    "images": [
-      "/images/events/indore-ai/indore-ai-meetup1.JPG",
-      "/images/events/indore-ai/indore-ai-meetup2.JPG",
-      "/images/events/indore-ai/indore-ai-meetup5.JPG"
-    ]
-  },
-  {
-    "id": 2,
-    "year": "2024",
     "title": "Mastering the Learning",
     "conference": "Pfizer Community Event 2024",
     "location": "London, UK",
@@ -30,7 +15,7 @@
     ]
   },
   {
-    "id": 3,
+    "id": 1,
     "year": "2024",
     "title": "Deploy Laravel with Docker ",
     "conference": "Laravel Kozhikode Meetup",
@@ -43,5 +28,46 @@
       "/images/events/laravel-kozhikode/laravel-kozhikode-event2.jpg",
       "/images/events/laravel-kozhikode/laravel-kozhikode-event3.jpg"
     ]
+  },
+  {
+    "id": 3,
+    "year": "2024",
+    "title": "Function calling in OpenAI",
+    "conference": "AI/ML Indore Meetup",
+    "location": "Indore, India",
+    "date": "October 18, 2024",
+    "audience": "20+ attendees",
+    "description": "Discussing the fundamentals of AI, Prompt Engineering, and Function calling in OpenAI",
+    "images": [
+      "/images/events/indore-ai/indore-ai-meetup1.JPG",
+      "/images/events/indore-ai/indore-ai-meetup2.JPG",
+      "/images/events/indore-ai/indore-ai-meetup5.JPG"
+    ]
+  },
+  {
+    "id": 4,
+    "year": "2025",
+    "title": "Content Creation with AI",
+    "conference": "Medicaps 25th Annual Fest",
+    "location": "Medicaps University, Indore, India",
+    "date": "March 21, 2025",
+    "audience": "100+ attendees",
+    "description": "Discussing the fundamentals of AI and how it can be used to create content",
+    "images": [
+      "/images/events/medicaps-fest/medicaps-fest1.jpg",
+      "/images/events/medicaps-fest/medicaps-fest2.jpg",
+      "/images/events/medicaps-fest/medicaps-fest3.jpg"
+    ]
+  },
+  {
+    "id": 5,
+    "year": "2025",
+    "title": "Vibe Coding with Laravel",
+    "conference": "Laravel Mauritius Meetup",
+    "location": "Mauritius, Africa",
+    "date": "March 28, 2025",
+    "audience": "20+ attendees",
+    "description": "What is Vibe Coding? How to code with vibes? Let's find out in this meetup.",
+    "images": []
   }
 ]
