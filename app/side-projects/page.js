@@ -51,6 +51,22 @@ export default function SideProjects() {
         "Multi-currency support",
       ],
     },
+    {
+      id: 3,
+      name: "Ginger",
+      description:
+        "A Chrome extension that helps users generate human-like comments using AI on LinkedIn posts and reply to existing comments effortlessly.",
+      image: "/images/projects/ginger.jpg",
+      link: "https://chromewebstore.google.com/detail/ginger-linkedin-ai-assist/ijolijeckddogpijopofibpplokamjba",
+      projectLink: "/side-projects/ginger",
+      tags: ["AI", "Chrome Extension", "LinkedIn"],
+      features: [
+        "Human-like LinkedIn comment generation",
+        "Reply to comments with AI assistance",
+        "No sign-in required to get started",
+        "100 free generations for guests, 300 for signed-in users",
+      ],
+    },
   ];
 
   return (
