@@ -100,9 +100,9 @@ export async function POST(request) {
       );
     }
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'your_openai_api_key_here') {
       return NextResponse.json(
-        { error: 'OpenAI API key not configured' },
+        { error: 'OpenAI API key not configured. Please set a valid OPENAI_API_KEY environment variable.' },
         { status: 500 }
       );
     }
