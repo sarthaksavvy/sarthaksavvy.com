@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function AskPage() {
+function AskPageContent() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
@@ -175,5 +175,20 @@ export default function AskPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AskPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-6 border-2 border-[#D1F366] border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-gray-300">Loading...</span>
+        </div>
+      </div>
+    }>
+      <AskPageContent />
+    </Suspense>
   );
 }
