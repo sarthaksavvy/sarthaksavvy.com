@@ -7,7 +7,23 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const CACHE_TTL = 1000 * 60 * 60; // 1 hour
+let contentCache = {
+  data: null,
+  timestamp: 0
+};
+
+const rateLimitStore = new Map();
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+const RATE_LIMIT_MAX_REQUESTS = 10;
+
 async function scrapeWebsiteContent() {
+  const now = Date.now();
+  if (contentCache.data && (now - contentCache.timestamp) < CACHE_TTL) {
+    console.log('Returning cached content');
+    return contentCache.data;
+  }
+
   try {
     const baseUrl = 'https://sarthaksavvy.com';
     const pages = [
@@ -19,11 +35,10 @@ async function scrapeWebsiteContent() {
     ];
 
     let scrapedContent = '';
-
-    for (const page of pages) {
+    const scrapePromises = pages.map(async (page) => {
       try {
         const response = await axios.get(`${baseUrl}${page}`, {
-          timeout: 10000,
+          timeout: 8000, // Reduced timeout
           headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
           }
@@ -39,12 +54,20 @@ async function scrapeWebsiteContent() {
           .substring(0, 2000);
 
         if (pageContent) {
-          scrapedContent += `\n\n=== Content from ${baseUrl}${page} ===\n${pageContent}`;
+          return `\n\n=== Content from ${baseUrl}${page} ===\n${pageContent}`;
         }
+        return '';
       } catch (pageError) {
         console.error(`Error scraping ${page}:`, pageError.message);
+        return '';
       }
-    }
+    });
+
+    const results = await Promise.allSettled(scrapePromises);
+    scrapedContent = results
+      .filter(result => result.status === 'fulfilled' && result.value)
+      .map(result => result.value)
+      .join('');
 
     const linkedinContent = `
 === LinkedIn Profile Information ===
@@ -54,10 +77,18 @@ His expertise includes Laravel, JavaScript, Python, AWS, Docker, AI/LLMs, and he
 LinkedIn: https://linkedin.com/in/sarthaksavvy
 `;
 
-    return scrapedContent + linkedinContent;
+    const finalContent = scrapedContent + linkedinContent;
+    
+    contentCache = {
+      data: finalContent,
+      timestamp: now
+    };
+    
+    console.log('Content scraped and cached successfully');
+    return finalContent;
   } catch (error) {
     console.error('Error scraping content:', error);
-    return `
+    const fallbackContent = `
 === Fallback Information about Sarthak Shrivastava ===
 Sarthak Shrivastava is an India-based founder, content creator, developer and AI enthusiast passionate about building and automating daily tasks.
 
@@ -86,16 +117,78 @@ Side Projects:
 - Expensorr: A simple yet powerful expense tracking application
 - Various other innovative projects showcasing technical skills
 `;
+    
+    contentCache = {
+      data: fallbackContent,
+      timestamp: now
+    };
+    
+    return fallbackContent;
   }
+}
+
+function getRateLimitKey(request) {
+  const forwarded = request.headers.get('x-forwarded-for');
+  const ip = forwarded ? forwarded.split(',')[0] : 'unknown';
+  return ip;
+}
+
+function isRateLimited(key) {
+  const now = Date.now();
+  const userRequests = rateLimitStore.get(key) || [];
+  
+  const validRequests = userRequests.filter(timestamp => now - timestamp < RATE_LIMIT_WINDOW);
+  
+  if (validRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+  
+  validRequests.push(now);
+  rateLimitStore.set(key, validRequests);
+  
+  return false;
+}
+
+function sanitizeInput(input) {
+  if (typeof input !== 'string') return '';
+  
+  return input
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<[^>]*>/g, '')
+    .trim()
+    .substring(0, 1000); // Enforce max length
 }
 
 export async function POST(request) {
   try {
+    const rateLimitKey = getRateLimitKey(request);
+    if (isRateLimited(rateLimitKey)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please wait before asking another question.' },
+        { status: 429 }
+      );
+    }
+
     const { question } = await request.json();
 
     if (!question || question.trim().length === 0) {
       return NextResponse.json(
         { error: 'Question is required' },
+        { status: 400 }
+      );
+    }
+
+    const sanitizedQuestion = sanitizeInput(question);
+    if (!sanitizedQuestion) {
+      return NextResponse.json(
+        { error: 'Invalid question format' },
+        { status: 400 }
+      );
+    }
+
+    if (sanitizedQuestion.length > 1000) {
+      return NextResponse.json(
+        { error: 'Question too long. Please keep it under 1000 characters.' },
         { status: 400 }
       );
     }
@@ -134,7 +227,7 @@ Answer the user's question about Sarthak:`;
         },
         {
           role: "user",
-          content: question
+          content: sanitizedQuestion
         }
       ],
       max_tokens: 500,
@@ -152,6 +245,20 @@ Answer the user's question about Sarthak:`;
       return NextResponse.json(
         { error: 'OpenAI API quota exceeded. Please try again later.' },
         { status: 429 }
+      );
+    }
+    
+    if (error.code === 'invalid_api_key') {
+      return NextResponse.json(
+        { error: 'Invalid OpenAI API key configuration.' },
+        { status: 500 }
+      );
+    }
+    
+    if (error.name === 'AbortError' || error.code === 'ECONNABORTED') {
+      return NextResponse.json(
+        { error: 'Request timeout. Please try again.' },
+        { status: 408 }
       );
     }
     

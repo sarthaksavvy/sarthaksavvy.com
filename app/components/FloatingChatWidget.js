@@ -51,12 +51,12 @@ export default function FloatingChatWidget() {
                 placeholder="What would you like to know about Sarthak&apos;s background, projects, or expertise?"
                 className="w-full bg-[#1A1A1A] border border-gray-600 rounded-lg p-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#D1F366] focus:border-transparent focus:outline-none resize-none"
                 rows={3}
-                maxLength={500}
+                maxLength={1000}
               />
               
               <div className="flex justify-between items-center">
                 <span className="text-xs text-gray-400">
-                  {question.length}/500
+                  {question.length}/1000
                 </span>
                 <button
                   type="submit"

@@ -27,22 +27,42 @@ function AskPageContent() {
     setAnswer("");
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       const response = await fetch("/api/ask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ question: questionText }),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        throw new Error("Failed to get answer");
+        const errorData = await response.json().catch(() => ({}));
+        
+        if (response.status === 429) {
+          throw new Error(errorData.error || "Too many requests. Please wait before asking another question.");
+        } else if (response.status === 400) {
+          throw new Error(errorData.error || "Invalid question format.");
+        } else if (response.status === 408) {
+          throw new Error("Request timeout. Please try again with a shorter question.");
+        } else {
+          throw new Error(errorData.error || "Failed to get answer");
+        }
       }
 
       const data = await response.json();
       setAnswer(data.answer);
     } catch (err) {
-      setError("Sorry, I couldn't process your question right now. Please try again.");
+      if (err.name === 'AbortError') {
+        setError("Request timeout. Please try again with a shorter question.");
+      } else {
+        setError(err.message || "Sorry, I couldn't process your question right now. Please try again.");
+      }
       console.error("Error:", err);
     } finally {
       setLoading(false);
@@ -83,6 +103,7 @@ function AskPageContent() {
                 rows={4}
                 maxLength={1000}
                 required
+                disabled={loading}
               />
               <div className="flex justify-between items-center mt-2">
                 <span className="text-xs text-gray-400">
