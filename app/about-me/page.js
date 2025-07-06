@@ -137,10 +137,10 @@ const AboutPage = () => {
             </div>
             <div className="space-y-8">
               <h2 className="text-5xl font-bold text-[#D1F366] leading-tight">
-                Hello, I'm Sarthak
+                Hello, I&apos;m Sarthak
               </h2>
               <p className="text-xl text-gray-300 leading-relaxed">
-                Known as "sarthaksavvy" in the tech community, I'm a full-stack
+                Known as &quot;sarthaksavvy&quot; in the tech community, I&apos;m a full-stack
                 developer, Docker Captain, and founder of Bitfumes. My journey
                 in technology has been driven by a passion for learning and
                 sharing knowledge with developers worldwide.
@@ -322,7 +322,7 @@ const AboutPage = () => {
             {testimonials.map((testimonial, index) => (
               <div key={index} className="backdrop-blur-sm bg-white/5 border border-white/10 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 group">
                 <Quote className="w-8 h-8 text-[#D1F366] mb-6" />
-                <p className="text-gray-300 mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
+                <p className="text-gray-300 mb-6 italic leading-relaxed">&quot;{testimonial.quote}&quot;</p>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#D1F366] to-[#bde052] flex items-center justify-center">
                     <span className="text-black font-bold text-lg">{testimonial.name.charAt(0)}</span>
@@ -369,8 +369,8 @@ const AboutPage = () => {
               </h2>
             </div>
             <p className="text-xl text-gray-300 mb-10 max-w-4xl mx-auto leading-relaxed">
-              I'm currently exploring and creating content about AI technologies,
-              including OpenAI's developments and LLMs. My mission is to make
+              I&apos;m currently exploring and creating content about AI technologies,
+              including OpenAI&apos;s developments and LLMs. My mission is to make
               technology education accessible while staying at the forefront of
               innovation and helping developers worldwide grow their skills.
             </p>
