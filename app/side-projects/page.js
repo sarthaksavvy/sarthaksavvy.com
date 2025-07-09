@@ -94,6 +94,7 @@ export default function SideProjects() {
                   <ClientImage
                     src={project.image}
                     alt={project.name}
+                    fill={true}
                     className="transition-transform duration-500 hover:scale-105"
                   />
                 </div>
@@ -162,8 +163,8 @@ export default function SideProjects() {
             Interested in collaborating?
           </h3>
           <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-            I'm always open to new ideas and collaborations on interesting
-            projects. Let's create something amazing together!
+            I&apos;m always open to new ideas and collaborations on interesting
+            projects. Let&apos;s create something amazing together!
           </p>
           <a
             href="mailto:sarthak@bitfumes.com"

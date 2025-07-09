@@ -10,6 +10,8 @@ export default function ClientImage({
   fill = false,
   sizes,
   fallbackText,
+  width,
+  height,
   ...props
 }) {
   const [imageError, setImageError] = useState(false);
@@ -38,7 +40,7 @@ export default function ClientImage({
         alt={alt}
         fill={true}
         sizes={sizes || "(max-width: 768px) 100vw, 50vw"}
-        className={className}
+        className={`object-contain ${className}`}
         onError={() => setImageError(true)}
         {...props}
       />
@@ -49,9 +51,10 @@ export default function ClientImage({
     <Image
       src={src}
       alt={alt}
-      fill={true}
+      width={width || 800}
+      height={height || 600}
       sizes={sizes || "(max-width: 768px) 100vw, 50vw"}
-      className={className}
+      className={`object-contain ${className}`}
       onError={() => setImageError(true)}
       {...props}
     />
