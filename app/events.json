@@ -69,5 +69,20 @@
     "audience": "20+ attendees",
     "description": "What is Vibe Coding? How to code with vibes? Let's find out in this meetup.",
     "images": []
+  },
+  {
+    "id": 6,
+    "year": "2025",
+    "title": "AI MASTERCLASS 2025: From Roadmap to Real-World Agents",
+    "conference": "AIBootstrapper Events",
+    "location": "Titanium Building, Indore, India",
+    "date": "August 23, 2025",
+    "audience": "50 seats",
+    "description": "Hands-On AI Transformation Journey. Building AI Agents That Actually work using OpenAI Agents SDK to build a database agent that can fetch data from a database in natural language.",
+    "images": [
+      "/images/events/ai-bootstrapper-01/ai-bootstrapper-1.jpg",
+      "/images/events/ai-bootstrapper-01/ai-bootstrapper-2.jpg",
+      "/images/events/ai-bootstrapper-01/ai-bootstrapper-3.jpg"
+    ]
   }
 ]
