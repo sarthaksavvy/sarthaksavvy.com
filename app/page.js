@@ -47,7 +47,8 @@ export default function Home() {
             <a
               href="https://linkedin.com/in/sarthaksavvy"
               target="_blank"
-              className="p-2 bg-gray-800 rounded-full"
+              className="p-2 rounded-full"
+              style={{ backgroundColor: '#0A66C2' }}
             >
               <Image
                 src="/images/icons/linkedin.svg"
@@ -59,7 +60,8 @@ export default function Home() {
             <a
               href="https://github.com/sarthaksavvy"
               target="_blank"
-              className="p-2 bg-gray-800 rounded-full"
+              className="p-2 rounded-full"
+              style={{ backgroundColor: '#181717' }}
             >
               <Image
                 src="/images/icons/github.svg"
@@ -71,7 +73,8 @@ export default function Home() {
             <a
               href="https://instagram.com/sarthaksavvy"
               target="_blank"
-              className="p-2 bg-gray-800 rounded-full"
+              className="p-2 rounded-full"
+              style={{ background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)' }}
             >
               <Image
                 src="/images/icons/instagram.svg"
