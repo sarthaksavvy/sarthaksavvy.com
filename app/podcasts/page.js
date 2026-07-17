@@ -30,7 +30,7 @@ const platforms = [
   },
   {
     label: "Youtube",
-    href: "https://www.youtube.com/playlist?list=PLe30vg_FG4ORc-DFXDwqYojn75HKeHZLA",
+    href: "https://www.youtube.com/@laravelindiapodcast",
   },
 ];
 
