@@ -92,7 +92,7 @@ LinkedIn: https://linkedin.com/in/sarthaksavvy
     console.error("Error scraping content:", error);
     const fallbackContent = `
 === Fallback Information about Sarthak Shrivastava ===
-Sarthak Shrivastava is an India-based founder, content creator, developer and AI enthusiast passionate about building and automating daily tasks.
+Sarthak Shrivastava is an India-based founder, content creator, developer and AI consultant passionate about building and automating daily tasks.
 
 Professional Background:
 - Founder of Bitfumes
