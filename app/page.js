@@ -1,4 +1,5 @@
-import Image from "next/image";
+import Hero from "./components/Hero";
+import Marquee from "./components/Marquee";
 
 export const metadata = {
   title: "Sarthak Shrivastava - Sarthaksavvy",
@@ -18,88 +19,8 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <main className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12 mt-20">
-        {/* Left Column */}
-        <div className="flex-1">
-          <h1 className="text-5xl sm:text-6xl md:text-6xl font-bold leading-tight mb-6">
-            HI, I AM
-            <br />
-            SARTHAK SHRIVASTAVA.
-          </h1>
-          <p className="text-gray-300 text-xl mb-8 max-w-md">
-            India based founder, content creator, developer and AI enthusiast
-            passionate about building and automating daily tasks.
-          </p>
-
-          {/* Contact and Social Links */}
-          <div className="flex items-center gap-4">
-            <a
-              href="https://cal.com/sarthaksavvy"
-              target="_blank"
-              className="bg-[#D1F366] text-black px-6 py-3 rounded-full font-medium hover:bg-[#bde052] transition-colors flex items-center gap-2"
-            >
-              Book a Call
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-black"></span>
-              </span>
-            </a>
-            <a
-              href="https://linkedin.com/in/sarthaksavvy"
-              target="_blank"
-              className="p-2 rounded-full"
-              style={{ backgroundColor: '#0A66C2' }}
-            >
-              <Image
-                src="/images/icons/linkedin.svg"
-                alt="Linkedin"
-                width={24}
-                height={24}
-              />
-            </a>
-            <a
-              href="https://github.com/sarthaksavvy"
-              target="_blank"
-              className="p-2 rounded-full"
-              style={{ backgroundColor: '#181717' }}
-            >
-              <Image
-                src="/images/icons/github.svg"
-                alt="Github"
-                width={24}
-                height={24}
-              />
-            </a>
-            <a
-              href="https://instagram.com/sarthaksavvy"
-              target="_blank"
-              className="p-2 rounded-full"
-              style={{ background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)' }}
-            >
-              <Image
-                src="/images/icons/instagram.svg"
-                alt="Instagram"
-                width={24}
-                height={24}
-              />
-            </a>
-          </div>
-        </div>
-
-        {/* Right Column - Image */}
-        <div className="flex-1 mt-8 md:mt-0">
-          <div className="rounded-3xl overflow-hidden bg-gray-200">
-            <Image
-              src="/images/sarthak.jpg"
-              alt="Professional portrait"
-              width={500}
-              height={600}
-              className="w-full h-auto object-cover"
-            />
-          </div>
-        </div>
-      </main>
-      {/* <Contact /> */}
+      <Hero />
+      <Marquee />
     </>
   );
 }

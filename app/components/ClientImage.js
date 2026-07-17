@@ -24,9 +24,9 @@ export default function ClientImage({
   if (imageError) {
     return (
       <div
-        className={`flex items-center justify-center h-full w-full bg-gray-800 ${className}`}
+        className={`flex items-center justify-center h-full w-full bg-line/40 ${className}`}
       >
-        <p className="text-gray-400 text-center p-4">
+        <p className="text-muted text-center p-4">
           {fallbackText || alt || "Image not available"}
         </p>
       </div>

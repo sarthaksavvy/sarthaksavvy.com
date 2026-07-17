@@ -1,141 +1,168 @@
 import Image from "next/image";
+import Reveal from "../components/motion/Reveal";
+import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
+import MagneticButton from "../components/motion/MagneticButton";
+
+export const metadata = {
+  title: "About Me - Sarthaksavvy",
+  description: "Get to know Sarthak Shrivastava's journey in tech.",
+};
+
+const currentRoles = [
+  "Founder of Bitfumes",
+  "Software Engineer at Pfizer",
+  "Content Creator",
+  "Docker Captain",
+];
+
+const coreExpertise = [
+  "Laravel, JavaScript and Python Development",
+  "AWS Cloud Certified",
+  "Docker & DevOps",
+  "AI & LLMs Integration",
+];
+
+const recognition = [
+  "Docker Captain (December 2023)",
+  "AWS Certified Solutions Architect",
+  "AWS Certified Developer",
+];
+
+const stats = [
+  { value: "134K+", label: "YouTube Subscribers" },
+  { value: "100K+", label: "Students on Udemy" },
+  { value: "3,000+", label: "Positive Course Reviews" },
+];
+
+function ListCard({ title, items }) {
+  return (
+    <div className="border border-line rounded-3xl p-8 hover:border-ink/40 transition-colors bg-paper">
+      <h3 className="font-display italic text-2xl mb-6">{title}</h3>
+      <ul className="space-y-4 text-ink/70">
+        {items.map((item) => (
+          <li key={item} className="flex items-start gap-3">
+            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-black text-white py-16 px-6">
-      <div className="container mx-auto max-w-6xl">
-        {/* Header Section */}
-        <div className="mb-16">
-          <h1 className="text-6xl font-bold mb-6">ABOUT ME</h1>
-          <p className="text-xl text-gray-300 max-w-2xl">
-            Get to know more about my journey, experiences, and what drives me
-            in the world of technology and education.
-          </p>
+    <div className="py-10 px-6 sm:px-10">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="mb-20 grid md:grid-cols-12 gap-6">
+          <Reveal className="md:col-span-8">
+            <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
+              About <span className="italic text-accent">me.</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.1} className="md:col-span-4 flex items-end">
+            <p className="text-lg text-ink/70">
+              My journey, experiences, and what drives me in the world of
+              technology and education.
+            </p>
+          </Reveal>
         </div>
 
-        {/* Introduction Section */}
-        <div className="bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A] rounded-3xl p-8 mb-16 shadow-lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="rounded-2xl overflow-hidden">
+        <Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center mb-24">
+            <div className="md:col-span-5 rounded-3xl overflow-hidden md:-rotate-2">
               <Image
                 src="/images/about-me.jpg"
                 alt="Sarthak Shrivastava"
-                width={400}
-                height={400}
-                className="object-cover"
+                width={500}
+                height={500}
+                className="object-cover w-full h-auto"
               />
             </div>
-            <div className="space-y-6">
-              <h2 className="text-4xl font-bold text-[#D1F366]">
-                Hello, I'm Sarthak
+            <div className="md:col-span-7 space-y-6">
+              <h2 className="font-display italic text-4xl text-accent">
+                Hello, I&apos;m Sarthak
               </h2>
-              <p className="text-gray-300">
-                Known as "sarthaksavvy" in the tech community, I'm a full-stack
-                developer, Docker Captain, and founder of Bitfumes. My journey
-                in technology has been driven by a passion for learning and
-                sharing knowledge.
+              <p className="text-ink/70 text-lg leading-relaxed">
+                Known as &ldquo;sarthaksavvy&rdquo; in the tech community, I&apos;m a
+                full-stack developer, Docker Captain, and founder of Bitfumes. My
+                journey in technology has been driven by a passion for learning
+                and sharing knowledge.
               </p>
             </div>
           </div>
+        </Reveal>
+
+        <div className="mb-24">
+          <Reveal>
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
+              // Professional Journey
+            </h2>
+          </Reveal>
+          <StaggerGroup className="grid md:grid-cols-2 gap-8">
+            <StaggerItem>
+              <ListCard title="Current Roles" items={currentRoles} />
+            </StaggerItem>
+            <StaggerItem>
+              <ListCard title="Core Expertise" items={coreExpertise} />
+            </StaggerItem>
+          </StaggerGroup>
         </div>
 
-        {/* Professional Journey */}
-        <div className="mb-16">
-          <h2 className="text-4xl font-bold mb-8 text-[#D1F366]">
-            Professional Journey
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A] p-8 rounded-3xl shadow-lg">
-              <h3 className="text-2xl font-bold mb-6">Current Roles</h3>
-              <ul className="space-y-4 text-gray-300">
-                <li className="flex items-center gap-2">Founder of Bitfumes</li>
-                <li className="flex items-center gap-2">
-                  Software Engineer at Pfizer
-                </li>
-                <li className="flex items-center gap-2">Content Creator</li>
-                <li className="flex items-center gap-2">Docker Captain</li>
-              </ul>
-            </div>
-            <div className="bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A] p-8 rounded-3xl shadow-lg">
-              <h3 className="text-2xl font-bold mb-6">Core Expertise</h3>
-              <ul className="space-y-4 text-gray-300">
-                <li className="flex items-center gap-2">
-                  Laravel, JavaScript and Python Development
-                </li>
-                <li className="flex items-center gap-2">AWS Cloud Certified</li>
-                <li className="flex items-center gap-2">Docker & DevOps</li>
-                <li className="flex items-center gap-2">
-                  AI & LLMs Integration
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div className="mb-24">
+          <Reveal>
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
+              // Achievements
+            </h2>
+          </Reveal>
+          <StaggerGroup className="grid md:grid-cols-2 gap-8 mb-8">
+            <StaggerItem>
+              <ListCard title="Recognition" items={recognition} />
+            </StaggerItem>
+            <StaggerItem>
+              <div className="border border-line rounded-3xl p-8 hover:border-ink/40 transition-colors">
+                <h3 className="font-display italic text-2xl mb-6">Community Impact</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  {stats.map((s) => (
+                    <div key={s.label}>
+                      <div className="font-display text-3xl sm:text-4xl text-accent">
+                        {s.value}
+                      </div>
+                      <div className="text-xs text-muted mt-1">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </StaggerItem>
+          </StaggerGroup>
         </div>
 
-        {/* Achievements Section */}
-        <div className="mb-16">
-          <h2 className="text-4xl font-bold mb-8 text-[#D1F366]">
-            Achievements
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A] p-8 rounded-3xl shadow-lg">
-              <h3 className="text-2xl font-bold mb-6">Recognition</h3>
-              <ul className="space-y-4 text-gray-300">
-                <li className="flex items-center gap-2">
-                  Docker Captain (December 2023)
-                </li>
-                <li className="flex items-center gap-2">
-                  AWS Certified Solutions Architect
-                </li>
-                <li className="flex items-center gap-2">
-                  AWS Certified Developer
-                </li>
-              </ul>
-            </div>
-            <div className="bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A] p-8 rounded-3xl shadow-lg">
-              <h3 className="text-2xl font-bold mb-6">Community Impact</h3>
-              <ul className="space-y-4 text-gray-300">
-                <li className="flex items-center gap-2">
-                  134K+ YouTube Subscribers
-                </li>
-                <li className="flex items-center gap-2">
-                  100K+ Students on Udemy
-                </li>
-                <li className="flex items-center gap-2">
-                  3,000+ Positive Course Reviews
-                </li>
-              </ul>
+        <Reveal>
+          <div className="border border-line rounded-3xl p-10 sm:p-14">
+            <h2 className="font-display italic text-4xl mb-6">Current Focus</h2>
+            <p className="text-ink/70 mb-8 max-w-2xl leading-relaxed">
+              I&apos;m currently exploring and creating content about AI
+              technologies, including OpenAI&apos;s developments and LLMs. My
+              mission is to make technology education accessible while staying at
+              the forefront of innovation.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <MagneticButton
+                href="mailto:sarthak@bitfumes.com"
+                className="bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex"
+              >
+                Get in Touch
+              </MagneticButton>
+              <MagneticButton
+                href="https://youtube.com/bitfumes"
+                target="_blank"
+                className="border border-ink/20 px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors inline-flex"
+              >
+                Watch My Content
+              </MagneticButton>
             </div>
           </div>
-        </div>
-
-        {/* Current Focus */}
-        <div className="bg-gradient-to-r from-[#1A1A1A] to-[#2A2A2A] rounded-3xl p-8 mb-16 shadow-lg">
-          <h2 className="text-4xl font-bold mb-6 text-[#D1F366]">
-            Current Focus
-          </h2>
-          <p className="text-gray-300 mb-6">
-            I'm currently exploring and creating content about AI technologies,
-            including OpenAI's developments and LLMs. My mission is to make
-            technology education accessible while staying at the forefront of
-            innovation.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="mailto:sarthak@bitfumes.com"
-              className="bg-[#D1F366] text-black px-6 py-3 rounded-full font-medium hover:bg-[#bde052] transition-colors shadow-md"
-            >
-              Get in Touch
-            </a>
-            <a
-              href="https://youtube.com/bitfumes"
-              target="_blank"
-              className="bg-gray-800 text-white px-6 py-3 rounded-full font-medium hover:bg-gray-700 transition-colors shadow-md"
-            >
-              Watch My Content
-            </a>
-          </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   );
