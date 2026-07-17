@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const navLinks = [
-  { href: "https://www.youtube.com/@laravelindiapodcast", label: "Podcasts", external: true },
+  { href: "/podcasts", label: "Podcasts" },
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
   { href: "https://youtube.com/bitfumes", label: "Youtube", external: true },

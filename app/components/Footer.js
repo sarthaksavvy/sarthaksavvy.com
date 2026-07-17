@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const links = [
-  { href: "https://www.youtube.com/@laravelindiapodcast", label: "Podcasts", external: true },
+  { href: "/podcasts", label: "Podcasts" },
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
   { href: "/about-me", label: "About Me" },
