@@ -23,7 +23,7 @@ export default function Hero() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6"
             >
-              Founder · Builder · AI Consultant
+              Founder · Builder · AI Consultant · 10+ Years
             </motion.p>
           </div>
 

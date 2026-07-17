@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const navLinks = [
-  { href: "/podcasts", label: "Podcasts" },
+  { href: "https://www.youtube.com/@laravelindiapodcast", label: "Podcasts", external: true },
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
   { href: "https://youtube.com/bitfumes", label: "Youtube", external: true },
-  { href: "https://bitfumes.com", label: "Courses", external: true },
+  { href: "https://courses.sarthaksavvy.com/", label: "Courses", external: true },
   { href: "/about-me", label: "About Me" },
 ];
 

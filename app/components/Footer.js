@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const links = [
-  { href: "/podcasts", label: "Podcasts" },
+  { href: "https://www.youtube.com/@laravelindiapodcast", label: "Podcasts", external: true },
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
   { href: "/about-me", label: "About Me" },
@@ -50,9 +50,15 @@ export default function Footer() {
           <span>© {new Date().getFullYear()} SARTHAK SHRIVASTAVA</span>
           <div className="flex gap-6 flex-wrap justify-center">
             {links.map((l) => (
-              <Link key={l.href} href={l.href} className="hover:text-ink transition-colors">
+              <a
+                key={l.href}
+                href={l.href}
+                target={l.external ? "_blank" : undefined}
+                rel={l.external ? "noreferrer" : undefined}
+                className="hover:text-ink transition-colors"
+              >
                 {l.label.toUpperCase()}
-              </Link>
+              </a>
             ))}
           </div>
           <span>BUILT IN INDIA</span>
