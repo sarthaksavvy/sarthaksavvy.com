@@ -2,9 +2,8 @@ import localFont from "next/font/local";
 import { Fraunces } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import FloatingChatWidget from "./components/FloatingChatWidget";
+import FloatingControls from "./components/FloatingControls";
 import EntryGate from "./components/EntryGate";
-import ResetIntroButton from "./components/ResetIntroButton";
 import { SITE_URL } from "./routes";
 import { SITE_NAME, ogImages } from "./seo";
 import "./globals.css";
@@ -66,8 +65,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <Footer />
-          <FloatingChatWidget />
-          <ResetIntroButton />
+          <FloatingControls />
         </div>
       </body>
     </html>
