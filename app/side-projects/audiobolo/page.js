@@ -11,22 +11,17 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { ogImages, pageMetadata } from "../../seo";
 
 const SITE = "https://audiobolo.com";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "AudioBolo - AI Voice to Text for macOS | Sarthak Shrivastava",
   description:
     "AudioBolo is an AI-powered voice transcription app for macOS that turns speech into accurate, context-aware text — type at the speed of thought.",
-  openGraph: {
-    title: "AudioBolo - AI Voice to Text for macOS | Sarthak Shrivastava",
-    description:
-      "AudioBolo is an AI-powered voice transcription app for macOS that turns speech into accurate, context-aware text — type at the speed of thought.",
-    url: "https://sarthaksavvy.com/side-projects/audiobolo",
-    siteName: "Sarthak Shrivastava - AudioBolo",
-    images: "/images/projects/audiobolo.png",
-  },
-};
+  path: "/side-projects/audiobolo",
+  image: ogImages.audiobolo,
+});
 
 export default function AudioBoloProject() {
   const features = [

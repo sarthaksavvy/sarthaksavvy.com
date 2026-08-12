@@ -2,14 +2,13 @@ import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
+import { pageMetadata } from "../seo";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "About Me - Sarthaksavvy",
   description: "Get to know Sarthak Shrivastava's journey in tech.",
-  alternates: {
-    canonical: "https://sarthaksavvy.com/about-me",
-  },
-};
+  path: "/about-me",
+});
 
 const currentRoles = [
   "Founder of Bitfumes",
@@ -99,7 +98,7 @@ const AboutPage = () => {
         <div className="mb-24">
           <Reveal>
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-              // Professional Journey
+              {"// Professional Journey"}
             </h2>
           </Reveal>
           <StaggerGroup className="grid md:grid-cols-2 gap-8">
@@ -115,7 +114,7 @@ const AboutPage = () => {
         <div className="mb-24">
           <Reveal>
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-              // Achievements
+              {"// Achievements"}
             </h2>
           </Reveal>
           <StaggerGroup className="grid md:grid-cols-2 gap-8 mb-8">

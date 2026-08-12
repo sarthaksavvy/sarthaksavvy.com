@@ -101,7 +101,7 @@ export default function EntryGate() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <p className="font-mono text-xs tracking-[0.3em] text-muted mb-4">
-              // SYSTEM · SARTHAKSAVVY.EXE
+              {"// SYSTEM · SARTHAKSAVVY.EXE"}
             </p>
             <h1 className="font-display text-3xl sm:text-5xl italic mb-4">
               initializing portfolio

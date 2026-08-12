@@ -3,21 +3,14 @@ import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
+import { ogImages, pageMetadata } from "../seo";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Sarthak Shrivastava - Podcasts",
   description: "Podcasts by Sarthak Shrivastava",
-  alternates: {
-    canonical: "https://sarthaksavvy.com/podcasts",
-  },
-  openGraph: {
-    title: "Sarthak Shrivastava - Podcasts",
-    description: "Podcasts by Sarthak Shrivastava",
-    url: "https://sarthaksavvy.com/podcasts",
-    siteName: "Sarthak Shrivastava - Podcasts",
-    images: "/laravel-india-podcast.png",
-  },
-};
+  path: "/podcasts",
+  image: ogImages.podcast,
+});
 
 const platforms = [
   {
