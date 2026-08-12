@@ -6,6 +6,9 @@ import MagneticButton from "../components/motion/MagneticButton";
 export const metadata = {
   title: "About Me - Sarthaksavvy",
   description: "Get to know Sarthak Shrivastava's journey in tech.",
+  alternates: {
+    canonical: "https://sarthaksavvy.com/about-me",
+  },
 };
 
 const currentRoles = [
