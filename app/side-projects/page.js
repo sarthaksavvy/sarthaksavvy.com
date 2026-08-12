@@ -5,7 +5,9 @@ import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
-import { pageMetadata } from "../seo";
+import JsonLd from "../components/JsonLd";
+import { canonicalUrl, pageMetadata } from "../seo";
+import { breadcrumbSchema, graph } from "../structuredData";
 
 export const metadata = pageMetadata({
   title: "Sarthak Shrivastava - Side Projects",
@@ -97,8 +99,26 @@ export default function SideProjects() {
     },
   ];
 
+  // Listing the projects as an ordered set of pages gives the index a reason
+  // to be crawled past its own copy: each entry names a detail page a crawler
+  // might otherwise only reach by following a card link.
+  const structuredData = graph(
+    {
+      "@type": "ItemList",
+      name: "Side projects by Sarthak Shrivastava",
+      itemListElement: projects.map((project, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: project.name,
+        url: canonicalUrl(project.projectLink),
+      })),
+    },
+    breadcrumbSchema([{ name: "Side Projects", path: "/side-projects" }])
+  );
+
   return (
     <div className="py-10 px-6 sm:px-10">
+      <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">

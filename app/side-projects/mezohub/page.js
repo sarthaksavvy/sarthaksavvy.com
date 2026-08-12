@@ -10,15 +10,41 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import ClientImage from "../../components/ClientImage";
+import JsonLd from "../../components/JsonLd";
 import { ogImages, pageMetadata } from "../../seo";
+import {
+  breadcrumbSchema,
+  graph,
+  softwareApplicationSchema,
+} from "../../structuredData";
+
+const SITE = "https://mezohub.com";
+
+const DESCRIPTION =
+  "Mezohub is a platform for developers, freelancers, and entrepreneurs to deploy your backend project with ease.";
 
 export const metadata = pageMetadata({
   title: "Mezohub - Backend Deployment Platform | Sarthak Shrivastava",
-  description:
-    "Mezohub is a platform for developers, freelancers, and entrepreneurs to deploy your backend project with ease.",
+  description: DESCRIPTION,
   path: "/side-projects/mezohub",
   image: ogImages.mezohub,
 });
+
+const structuredData = graph(
+  softwareApplicationSchema({
+    name: "Mezohub",
+    description: DESCRIPTION,
+    url: SITE,
+    path: "/side-projects/mezohub",
+    image: ogImages.mezohub.url,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+  }),
+  breadcrumbSchema([
+    { name: "Side Projects", path: "/side-projects" },
+    { name: "Mezohub", path: "/side-projects/mezohub" },
+  ])
+);
 
 export default function MezohubProject() {
   const features = [
@@ -80,6 +106,7 @@ export default function MezohubProject() {
 
   return (
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
+      <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
         {/* Back Navigation */}
         <div className="mb-12">

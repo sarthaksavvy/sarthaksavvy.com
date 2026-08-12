@@ -11,17 +11,41 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import JsonLd from "../../components/JsonLd";
 import { ogImages, pageMetadata } from "../../seo";
+import {
+  breadcrumbSchema,
+  graph,
+  softwareApplicationSchema,
+} from "../../structuredData";
 
 const SITE = "https://audiobolo.com";
 
+const DESCRIPTION =
+  "AudioBolo is an AI-powered voice transcription app for macOS that turns speech into accurate, context-aware text — type at the speed of thought.";
+
 export const metadata = pageMetadata({
   title: "AudioBolo - AI Voice to Text for macOS | Sarthak Shrivastava",
-  description:
-    "AudioBolo is an AI-powered voice transcription app for macOS that turns speech into accurate, context-aware text — type at the speed of thought.",
+  description: DESCRIPTION,
   path: "/side-projects/audiobolo",
   image: ogImages.audiobolo,
 });
+
+const structuredData = graph(
+  softwareApplicationSchema({
+    name: "AudioBolo",
+    description: DESCRIPTION,
+    url: SITE,
+    path: "/side-projects/audiobolo",
+    image: ogImages.audiobolo.url,
+    applicationCategory: "UtilitiesApplication",
+    operatingSystem: "macOS",
+  }),
+  breadcrumbSchema([
+    { name: "Side Projects", path: "/side-projects" },
+    { name: "AudioBolo", path: "/side-projects/audiobolo" },
+  ])
+);
 
 export default function AudioBoloProject() {
   const features = [
@@ -113,6 +137,7 @@ export default function AudioBoloProject() {
 
   return (
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
+      <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
         {/* Back Navigation */}
         <div className="mb-12">

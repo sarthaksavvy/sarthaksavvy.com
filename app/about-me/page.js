@@ -2,13 +2,28 @@ import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
-import { pageMetadata } from "../seo";
+import JsonLd from "../components/JsonLd";
+import { canonicalUrl, pageMetadata } from "../seo";
+import { breadcrumbSchema, graph, personSchema } from "../structuredData";
 
 export const metadata = pageMetadata({
   title: "About Me - Sarthaksavvy",
   description: "Get to know Sarthak Shrivastava's journey in tech.",
   path: "/about-me",
 });
+
+// The page a crawler should treat as the profile of the person, which is what
+// makes the roles, credentials and social links here attributable rather than
+// loose text on a page.
+const structuredData = graph(
+  {
+    "@type": "ProfilePage",
+    url: canonicalUrl("/about-me"),
+    name: "About Sarthak Shrivastava",
+    mainEntity: personSchema(),
+  },
+  breadcrumbSchema([{ name: "About Me", path: "/about-me" }])
+);
 
 const currentRoles = [
   "Founder of Bitfumes",
@@ -55,6 +70,7 @@ function ListCard({ title, items }) {
 const AboutPage = () => {
   return (
     <div className="py-10 px-6 sm:px-10">
+      <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">

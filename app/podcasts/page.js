@@ -3,7 +3,9 @@ import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
-import { ogImages, pageMetadata } from "../seo";
+import JsonLd from "../components/JsonLd";
+import { canonicalUrl, ogImages, pageMetadata } from "../seo";
+import { breadcrumbSchema, graph, personSchema } from "../structuredData";
 
 export const metadata = pageMetadata({
   title: "Sarthak Shrivastava - Podcasts",
@@ -27,9 +29,29 @@ const platforms = [
   },
 ];
 
+// `sameAs` is what ties this page to the show as Apple, Spotify and YouTube
+// already know it, so the three listings and this page are understood as one
+// podcast rather than four unrelated URLs.
+const structuredData = graph(
+  {
+    "@type": "PodcastSeries",
+    name: "Laravel India Podcast",
+    url: canonicalUrl("/podcasts"),
+    description:
+      "Conversations with guests from the worldwide Laravel community, " +
+      "including Taylor Otwell, James Brooks and Freek Van der Herten.",
+    image: canonicalUrl(ogImages.podcast.url),
+    inLanguage: "en",
+    author: personSchema(),
+    sameAs: platforms.map((platform) => platform.href),
+  },
+  breadcrumbSchema([{ name: "Podcasts", path: "/podcasts" }])
+);
+
 export default function Podcasts() {
   return (
     <div className="py-10 px-6 sm:px-10">
+      <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">

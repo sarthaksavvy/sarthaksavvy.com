@@ -1,6 +1,8 @@
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
+import JsonLd from "./components/JsonLd";
 import { pageMetadata } from "./seo";
+import { graph, personSchema, websiteSchema } from "./structuredData";
 
 export const metadata = pageMetadata({
   title: "Sarthak Shrivastava - Sarthaksavvy",
@@ -11,6 +13,7 @@ export const metadata = pageMetadata({
 export default function Home() {
   return (
     <>
+      <JsonLd data={graph(personSchema(), websiteSchema())} />
       <Hero />
       <Marquee />
     </>
