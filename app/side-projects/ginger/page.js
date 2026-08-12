@@ -127,7 +127,7 @@ export default function GingerProject() {
                     G
                   </div>
                   <div>
-                    <h3 className="font-bold text-paper text-lg">
+                    <h3 className="font-bold text-ink text-lg">
                       Ginger - LinkedIn AI Assistant
                     </h3>
                     <p className="text-muted text-sm">

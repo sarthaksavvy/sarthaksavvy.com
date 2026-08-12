@@ -56,6 +56,22 @@ export default function SideProjects() {
       ],
     },
     {
+      id: 2,
+      name: "Expensorr",
+      description:
+        "A simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
+      image: "/images/projects/expensorr.png",
+      link: "https://apps.apple.com/us/app/expensorr/id6739472004",
+      projectLink: "/side-projects/expensorr",
+      tags: ["Finance", "Tracking", "Mobile App"],
+      features: [
+        "Receipt scanning and categorization",
+        "Budget planning and alerts",
+        "Expense reports and analytics",
+        "Multi-currency support",
+      ],
+    },
+    {
       id: 1,
       name: "Mezohub",
       description:
@@ -69,22 +85,6 @@ export default function SideProjects() {
         "Integrated messaging system",
         "Skill-based team formation",
         "Project showcase portfolio",
-      ],
-    },
-    {
-      id: 2,
-      name: "Expensorr",
-      description:
-        "A simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
-      image: "/images/projects/expensorr.jpg",
-      link: "https://apps.apple.com/us/app/expensorr/id6739472004",
-      projectLink: "/side-projects/expensorr",
-      tags: ["Finance", "Tracking", "Mobile App"],
-      features: [
-        "Receipt scanning and categorization",
-        "Budget planning and alerts",
-        "Expense reports and analytics",
-        "Multi-currency support",
       ],
     },
     {

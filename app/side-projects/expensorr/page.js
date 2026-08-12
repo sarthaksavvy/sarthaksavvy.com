@@ -20,7 +20,7 @@ export const metadata = {
       "Expensorr is a simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
     url: "https://sarthaksavvy.com/side-projects/expensorr",
     siteName: "Sarthak Shrivastava - Expensorr",
-    images: "/images/projects/expensorr.jpg",
+    images: "/images/projects/expensorr.png",
   },
 };
 

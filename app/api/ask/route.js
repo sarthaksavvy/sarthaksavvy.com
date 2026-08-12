@@ -1,10 +1,33 @@
-import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
+const SITE_URL = "https://sarthaksavvy.com";
+// Pinned deliberately: the "~...-latest" alias resolves to a snapshot served by
+// a slower provider pool (13-66s vs 5-7s in benchmarks).
+const MODEL = "deepseek/deepseek-v4-flash";
+
+// Ceiling only — the model is told to match answer length to the question, and
+// unused headroom costs nothing. Detail-seeking questions get the wider cap.
+const MAX_TOKENS_DEFAULT = 1000;
+const MAX_TOKENS_DETAILED = 1600;
+const DETAIL_PATTERN =
+  /\b(list|all|every|each|compare|difference|walk me through|step by step|in detail|detailed|explain|breakdown|elaborate|tell me (about|everything))\b/i;
+
+function maxTokensFor(question) {
+  return DETAIL_PATTERN.test(question)
+    ? MAX_TOKENS_DETAILED
+    : MAX_TOKENS_DEFAULT;
+}
+
+const openrouter = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
+  defaultHeaders: {
+    "HTTP-Referer": SITE_URL,
+    "X-Title": "Ask About Sarthak",
+  },
 });
 
 const CACHE_TTL = 1000 * 60 * 60; // 1 hour
@@ -201,13 +224,13 @@ export async function POST(request) {
     }
 
     if (
-      !process.env.ANTHROPIC_API_KEY ||
-      process.env.ANTHROPIC_API_KEY === "your_anthropic_api_key_here"
+      !process.env.OPENROUTER_API_KEY ||
+      process.env.OPENROUTER_API_KEY === "your_openrouter_api_key_here"
     ) {
       return NextResponse.json(
         {
           error:
-            "Anthropic API key not configured. Please set a valid ANTHROPIC_API_KEY environment variable.",
+            "OpenRouter API key not configured. Please set a valid OPENROUTER_API_KEY environment variable.",
         },
         { status: 500 }
       );
@@ -224,17 +247,21 @@ Instructions:
 - Answer questions about Sarthak's background, projects, expertise, and professional journey
 - Be conversational and helpful
 - If asked about something not covered in the provided information, politely say you don't have that specific information
-- Keep responses concise but informative (2-4 paragraphs max)
+- Match the length of your answer to the question: a couple of sentences for a simple factual one, several paragraphs or a list when the question asks for detail, a comparison, or a walkthrough. Never pad an answer to fill space
+- Use Markdown where it helps readability — bold for emphasis, bullet lists for enumerations, links for URLs
 - Include relevant links when appropriate (website, LinkedIn, YouTube, etc.)
 - Maintain a professional yet friendly tone
 - If asked about contact information, direct them to his website or LinkedIn`;
 
-    const message = await anthropic.messages.create({
-      model: "claude-3-5-sonnet-latest",
-      max_tokens: 500,
+    const completion = await openrouter.chat.completions.create({
+      model: MODEL,
+      max_tokens: maxTokensFor(sanitizedQuestion),
       temperature: 0.7,
-      system: systemPrompt,
       messages: [
+        {
+          role: "system",
+          content: systemPrompt,
+        },
         {
           role: "user",
           content: sanitizedQuestion,
@@ -243,7 +270,7 @@ Instructions:
     });
 
     const answer =
-      message.content[0]?.text ||
+      completion.choices[0]?.message?.content?.trim() ||
       "Sorry, I could not generate an answer at this time.";
 
     return NextResponse.json({ answer });
@@ -252,14 +279,21 @@ Instructions:
 
     if (error.status === 429) {
       return NextResponse.json(
-        { error: "Anthropic API rate limit exceeded. Please try again later." },
+        { error: "OpenRouter rate limit exceeded. Please try again later." },
         { status: 429 }
       );
     }
 
-    if (error.status === 401) {
+    if (error.status === 401 || error.status === 403) {
       return NextResponse.json(
-        { error: "Invalid Anthropic API key configuration." },
+        { error: "Invalid OpenRouter API key configuration." },
+        { status: 500 }
+      );
+    }
+
+    if (error.status === 402) {
+      return NextResponse.json(
+        { error: "OpenRouter credits exhausted. Please top up the account." },
         { status: 500 }
       );
     }
