@@ -5,6 +5,8 @@ import Footer from "./components/Footer";
 import FloatingChatWidget from "./components/FloatingChatWidget";
 import EntryGate from "./components/EntryGate";
 import ResetIntroButton from "./components/ResetIntroButton";
+import { SITE_URL } from "./routes";
+import { SITE_NAME, ogImages } from "./seo";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -27,10 +29,29 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
+// Site-wide fallback. Routes that set their own metadata override these; the
+// point here is that a route which forgets to still shares with a working
+// card instead of a bare link. No canonical is set at this level — it would be
+// inherited by every page that does not declare one and point them all at "/".
 export const metadata = {
   title: "Sarthak Shrivastava - Sarthaksavvy",
   description: "Sarthak Shrivastava's personal website",
-  metadataBase: new URL("https://sarthaksavvy.com"),
+  metadataBase: new URL(SITE_URL),
+  openGraph: {
+    type: "website",
+    title: "Sarthak Shrivastava - Sarthaksavvy",
+    description: "Sarthak Shrivastava's personal website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "en_US",
+    images: [ogImages.portrait],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sarthak Shrivastava - Sarthaksavvy",
+    description: "Sarthak Shrivastava's personal website",
+    images: [ogImages.portrait.url],
+  },
 };
 
 export default function RootLayout({ children }) {

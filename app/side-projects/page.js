@@ -5,21 +5,13 @@ import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
+import { pageMetadata } from "../seo";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Sarthak Shrivastava - Side Projects",
   description: "Side Projects by Sarthak Shrivastava",
-  alternates: {
-    canonical: "https://sarthaksavvy.com/side-projects",
-  },
-  openGraph: {
-    title: "Sarthak Shrivastava - Side Projects",
-    description: "Side Projects by Sarthak Shrivastava",
-    url: "https://sarthaksavvy.com/side-projects",
-    siteName: "Sarthak Shrivastava - Side Projects",
-    images: "/sarthak.jpg",
-  },
-};
+  path: "/side-projects",
+});
 
 export default function SideProjects() {
   const projects = [

@@ -22,7 +22,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between gap-10 mb-16">
           <div>
             <p className="font-mono text-xs tracking-widest text-muted mb-3">
-              // LET&apos;S BUILD SOMETHING
+              {"// LET'S BUILD SOMETHING"}
             </p>
             <a
               href="mailto:hello@sarthaksavvy.com"

@@ -8,6 +8,8 @@ export const indexableRoutes = [
   { path: "/side-projects", changeFrequency: "monthly", priority: 0.8 },
   { path: "/podcasts", changeFrequency: "monthly", priority: 0.7 },
   { path: "/public-speaking", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/side-projects/backstage-cut", changeFrequency: "yearly", priority: 0.6 },
+  { path: "/side-projects/audiobolo", changeFrequency: "yearly", priority: 0.6 },
   { path: "/side-projects/ginger", changeFrequency: "yearly", priority: 0.6 },
   { path: "/side-projects/expensorr", changeFrequency: "yearly", priority: 0.6 },
   { path: "/side-projects/mezohub", changeFrequency: "yearly", priority: 0.6 },

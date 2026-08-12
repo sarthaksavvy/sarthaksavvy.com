@@ -10,20 +10,15 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { ogImages, pageMetadata } from "../../seo";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Ginger - LinkedIn AI Assistant | Sarthak Shrivastava",
   description:
     "Ginger is a Chrome extension that helps users generate human-like comments using AI on LinkedIn posts and reply to existing comments effortlessly.",
-  openGraph: {
-    title: "Ginger - LinkedIn AI Assistant | Sarthak Shrivastava",
-    description:
-      "Ginger is a Chrome extension that helps users generate human-like comments using AI on LinkedIn posts and reply to existing comments effortlessly.",
-    url: "https://sarthaksavvy.com/side-projects/ginger",
-    siteName: "Sarthak Shrivastava - Ginger",
-    images: "/images/projects/ginger.jpg",
-  },
-};
+  path: "/side-projects/ginger",
+  image: ogImages.ginger,
+});
 
 export default function GingerProject() {
   const features = [
@@ -214,7 +209,8 @@ export default function GingerProject() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">Browse</h3>
                 <p className="text-ink/70">
-                  Navigate to LinkedIn and find posts you'd like to engage with
+                  Navigate to LinkedIn and find posts you&apos;d like to engage
+                  with
                   in your feed or network.
                 </p>
               </div>
@@ -258,7 +254,7 @@ export default function GingerProject() {
                   ))}
                 </div>
                 <p className="text-ink/70 mb-6 italic">
-                  "{testimonial.text}"
+                  &quot;{testimonial.text}&quot;
                 </p>
                 <p className="font-medium">- {testimonial.author}</p>
               </div>

@@ -10,20 +10,15 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import ClientImage from "../../components/ClientImage";
+import { ogImages, pageMetadata } from "../../seo";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Mezohub - Backend Deployment Platform | Sarthak Shrivastava",
   description:
     "Mezohub is a platform for developers, freelancers, and entrepreneurs to deploy your backend project with ease.",
-  openGraph: {
-    title: "Mezohub - Backend Deployment Platform | Sarthak Shrivastava",
-    description:
-      "Mezohub is a platform for developers, freelancers, and entrepreneurs to deploy your backend project with ease.",
-    url: "https://sarthaksavvy.com/side-projects/mezohub",
-    siteName: "Sarthak Shrivastava - Mezohub",
-    images: "/images/projects/mezohub.jpg",
-  },
-};
+  path: "/side-projects/mezohub",
+  image: ogImages.mezohub,
+});
 
 export default function MezohubProject() {
   const features = [

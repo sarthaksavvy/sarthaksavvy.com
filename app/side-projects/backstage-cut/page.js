@@ -10,22 +10,17 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { ogImages, pageMetadata } from "../../seo";
 
 const SITE = "https://premier-pro-extension.vercel.app";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Backstage Cut - AI Premiere Pro Extension | Sarthak Shrivastava",
   description:
     "Backstage Cut is an AI-powered Premiere Pro extension that handles transcription, captions, zooms, B-roll and chapters without leaving the timeline.",
-  openGraph: {
-    title: "Backstage Cut - AI Premiere Pro Extension | Sarthak Shrivastava",
-    description:
-      "Backstage Cut is an AI-powered Premiere Pro extension that handles transcription, captions, zooms, B-roll and chapters without leaving the timeline.",
-    url: "https://sarthaksavvy.com/side-projects/backstage-cut",
-    siteName: "Sarthak Shrivastava - Backstage Cut",
-    images: "/images/projects/backstage-cut.png",
-  },
-};
+  path: "/side-projects/backstage-cut",
+  image: ogImages.backstageCut,
+});
 
 export default function BackstageCutProject() {
   const features = [

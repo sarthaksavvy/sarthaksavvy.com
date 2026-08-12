@@ -9,20 +9,15 @@ import {
   Star,
 } from "lucide-react";
 import Link from "next/link";
+import { ogImages, pageMetadata } from "../../seo";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Expensorr - Expense Tracking App | Sarthak Shrivastava",
   description:
     "Expensorr is a simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
-  openGraph: {
-    title: "Expensorr - Expense Tracking App | Sarthak Shrivastava",
-    description:
-      "Expensorr is a simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
-    url: "https://sarthaksavvy.com/side-projects/expensorr",
-    siteName: "Sarthak Shrivastava - Expensorr",
-    images: "/images/projects/expensorr.png",
-  },
-};
+  path: "/side-projects/expensorr",
+  image: ogImages.expensorr,
+});
 
 export default function ExpensorrProject() {
   const features = [
@@ -260,7 +255,9 @@ export default function ExpensorrProject() {
                     />
                   ))}
                 </div>
-                <p className="text-ink/70 mb-6">"{testimonial.text}"</p>
+                <p className="text-ink/70 mb-6">
+                  &quot;{testimonial.text}&quot;
+                </p>
                 <p className="font-semibold">{testimonial.author}</p>
               </div>
             ))}

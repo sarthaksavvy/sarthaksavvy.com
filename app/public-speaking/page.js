@@ -3,21 +3,13 @@ import SingleEvent from "../components/PublicSpeaking/SingleEvent";
 import speakingEvents from "../events.json";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
+import { pageMetadata } from "../seo";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Sarthak Shrivastava - Public Speaking",
   description: "Public Speaking by Sarthak Shrivastava",
-  alternates: {
-    canonical: "https://sarthaksavvy.com/public-speaking",
-  },
-  openGraph: {
-    title: "Sarthak Shrivastava - Public Speaking",
-    description: "Public Speaking by Sarthak Shrivastava",
-    url: "https://sarthaksavvy.com/public-speaking",
-    siteName: "Sarthak Shrivastava - Public Speaking",
-    images: "/sarthak.jpg",
-  },
-};
+  path: "/public-speaking",
+});
 
 export default function SpeakingTimeline() {
   return (
