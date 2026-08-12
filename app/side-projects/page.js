@@ -24,6 +24,38 @@ export const metadata = {
 export default function SideProjects() {
   const projects = [
     {
+      id: 4,
+      name: "Backstage Cut",
+      description:
+        "An AI-powered Premiere Pro extension that automates the repetitive parts of editing — transcription, captions, zooms, B-roll and chapters — without ever leaving the timeline.",
+      image: "/images/projects/backstage-cut.png",
+      link: "https://premier-pro-extension.vercel.app",
+      projectLink: "/side-projects/backstage-cut",
+      tags: ["AI", "Premiere Pro", "Video Editing"],
+      features: [
+        "One-click transcription and captions in English, Hindi and Hinglish",
+        "Punch-in zooms timed to dialogue, with editable keyframes",
+        "B-roll matched from your own folder and frame-aligned",
+        "YouTube chapter markers generated from the transcript",
+      ],
+    },
+    {
+      id: 5,
+      name: "AudioBolo",
+      description:
+        "An AI voice transcription app for macOS that turns speech into accurate, context-aware text — so you can type at the speed of thought.",
+      image: "/images/projects/audiobolo.png",
+      link: "https://audiobolo.com",
+      projectLink: "/side-projects/audiobolo",
+      tags: ["AI", "macOS App", "Productivity"],
+      features: [
+        "Screen context awareness for more accurate transcripts",
+        "Auto-learns from your corrections over time",
+        "@Filename tagging for AI coding tools like Cursor",
+        "Custom modes for posts, emails and meeting notes",
+      ],
+    },
+    {
       id: 1,
       name: "Mezohub",
       description:
