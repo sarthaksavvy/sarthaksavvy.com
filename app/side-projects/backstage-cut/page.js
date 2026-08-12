@@ -10,17 +10,40 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import JsonLd from "../../components/JsonLd";
 import { ogImages, pageMetadata } from "../../seo";
+import {
+  breadcrumbSchema,
+  graph,
+  softwareApplicationSchema,
+} from "../../structuredData";
 
 const SITE = "https://premier-pro-extension.vercel.app";
 
+const DESCRIPTION =
+  "Backstage Cut is an AI-powered Premiere Pro extension that handles transcription, captions, zooms, B-roll and chapters without leaving the timeline.";
+
 export const metadata = pageMetadata({
   title: "Backstage Cut - AI Premiere Pro Extension | Sarthak Shrivastava",
-  description:
-    "Backstage Cut is an AI-powered Premiere Pro extension that handles transcription, captions, zooms, B-roll and chapters without leaving the timeline.",
+  description: DESCRIPTION,
   path: "/side-projects/backstage-cut",
   image: ogImages.backstageCut,
 });
+
+const structuredData = graph(
+  softwareApplicationSchema({
+    name: "Backstage Cut",
+    description: DESCRIPTION,
+    url: SITE,
+    path: "/side-projects/backstage-cut",
+    image: ogImages.backstageCut.url,
+    applicationCategory: "MultimediaApplication",
+  }),
+  breadcrumbSchema([
+    { name: "Side Projects", path: "/side-projects" },
+    { name: "Backstage Cut", path: "/side-projects/backstage-cut" },
+  ])
+);
 
 export default function BackstageCutProject() {
   const features = [
@@ -97,6 +120,7 @@ export default function BackstageCutProject() {
 
   return (
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
+      <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
         {/* Back Navigation */}
         <div className="mb-12">

@@ -10,15 +10,42 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import JsonLd from "../../components/JsonLd";
 import { ogImages, pageMetadata } from "../../seo";
+import {
+  breadcrumbSchema,
+  graph,
+  softwareApplicationSchema,
+} from "../../structuredData";
+
+const SITE =
+  "https://chromewebstore.google.com/detail/ginger-linkedin-ai-assist/ijolijeckddogpijopofibpplokamjba";
+
+const DESCRIPTION =
+  "Ginger is a Chrome extension that helps users generate human-like comments using AI on LinkedIn posts and reply to existing comments effortlessly.";
 
 export const metadata = pageMetadata({
   title: "Ginger - LinkedIn AI Assistant | Sarthak Shrivastava",
-  description:
-    "Ginger is a Chrome extension that helps users generate human-like comments using AI on LinkedIn posts and reply to existing comments effortlessly.",
+  description: DESCRIPTION,
   path: "/side-projects/ginger",
   image: ogImages.ginger,
 });
+
+const structuredData = graph(
+  softwareApplicationSchema({
+    name: "Ginger",
+    description: DESCRIPTION,
+    url: SITE,
+    path: "/side-projects/ginger",
+    image: ogImages.ginger.url,
+    applicationCategory: "BrowserApplication",
+    operatingSystem: "Chrome",
+  }),
+  breadcrumbSchema([
+    { name: "Side Projects", path: "/side-projects" },
+    { name: "Ginger", path: "/side-projects/ginger" },
+  ])
+);
 
 export default function GingerProject() {
   const features = [
@@ -68,6 +95,7 @@ export default function GingerProject() {
 
   return (
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
+      <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
         {/* Back Navigation */}
         <div className="mb-12">

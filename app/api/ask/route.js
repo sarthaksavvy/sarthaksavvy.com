@@ -21,14 +21,22 @@ function maxTokensFor(question) {
     : MAX_TOKENS_DEFAULT;
 }
 
-const openrouter = new OpenAI({
-  apiKey: process.env.OPENROUTER_API_KEY,
-  baseURL: "https://openrouter.ai/api/v1",
-  defaultHeaders: {
-    "HTTP-Referer": SITE_URL,
-    "X-Title": "Ask About Sarthak",
-  },
-});
+// Built per request rather than once at module scope. The SDK constructor
+// throws when it cannot find a key, and at build time there is no key to find
+// — which made `next build` fail while collecting this route unless the
+// environment happened to carry OPENROUTER_API_KEY. It also meant the missing
+// key check further down could never run, because the module blew up before
+// the handler was ever reached.
+function openrouterClient() {
+  return new OpenAI({
+    apiKey: process.env.OPENROUTER_API_KEY,
+    baseURL: "https://openrouter.ai/api/v1",
+    defaultHeaders: {
+      "HTTP-Referer": SITE_URL,
+      "X-Title": "Ask About Sarthak",
+    },
+  });
+}
 
 const CACHE_TTL = 1000 * 60 * 60; // 1 hour
 let contentCache = {
@@ -253,7 +261,7 @@ Instructions:
 - Maintain a professional yet friendly tone
 - If asked about contact information, direct them to his website or LinkedIn`;
 
-    const completion = await openrouter.chat.completions.create({
+    const completion = await openrouterClient().chat.completions.create({
       model: MODEL,
       max_tokens: maxTokensFor(sanitizedQuestion),
       temperature: 0.7,

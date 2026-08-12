@@ -9,15 +9,41 @@ import {
   Star,
 } from "lucide-react";
 import Link from "next/link";
+import JsonLd from "../../components/JsonLd";
 import { ogImages, pageMetadata } from "../../seo";
+import {
+  breadcrumbSchema,
+  graph,
+  softwareApplicationSchema,
+} from "../../structuredData";
+
+const SITE = "https://apps.apple.com/us/app/expensorr/id6739472004";
+
+const DESCRIPTION =
+  "Expensorr is a simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.";
 
 export const metadata = pageMetadata({
   title: "Expensorr - Expense Tracking App | Sarthak Shrivastava",
-  description:
-    "Expensorr is a simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
+  description: DESCRIPTION,
   path: "/side-projects/expensorr",
   image: ogImages.expensorr,
 });
+
+const structuredData = graph(
+  softwareApplicationSchema({
+    name: "Expensorr",
+    description: DESCRIPTION,
+    url: SITE,
+    path: "/side-projects/expensorr",
+    image: ogImages.expensorr.url,
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "iOS",
+  }),
+  breadcrumbSchema([
+    { name: "Side Projects", path: "/side-projects" },
+    { name: "Expensorr", path: "/side-projects/expensorr" },
+  ])
+);
 
 export default function ExpensorrProject() {
   const features = [
@@ -67,6 +93,7 @@ export default function ExpensorrProject() {
 
   return (
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
+      <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
         {/* Back Navigation */}
         <div className="mb-12">
