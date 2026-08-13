@@ -12,8 +12,9 @@ import {
 } from "../structuredData";
 
 export const metadata = pageMetadata({
-  title: "Sarthak Shrivastava - Public Speaking",
-  description: "Public Speaking by Sarthak Shrivastava",
+  title: "Conference Talks by Sarthak Shrivastava — AI & Laravel",
+  description:
+    "Talks on AI agents, LLM function calling, Laravel and Docker at conferences worldwide, from AI consultant and Docker Captain Sarthak Shrivastava.",
   path: "/public-speaking",
 });
 

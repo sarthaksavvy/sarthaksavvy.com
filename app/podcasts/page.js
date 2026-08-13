@@ -8,8 +8,9 @@ import { canonicalUrl, ogImages, pageMetadata } from "../seo";
 import { breadcrumbSchema, graph, personSchema } from "../structuredData";
 
 export const metadata = pageMetadata({
-  title: "Sarthak Shrivastava - Podcasts",
-  description: "Podcasts by Sarthak Shrivastava",
+  title: "Laravel India Podcast — Hosted by Sarthak Shrivastava",
+  description:
+    "Conversations with the worldwide Laravel community — including Taylor Otwell, James Brooks and Freek Van der Herten — hosted by AI consultant and Bitfumes founder Sarthak Shrivastava.",
   path: "/podcasts",
   image: ogImages.podcast,
 });
