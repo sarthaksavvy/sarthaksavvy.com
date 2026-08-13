@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import FloatingControls from "./components/FloatingControls";
 import EntryGate from "./components/EntryGate";
 import { SITE_URL } from "./routes";
-import { SITE_NAME, ogImages } from "./seo";
+import { SITE_NAME, ogImages, twitterCard } from "./seo";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -46,7 +46,7 @@ export const metadata = {
     images: [ogImages.portrait],
   },
   twitter: {
-    card: "summary_large_image",
+    card: twitterCard(ogImages.portrait),
     title: "Sarthak Shrivastava - Sarthaksavvy",
     description: "Sarthak Shrivastava's personal website",
     images: [ogImages.portrait.url],

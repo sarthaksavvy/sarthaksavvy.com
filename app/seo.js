@@ -13,14 +13,14 @@ export const SITE_NAME = "Sarthak Shrivastava";
 export const ogImages = {
   portrait: {
     url: "/images/sarthak.jpg",
-    width: 2668,
-    height: 2773,
+    width: 1200,
+    height: 1247,
     alt: "Sarthak Shrivastava",
   },
   podcast: {
-    url: "/images/laravel-india-podcast.png",
-    width: 3000,
-    height: 3000,
+    url: "/images/laravel-india-podcast.jpg",
+    width: 1200,
+    height: 1200,
     alt: "Laravel India Podcast cover art",
   },
   audiobolo: {
@@ -55,10 +55,19 @@ export const ogImages = {
   },
 };
 
-// A wide card needs an image X will actually accept at that size; anything
-// smaller renders better as the compact card than as a stretched banner.
-function twitterCard(image) {
-  return image.width >= 600 ? "summary_large_image" : "summary";
+// X renders `summary_large_image` in a fixed 1.91:1 frame and centre-crops
+// whatever it is given to fit. A square or portrait photo declared as a large
+// card therefore arrives as a horizontal band sliced out of the middle of it —
+// a face with the top of the head and the chin cut off. The compact `summary`
+// card scales the same image into a 1:1 thumbnail with nothing cropped, so the
+// choice is about the image's shape, not its size: only genuinely wide artwork
+// survives the large card intact.
+const WIDE_CARD_MIN_RATIO = 1.5;
+
+export function twitterCard(image) {
+  return image.width / image.height >= WIDE_CARD_MIN_RATIO
+    ? "summary_large_image"
+    : "summary";
 }
 
 export function canonicalUrl(path = "/") {

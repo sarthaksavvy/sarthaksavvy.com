@@ -1,8 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 
 const RADIUS = 130;
+
+// The photo is laid out at 42% of a 1400px-max container, so it never needs to
+// be wider than ~588px however large the screen gets. Saying so lets Next pick
+// a source that size instead of shipping the full-resolution original.
+const SIZES = "(min-width: 1400px) 588px, 42vw";
 
 // Builds an irregular, hand-torn-looking frame instead of a perfect
 // rectangle — points walk each edge with small random jitter.
@@ -71,20 +77,32 @@ export default function ParticleImage({ src, className = "" }) {
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
     >
-      {/* Resting state: the photo sits behind a very subtle blur. */}
-      <img
+      {/* Resting state: the photo sits behind a very subtle blur.
+
+          Both layers stay lazy on purpose. The effect only exists on desktop —
+          Hero hides the whole thing below `md` — and a lazy image inside a
+          `display: none` parent is never fetched, so phones stop paying for a
+          photo they are not shown. It costs nothing above the fold either:
+          this component is loaded with `ssr: false`, so it already renders
+          after hydration, and the page's LCP is the headline, not the photo. */}
+      <Image
         src={src}
         alt=""
-        className="absolute inset-0 w-full h-full object-cover"
+        fill
+        sizes={SIZES}
+        className="object-cover"
         style={{ filter: "blur(1.5px)" }}
       />
       {/* Hover state: the sharp photo is revealed only inside a soft
-          circular mask that follows the cursor. */}
-      <img
+          circular mask that follows the cursor. Same `src` as the layer above,
+          so this is one download shared by both. */}
+      <Image
         ref={sharpRef}
         src={src}
         alt=""
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-200"
+        fill
+        sizes={SIZES}
+        className="object-cover transition-opacity duration-200"
         style={{ opacity: 0 }}
       />
       {/* Ring outlining exactly where the clear reveal ends. */}

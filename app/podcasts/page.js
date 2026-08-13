@@ -72,7 +72,7 @@ export default function Podcasts() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
               <div className="rounded-2xl overflow-hidden md:rotate-1">
                 <Image
-                  src="/images/laravel-india-podcast.png"
+                  src="/images/laravel-india-podcast.jpg"
                   alt="Latest episode cover"
                   className="object-cover w-full h-auto"
                   width={400}
