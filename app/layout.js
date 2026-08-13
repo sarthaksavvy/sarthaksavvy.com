@@ -62,8 +62,27 @@ export default function RootLayout({ children }) {
       <body className="grain">
         <EntryGate />
         <div className="min-h-screen bg-paper text-ink w-full overflow-x-hidden">
+          {/* Header, footer and the two floating controls sit outside the main
+              landmark on purpose: everything in here is repeated on every
+              route, so a screen reader or keyboard visitor needs a way past it
+              that is not seven Tab presses. The link is invisible until it is
+              focused, at which point it is the first thing in the tab order. */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[110] focus:px-5 focus:py-3 focus:rounded-full focus:bg-ink focus:text-paper focus:font-mono focus:text-xs focus:tracking-widest focus:uppercase focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-paper"
+          >
+            Skip to content
+          </a>
           <Header />
-          {children}
+          {/* The landmark lives here rather than in each page so no route can
+              ship without one — before this only the home page had a <main>,
+              which left every other page with no content landmark at all.
+              tabIndex makes it a valid destination for the skip link: without
+              it the browser moves the viewport but leaves focus behind, and
+              the next Tab returns to the top of the header. */}
+          <main id="main-content" tabIndex={-1} className="focus:outline-none">
+            {children}
+          </main>
           <Footer />
           <FloatingControls />
         </div>

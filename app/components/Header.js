@@ -57,7 +57,10 @@ export default function Header() {
         scrolled ? "bg-paper/85 backdrop-blur-md border-b border-line" : "bg-transparent"
       }`}
     >
-      <nav className="flex justify-between items-center px-6 sm:px-10 py-5 sm:py-6 max-w-[1400px] mx-auto w-full">
+      <nav
+        aria-label="Primary"
+        className="flex justify-between items-center px-6 sm:px-10 py-5 sm:py-6 max-w-[1400px] mx-auto w-full"
+      >
         <Link href="/" className="font-display italic text-lg sm:text-xl">
           Sarthak Shrivastava
         </Link>
@@ -68,10 +71,17 @@ export default function Header() {
           ))}
         </div>
 
+        {/* The three bars animate into a cross, which is the only signal that
+            the menu is open — and it is a purely visual one. aria-expanded is
+            what carries that same state to a screen reader, and aria-controls
+            ties the button to the panel it opens. */}
         <button
+          type="button"
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden relative z-40 w-8 h-6 flex flex-col justify-between"
-          aria-label="Toggle menu"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-nav"
         >
           <motion.span
             animate={isOpen ? { rotate: 45, y: 10 } : { rotate: 0, y: 0 }}
@@ -91,13 +101,17 @@ export default function Header() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="mobile-nav"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="md:hidden overflow-hidden bg-paper border-b border-line"
           >
-            <div className="flex flex-col gap-6 px-6 py-8">
+            {/* A landmark of its own: the panel renders outside the primary
+                nav above, so without this the mobile links sit in no landmark
+                at all. */}
+            <nav aria-label="Primary mobile" className="flex flex-col gap-6 px-6 py-8">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.label}
@@ -115,7 +129,7 @@ export default function Header() {
                   </Link>
                 </motion.div>
               ))}
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
