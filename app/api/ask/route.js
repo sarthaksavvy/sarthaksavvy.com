@@ -15,6 +15,18 @@ const MAX_TOKENS_DETAILED = 1600;
 const DETAIL_PATTERN =
   /\b(list|all|every|each|compare|difference|walk me through|step by step|in detail|detailed|explain|breakdown|elaborate|tell me (about|everything))\b/i;
 
+// Kept in step with the `maxLength` on both question inputs in the UI.
+const MAX_QUESTION_LENGTH = 1000;
+
+// The browser gives up on a request after 45s. Without a matching ceiling here
+// the model call outlives the reader it was for and still bills for the
+// tokens it produces, so it is cut off with enough margin for the response to
+// travel back. One retry rather than the SDK's default of two, for the same
+// reason: three sequential 35s attempts cannot fit inside the client's budget,
+// so the later ones can only cost money.
+const LLM_TIMEOUT_MS = 35000;
+const LLM_MAX_RETRIES = 1;
+
 function maxTokensFor(question) {
   return DETAIL_PATTERN.test(question)
     ? MAX_TOKENS_DETAILED
@@ -31,6 +43,7 @@ function openrouterClient() {
   return new OpenAI({
     apiKey: process.env.OPENROUTER_API_KEY,
     baseURL: "https://openrouter.ai/api/v1",
+    maxRetries: LLM_MAX_RETRIES,
     defaultHeaders: {
       "HTTP-Referer": SITE_URL,
       "X-Title": "Ask About Sarthak",
@@ -39,70 +52,22 @@ function openrouterClient() {
 }
 
 const CACHE_TTL = 1000 * 60 * 60; // 1 hour
+// When every page fetch failed there is nothing worth keeping for an hour, so
+// the stand-in profile is cached only long enough to absorb a burst of
+// questions before the crawl is worth attempting again.
+const DEGRADED_CACHE_TTL = 1000 * 60 * 2;
+
 let contentCache = {
   data: null,
   timestamp: 0,
+  ttl: CACHE_TTL,
 };
 
-const rateLimitStore = new Map();
-const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
-const RATE_LIMIT_MAX_REQUESTS = 10;
+// Set while a crawl is running so that concurrent questions arriving at a cold
+// instance wait on the one crawl instead of each starting their own.
+let inFlightScrape = null;
 
-async function scrapeWebsiteContent() {
-  const now = Date.now();
-  if (contentCache.data && now - contentCache.timestamp < CACHE_TTL) {
-    console.log("Returning cached content");
-    return contentCache.data;
-  }
-
-  try {
-    const baseUrl = "https://sarthaksavvy.com";
-    const pages = [
-      "/",
-      "/about-me",
-      "/side-projects",
-      "/public-speaking",
-      "/podcasts",
-    ];
-
-    let scrapedContent = "";
-    const scrapePromises = pages.map(async (page) => {
-      try {
-        const response = await axios.get(`${baseUrl}${page}`, {
-          timeout: 8000, // Reduced timeout
-          headers: {
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-          },
-        });
-
-        const $ = cheerio.load(response.data);
-
-        $("script, style, nav, header, footer").remove();
-
-        const pageContent = $("body")
-          .text()
-          .replace(/\s+/g, " ")
-          .trim()
-          .substring(0, 2000);
-
-        if (pageContent) {
-          return `\n\n=== Content from ${baseUrl}${page} ===\n${pageContent}`;
-        }
-        return "";
-      } catch (pageError) {
-        console.error(`Error scraping ${page}:`, pageError.message);
-        return "";
-      }
-    });
-
-    const results = await Promise.allSettled(scrapePromises);
-    scrapedContent = results
-      .filter((result) => result.status === "fulfilled" && result.value)
-      .map((result) => result.value)
-      .join("");
-
-    const linkedinContent = `
+const LINKEDIN_CONTENT = `
 === LinkedIn Profile Information ===
 Sarthak Shrivastava (sarthaksavvy) is a full-stack developer, Docker Captain, and founder of Bitfumes.
 He works as a Software Engineer at Pfizer and is a content creator with 134K+ YouTube subscribers and 100K+ Udemy students.
@@ -110,18 +75,7 @@ His expertise includes Laravel, JavaScript, Python, AWS, Docker, AI/LLMs, and he
 LinkedIn: https://linkedin.com/in/sarthaksavvy
 `;
 
-    const finalContent = scrapedContent + linkedinContent;
-
-    contentCache = {
-      data: finalContent,
-      timestamp: now,
-    };
-
-    console.log("Content scraped and cached successfully");
-    return finalContent;
-  } catch (error) {
-    console.error("Error scraping content:", error);
-    const fallbackContent = `
+const FALLBACK_CONTENT = `
 === Fallback Information about Sarthak Shrivastava ===
 Sarthak Shrivastava is an India-based founder, content creator, developer and AI consultant passionate about building and automating daily tasks.
 
@@ -151,35 +105,163 @@ Side Projects:
 - Various other innovative projects showcasing technical skills
 `;
 
-    contentCache = {
-      data: fallbackContent,
-      timestamp: now,
-    };
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+const RATE_LIMIT_MAX_REQUESTS = 10;
+// One warm instance can be reached by an unbounded number of distinct clients
+// over its lifetime, and nothing was ever removed from the store — so it grew
+// by one entry per address, for as long as the instance lived. Expired entries
+// are now swept, and this is the backstop for the case where they are all
+// still inside the window.
+const RATE_LIMIT_MAX_KEYS = 10000;
 
-    return fallbackContent;
+const rateLimitStore = new Map();
+
+async function scrapeWebsiteContent() {
+  const now = Date.now();
+
+  const pages = [
+    "/",
+    "/about-me",
+    "/side-projects",
+    "/public-speaking",
+    "/podcasts",
+  ];
+
+  const scrapePromises = pages.map(async (page) => {
+    try {
+      const response = await axios.get(`${SITE_URL}${page}`, {
+        timeout: 8000,
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+      });
+
+      const $ = cheerio.load(response.data);
+
+      $("script, style, nav, header, footer").remove();
+
+      const pageContent = $("body")
+        .text()
+        .replace(/\s+/g, " ")
+        .trim()
+        .substring(0, 2000);
+
+      if (pageContent) {
+        return `\n\n=== Content from ${SITE_URL}${page} ===\n${pageContent}`;
+      }
+      return "";
+    } catch (pageError) {
+      console.error(`Error scraping ${page}:`, pageError.message);
+      return "";
+    }
+  });
+
+  const results = await Promise.allSettled(scrapePromises);
+  const scrapedContent = results
+    .filter((result) => result.status === "fulfilled" && result.value)
+    .map((result) => result.value)
+    .join("");
+
+  // The static profile below used to sit in a `catch` that could not fire:
+  // `Promise.allSettled` never rejects and every fetch already had its own
+  // `try`, so a site-wide outage produced an empty crawl rather than an error.
+  // The model was then handed the three-line LinkedIn blurb and nothing else,
+  // and that was cached for an hour.
+  if (!scrapedContent) {
+    console.error("All page scrapes failed; serving the static profile");
+    contentCache = {
+      data: FALLBACK_CONTENT,
+      timestamp: now,
+      ttl: DEGRADED_CACHE_TTL,
+    };
+    return FALLBACK_CONTENT;
   }
+
+  const finalContent = scrapedContent + LINKEDIN_CONTENT;
+
+  contentCache = {
+    data: finalContent,
+    timestamp: now,
+    ttl: CACHE_TTL,
+  };
+
+  return finalContent;
+}
+
+function getWebsiteContent() {
+  const now = Date.now();
+
+  if (contentCache.data && now - contentCache.timestamp < contentCache.ttl) {
+    return Promise.resolve(contentCache.data);
+  }
+
+  if (!inFlightScrape) {
+    inFlightScrape = scrapeWebsiteContent().finally(() => {
+      inFlightScrape = null;
+    });
+  }
+
+  return inFlightScrape;
 }
 
 function getRateLimitKey(request) {
+  // `request.ip` is filled in by the host from the connection itself, so it is
+  // preferred over anything the caller can put in a header. The headers are
+  // the fallback for a deployment sitting behind its own proxy, and only
+  // `x-forwarded-for` was consulted before.
+  //
+  // The last resort is still a single shared bucket, which throttles unrelated
+  // visitors together — but a quota that protects paid calls should fail
+  // closed, so an unidentifiable client is limited rather than exempt.
   const forwarded = request.headers.get("x-forwarded-for");
-  const ip = forwarded ? forwarded.split(",")[0] : "unknown";
-  return ip;
+  const forwardedClient = forwarded ? forwarded.split(",")[0].trim() : "";
+
+  return (
+    request.ip ||
+    request.headers.get("x-real-ip") ||
+    forwardedClient ||
+    "unknown"
+  );
+}
+
+function pruneRateLimitStore(now) {
+  for (const [key, timestamps] of rateLimitStore) {
+    const newest = timestamps[timestamps.length - 1];
+    if (newest === undefined || now - newest >= RATE_LIMIT_WINDOW) {
+      rateLimitStore.delete(key);
+    }
+  }
+
+  // Everything left is still inside its window. Map iterates in insertion
+  // order, so this drops the keys first seen — the ones whose windows are
+  // closest to expiring anyway.
+  for (const key of rateLimitStore.keys()) {
+    if (rateLimitStore.size <= RATE_LIMIT_MAX_KEYS) break;
+    rateLimitStore.delete(key);
+  }
 }
 
 function isRateLimited(key) {
   const now = Date.now();
-  const userRequests = rateLimitStore.get(key) || [];
 
-  const validRequests = userRequests.filter(
+  if (rateLimitStore.size > RATE_LIMIT_MAX_KEYS) {
+    pruneRateLimitStore(now);
+  }
+
+  const recent = (rateLimitStore.get(key) || []).filter(
     (timestamp) => now - timestamp < RATE_LIMIT_WINDOW
   );
 
-  if (validRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
+  if (recent.length >= RATE_LIMIT_MAX_REQUESTS) {
+    // Written back so the entry shrinks as its window slides, rather than
+    // holding every timestamp ever recorded for a client that keeps trying.
+    rateLimitStore.set(key, recent);
     return true;
   }
 
-  validRequests.push(now);
-  rateLimitStore.set(key, validRequests);
+  recent.push(now);
+  rateLimitStore.set(key, recent);
 
   return false;
 }
@@ -191,42 +273,49 @@ function sanitizeInput(input) {
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
     .replace(/<[^>]*>/g, "")
     .trim()
-    .substring(0, 1000); // Enforce max length
+    .substring(0, MAX_QUESTION_LENGTH);
 }
 
 export async function POST(request) {
   try {
-    const rateLimitKey = getRateLimitKey(request);
-    if (isRateLimited(rateLimitKey)) {
+    let payload;
+    try {
+      payload = await request.json();
+    } catch (parseError) {
+      // Previously this threw past every check below and came back as a 500,
+      // which reads as "the site is broken" for what is a malformed request.
       return NextResponse.json(
-        {
-          error:
-            "Too many requests. Please wait before asking another question.",
-        },
-        { status: 429 }
+        { error: "Invalid request body." },
+        { status: 400 }
       );
     }
 
-    const { question } = await request.json();
+    const rawQuestion =
+      typeof payload?.question === "string" ? payload.question : "";
 
-    if (!question || question.trim().length === 0) {
+    if (!rawQuestion.trim()) {
       return NextResponse.json(
         { error: "Question is required" },
         { status: 400 }
       );
     }
 
-    const sanitizedQuestion = sanitizeInput(question);
-    if (!sanitizedQuestion) {
+    // Checked against the raw input. The old check ran after sanitizing, which
+    // had already truncated to the limit, so it could never be true and an
+    // over-long question was silently cut in half instead of being refused.
+    if (rawQuestion.length > MAX_QUESTION_LENGTH) {
       return NextResponse.json(
-        { error: "Invalid question format" },
+        {
+          error: `Question too long. Please keep it under ${MAX_QUESTION_LENGTH} characters.`,
+        },
         { status: 400 }
       );
     }
 
-    if (sanitizedQuestion.length > 1000) {
+    const sanitizedQuestion = sanitizeInput(rawQuestion);
+    if (!sanitizedQuestion) {
       return NextResponse.json(
-        { error: "Question too long. Please keep it under 1000 characters." },
+        { error: "Invalid question format" },
         { status: 400 }
       );
     }
@@ -244,7 +333,20 @@ export async function POST(request) {
       );
     }
 
-    const websiteContent = await scrapeWebsiteContent();
+    // Checked last, and only for a request that is actually about to spend a
+    // crawl and a paid model call. The quota exists to protect those; a typo
+    // or a malformed body should not eat into a visitor's ten questions.
+    if (isRateLimited(getRateLimitKey(request))) {
+      return NextResponse.json(
+        {
+          error:
+            "Too many requests. Please wait before asking another question.",
+        },
+        { status: 429 }
+      );
+    }
+
+    const websiteContent = await getWebsiteContent();
 
     const systemPrompt = `You are an AI assistant that answers questions about Sarthak Shrivastava based on the provided information.
 
@@ -261,21 +363,24 @@ Instructions:
 - Maintain a professional yet friendly tone
 - If asked about contact information, direct them to his website or LinkedIn`;
 
-    const completion = await openrouterClient().chat.completions.create({
-      model: MODEL,
-      max_tokens: maxTokensFor(sanitizedQuestion),
-      temperature: 0.7,
-      messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: sanitizedQuestion,
-        },
-      ],
-    });
+    const completion = await openrouterClient().chat.completions.create(
+      {
+        model: MODEL,
+        max_tokens: maxTokensFor(sanitizedQuestion),
+        temperature: 0.7,
+        messages: [
+          {
+            role: "system",
+            content: systemPrompt,
+          },
+          {
+            role: "user",
+            content: sanitizedQuestion,
+          },
+        ],
+      },
+      { timeout: LLM_TIMEOUT_MS }
+    );
 
     const answer =
       completion.choices[0]?.message?.content?.trim() ||
@@ -306,7 +411,11 @@ Instructions:
       );
     }
 
-    if (error.name === "AbortError" || error.code === "ECONNABORTED") {
+    if (
+      error.name === "AbortError" ||
+      error.name === "APIConnectionTimeoutError" ||
+      error.code === "ECONNABORTED"
+    ) {
       return NextResponse.json(
         { error: "Request timeout. Please try again." },
         { status: 408 }
