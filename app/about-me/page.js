@@ -7,8 +7,9 @@ import { canonicalUrl, pageMetadata } from "../seo";
 import { breadcrumbSchema, graph, personSchema } from "../structuredData";
 
 export const metadata = pageMetadata({
-  title: "About Me - Sarthaksavvy",
-  description: "Get to know Sarthak Shrivastava's journey in tech.",
+  title: "About Sarthak Shrivastava — AI Consultant & Docker Captain",
+  description:
+    "The path from software engineer to AI consultant: founding Bitfumes, becoming a Docker Captain, earning AWS certifications, and teaching 100K+ developers.",
   path: "/about-me",
 });
 
