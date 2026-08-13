@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
 // How far the element follows the cursor, as a fraction of the distance from
 // its centre, and the spring that carries it there. Unchanged from the values
@@ -45,6 +45,12 @@ export default function MagneticButton({
 }) {
   const ref = useRef(null);
   const MotionTag = motionTag(Tag);
+  // Same reason as TiltCard: the pull is written to a motion value by hand
+  // rather than animated by Framer, so the global reduced-motion setting does
+  // not reach it and this has to opt out on its own. The button keeps its
+  // colour change on hover, so it still reads as interactive — it just stops
+  // sliding out from under the cursor.
+  const prefersReducedMotion = useReducedMotion();
 
   // Motion values are written to the DOM directly rather than through state, so
   // tracking the cursor no longer re-renders the component ~60 times a second.
@@ -57,7 +63,7 @@ export default function MagneticButton({
 
   function handleMouseMove(e) {
     const el = ref.current;
-    if (!el) return;
+    if (!el || prefersReducedMotion) return;
     const rect = el.getBoundingClientRect();
     targetX.set((e.clientX - rect.left - rect.width / 2) * PULL);
     targetY.set((e.clientY - rect.top - rect.height / 2) * PULL);
