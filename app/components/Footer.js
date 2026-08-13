@@ -8,11 +8,30 @@ const links = [
   { href: "/about-me", label: "About Me" },
 ];
 
+// The icon is the whole of each link, so its alt text is the only accessible
+// name the link has. "x" on its own tells a screen reader nothing; the label
+// below is what gets read out instead.
 const socials = [
-  { href: "https://linkedin.com/in/sarthaksavvy", icon: "linkedin" },
-  { href: "https://github.com/sarthaksavvy", icon: "github" },
-  { href: "https://instagram.com/sarthaksavvy", icon: "instagram" },
-  { href: "https://x.com/sarthaksavvy", icon: "x" },
+  {
+    href: "https://linkedin.com/in/sarthaksavvy",
+    icon: "linkedin",
+    label: "Sarthak Shrivastava on LinkedIn",
+  },
+  {
+    href: "https://github.com/sarthaksavvy",
+    icon: "github",
+    label: "Sarthak Shrivastava on GitHub",
+  },
+  {
+    href: "https://instagram.com/sarthaksavvy",
+    icon: "instagram",
+    label: "Sarthak Shrivastava on Instagram",
+  },
+  {
+    href: "https://x.com/sarthaksavvy",
+    icon: "x",
+    label: "Sarthak Shrivastava on X",
+  },
 ];
 
 export default function Footer() {
@@ -40,7 +59,12 @@ export default function Footer() {
                 rel="noreferrer"
                 className="w-11 h-11 rounded-full border border-ink/20 flex items-center justify-center hover:border-ink hover:bg-ink hover:[&_img]:invert transition-colors"
               >
-                <Image src={`/images/icons/${s.icon}.svg`} alt={s.icon} width={18} height={18} />
+                <Image
+                  src={`/images/icons/${s.icon}.svg`}
+                  alt={s.label}
+                  width={18}
+                  height={18}
+                />
               </a>
             ))}
           </div>
@@ -50,15 +74,13 @@ export default function Footer() {
           <span>© {new Date().getFullYear()} SARTHAK SHRIVASTAVA</span>
           <div className="flex gap-6 flex-wrap justify-center">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
-                target={l.external ? "_blank" : undefined}
-                rel={l.external ? "noreferrer" : undefined}
                 className="hover:text-ink transition-colors"
               >
                 {l.label.toUpperCase()}
-              </a>
+              </Link>
             ))}
           </div>
           <span>BUILT IN INDIA</span>
