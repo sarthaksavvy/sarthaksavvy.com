@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const navLinks = [
+  { href: "/ai-consulting", label: "AI Consulting" },
   { href: "/podcasts", label: "Podcasts" },
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
@@ -65,7 +66,12 @@ export default function Header() {
           Sarthak Shrivastava
         </Link>
 
-        <div className="hidden md:flex gap-8 items-center">
+        {/* The row switches to the menu button at `lg`, not `md`. Six links
+            and the wordmark just fitted a 768px viewport; the seventh pushes
+            the last one to 783px, past the edge of a container that clips its
+            overflow — so "About Me" would be sliced off with no way to reach
+            it. The tighter `gap-6` is what lets all seven fit at 1024px. */}
+        <div className="hidden lg:flex gap-6 xl:gap-8 items-center">
           {navLinks.map((link) => (
             <NavLink key={link.label} {...link} pathname={pathname} />
           ))}
@@ -78,7 +84,7 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden relative z-40 w-8 h-6 flex flex-col justify-between"
+          className="lg:hidden relative z-40 w-8 h-6 flex flex-col justify-between"
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
           aria-controls="mobile-nav"
@@ -106,7 +112,7 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden overflow-hidden bg-paper border-b border-line"
+            className="lg:hidden overflow-hidden bg-paper border-b border-line"
           >
             {/* A landmark of its own: the panel renders outside the primary
                 nav above, so without this the mobile links sit in no landmark

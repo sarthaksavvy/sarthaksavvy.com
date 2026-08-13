@@ -4,6 +4,7 @@ export const SITE_URL = "https://sarthaksavvy.com";
 // sitemap so a new page only has to be registered in one place.
 export const indexableRoutes = [
   { path: "/", changeFrequency: "monthly", priority: 1 },
+  { path: "/ai-consulting", changeFrequency: "monthly", priority: 0.9 },
   { path: "/about-me", changeFrequency: "monthly", priority: 0.8 },
   { path: "/side-projects", changeFrequency: "monthly", priority: 0.8 },
   { path: "/podcasts", changeFrequency: "monthly", priority: 0.7 },
