@@ -204,6 +204,81 @@ export function speakingEventsSchema(events) {
 }
 
 /**
+ * The consulting practice as a thing that can be hired, which is not something
+ * a `Person` node can express: `Person` says who Sarthak is, `ProfessionalService`
+ * says what is on offer and who provides it. Without it, a page about AI
+ * consulting reads to a crawler as prose about a person rather than as a
+ * service with an area of practice.
+ *
+ * `services` are the same four areas the page lists, so the markup and the
+ * visible copy cannot drift.
+ */
+export function professionalServiceSchema({
+  path,
+  name,
+  description,
+  services,
+}) {
+  return {
+    "@type": "ProfessionalService",
+    "@id": `${SITE_URL}/#ai-consulting`,
+    name,
+    description,
+    url: canonicalUrl(path),
+    image: canonicalUrl("/images/sarthak.jpg"),
+    provider: personSchema(),
+    founder: { "@id": PERSON_ID },
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "IN",
+    },
+    serviceType: services.map((service) => service.title),
+    knowsAbout: [
+      "AI Consulting",
+      "Large Language Models",
+      "LLM Integration",
+      "AI Automation",
+      "Prompt Engineering",
+      "AI Product Development",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name,
+      itemListElement: services.map(({ title, summary }) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: title,
+          description: summary,
+          provider: { "@id": PERSON_ID },
+        },
+      })),
+    },
+  };
+}
+
+/**
+ * Questions a visitor asks before they book a call. Google can show these
+ * directly under the result, which is worth more on a page whose whole job is
+ * to answer "can this person do the thing I need". `answer` is plain text on
+ * purpose: it has to be the same string the page renders, or the markup is
+ * describing a page that does not exist.
+ */
+export function faqSchema(items) {
+  return {
+    "@type": "FAQPage",
+    mainEntity: items.map(({ question, answer }) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: answer,
+      },
+    })),
+  };
+}
+
+/**
  * A project page describes a piece of software, not an article about one.
  * `url` is the product's own site — the page itself is already the canonical
  * `mainEntityOfPage`.
