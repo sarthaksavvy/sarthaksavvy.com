@@ -64,6 +64,7 @@ export default function Hero() {
               <MagneticButton
                 href="https://cal.com/sarthaksavvy"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="bg-ink text-paper px-7 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors flex items-center gap-3 inline-flex"
               >
                 Book a Call
