@@ -275,6 +275,7 @@ export default function MezohubProject() {
             <a
               href="https://mezohub.com"
               target="_blank"
+              rel="noopener noreferrer"
               className="bg-ink text-paper px-8 py-3 rounded-full font-medium hover:bg-accent transition-colors inline-flex items-center gap-2"
             >
               Visit Platform

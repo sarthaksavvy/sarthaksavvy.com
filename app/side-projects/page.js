@@ -192,6 +192,7 @@ export default function SideProjects() {
                     <MagneticButton
                       href={project.link}
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 border border-ink/20 px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors"
                     >
                       Visit Project

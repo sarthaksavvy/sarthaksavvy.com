@@ -102,6 +102,7 @@ export default function Podcasts() {
                       key={p.label}
                       href={p.href}
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="bg-ink text-paper hover:bg-accent transition-colors px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase inline-flex"
                     >
                       {p.label}

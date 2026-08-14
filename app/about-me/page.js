@@ -175,6 +175,7 @@ const AboutPage = () => {
               <MagneticButton
                 href="https://youtube.com/bitfumes"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="border border-ink/20 px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors inline-flex"
               >
                 Watch My Content
