@@ -33,6 +33,15 @@ const fraunces = Fraunces({
 // point here is that a route which forgets to still shares with a working
 // card instead of a bare link. No canonical is set at this level — it would be
 // inherited by every page that does not declare one and point them all at "/".
+// Separate from `metadata` per the App Router's viewport export: `themeColor`
+// tints the mobile browser chrome (status bar, task switcher) to match the
+// site's own paper background instead of the browser's default white or grey.
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#F6F3EC",
+};
+
 export const metadata = {
   title: "Sarthak Shrivastava - Sarthaksavvy",
   description: "Sarthak Shrivastava's personal website",
