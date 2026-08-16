@@ -36,8 +36,8 @@ export default function SpeakingTimeline() {
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-4 flex items-end">
             <p className="text-lg text-ink/70">
-              Sharing knowledge at tech conferences worldwide — frontend
-              development, accessibility, and modern web technologies.
+              Sharing knowledge at tech conferences worldwide — AI agents,
+              LLM applications, and Laravel in production.
             </p>
           </Reveal>
         </div>
