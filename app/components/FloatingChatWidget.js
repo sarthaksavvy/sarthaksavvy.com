@@ -3,6 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+const FOCUSABLE =
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 // Open state is owned by FloatingControls so the reset button can move out of
 // the way while the panel is expanded. Positioning lives there too — this
 // component only draws the launcher and the panel.
@@ -15,6 +18,7 @@ export default function FloatingChatWidget({
   const router = useRouter();
   const launcherRef = useRef(null);
   const inputRef = useRef(null);
+  const panelRef = useRef(null);
   // The launcher unmounts while the panel is open, so its ref is null exactly
   // when we want to focus it. Instead we note that focus is owed and hand it
   // back on the render where the launcher exists again.
@@ -36,7 +40,11 @@ export default function FloatingChatWidget({
 
   // A panel that covers part of the page needs a way out that is not a mouse
   // aimed at a 12px glyph: Escape closes it, and focus lands in the textarea
-  // on open rather than staying behind on the page underneath.
+  // on open rather than staying behind on the page underneath. Tab is also
+  // trapped inside it — the launcher gets its focus back on close (above),
+  // so a keyboard visitor who tabs off the end of the panel while it is open
+  // should stay inside it rather than landing somewhere in the page behind,
+  // same as the entry gate overlay does.
   useEffect(() => {
     if (!open) {
       if (focusOwedRef.current) {
@@ -52,6 +60,26 @@ export default function FloatingChatWidget({
       if (event.key === "Escape") {
         event.preventDefault();
         close();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const panel = panelRef.current;
+      const items = panel ? Array.from(panel.querySelectorAll(FOCUSABLE)) : [];
+      if (!items.length) return;
+
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      const outside = !panel.contains(active);
+
+      if (event.shiftKey && (outside || active === first)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (outside || active === last)) {
+        event.preventDefault();
+        first.focus();
       }
     }
 
@@ -62,7 +90,9 @@ export default function FloatingChatWidget({
   if (open) {
     return (
       <div
+        ref={panelRef}
         role="dialog"
+        aria-modal="true"
         aria-labelledby="ask-widget-title"
         className={`pointer-events-auto bg-paper border border-line rounded-2xl p-6 w-full max-w-[20rem] shadow-2xl ${className}`}
       >
