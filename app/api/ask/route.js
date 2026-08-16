@@ -96,8 +96,8 @@ Contact:
 - Website: https://sarthaksavvy.com
 - LinkedIn: https://linkedin.com/in/sarthaksavvy
 - YouTube: https://youtube.com/bitfumes
-- Email: sarthak@bitfumes.com
-- Courses: https://bitfumes.com
+- Email: hello@sarthaksavvy.com
+- Courses: https://courses.sarthaksavvy.com/
 
 Side Projects:
 - Mezohub: A centralized platform for connecting developers, designers, and entrepreneurs

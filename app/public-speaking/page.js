@@ -60,7 +60,7 @@ export default function SpeakingTimeline() {
             I&apos;m available for conferences, meetups, and workshops worldwide.
           </p>
           <MagneticButton
-            href="mailto:sarthak@bitfumes.com"
+            href="mailto:hello@sarthaksavvy.com"
             className="bg-ink text-paper px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex items-center gap-2"
           >
             Get in Touch

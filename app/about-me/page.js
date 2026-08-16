@@ -167,7 +167,7 @@ const AboutPage = () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <MagneticButton
-                href="mailto:sarthak@bitfumes.com"
+                href="mailto:hello@sarthaksavvy.com"
                 className="bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex"
               >
                 Get in Touch
