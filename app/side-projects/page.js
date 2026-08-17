@@ -206,9 +206,9 @@ export default function SideProjects() {
         </StaggerGroup>
 
         <Reveal className="border border-line rounded-3xl p-10 sm:p-14 text-center">
-          <h3 className="font-display italic text-3xl sm:text-4xl mb-4">
+          <h2 className="font-display italic text-3xl sm:text-4xl mb-4">
             Interested in collaborating?
-          </h3>
+          </h2>
           <p className="text-ink/70 mb-8 max-w-2xl mx-auto">
             I&apos;m always open to new ideas and collaborations on interesting
             projects. Let&apos;s create something amazing together!
