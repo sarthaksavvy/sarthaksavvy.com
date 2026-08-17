@@ -6,7 +6,6 @@ import {
   PieChart,
   Scan,
   Smartphone,
-  Star,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -76,24 +75,6 @@ export default function ExpensorrProject() {
       title: "Multi-currency Support",
       description:
         "Track expenses in different currencies, perfect for travelers or those who manage finances across multiple countries.",
-    },
-  ];
-
-  const testimonials = [
-    {
-      text: "This app has completely changed how I manage my finances. The receipt scanning feature is a game-changer!",
-      author: "John D.",
-      rating: 5,
-    },
-    {
-      text: "I've tried many expense trackers, but Expensorr stands out with its intuitive interface and powerful analytics.",
-      author: "Sarah M.",
-      rating: 5,
-    },
-    {
-      text: "The multi-currency support is perfect for my business trips. Highly recommended for frequent travelers.",
-      author: "Michael T.",
-      rating: 4,
     },
   ];
 
@@ -272,39 +253,6 @@ export default function ExpensorrProject() {
             </div>
           </div>
         </div> */}
-
-        {/* Testimonials */}
-        <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
-            User Testimonials
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-paper border border-line rounded-3xl p-8 shadow-lg"
-              >
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={20}
-                      className={
-                        i < testimonial.rating
-                          ? "text-accent fill-[#FF5A1F]"
-                          : "text-muted"
-                      }
-                    />
-                  ))}
-                </div>
-                <p className="text-ink/70 mb-6">
-                  &quot;{testimonial.text}&quot;
-                </p>
-                <p className="font-semibold">{testimonial.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* Technologies Used */}
         <div className="mb-20">
