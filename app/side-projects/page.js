@@ -11,7 +11,8 @@ import { breadcrumbSchema, graph } from "../structuredData";
 
 export const metadata = pageMetadata({
   title: "Sarthak Shrivastava - Side Projects",
-  description: "Side Projects by Sarthak Shrivastava",
+  description:
+    "AI apps built by AI consultant Sarthak Shrivastava — an AI voice-to-text tool, a Premiere Pro AI extension, an expense tracker and a LinkedIn AI assistant.",
   path: "/side-projects",
 });
 

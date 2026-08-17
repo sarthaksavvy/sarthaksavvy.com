@@ -10,7 +10,7 @@ import { breadcrumbSchema, graph, personSchema } from "../structuredData";
 export const metadata = pageMetadata({
   title: "Laravel India Podcast — Hosted by Sarthak Shrivastava",
   description:
-    "Conversations with the worldwide Laravel community — including Taylor Otwell, James Brooks and Freek Van der Herten — hosted by AI consultant and Bitfumes founder Sarthak Shrivastava.",
+    "Conversations with the Laravel community — including Taylor Otwell, James Brooks and Freek Van der Herten — hosted by AI consultant Sarthak Shrivastava.",
   path: "/podcasts",
   image: ogImages.podcast,
 });
