@@ -30,17 +30,48 @@ const securityHeaders = [
   },
 ];
 
+import { SITE_URL, indexableRoutes, markdownSlug } from "./app/routes.js";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Plain-markdown mirrors of every page, for LLMs and answer engines. The
+  // handler lives under /api/md/... because that is where a catch-all route
+  // can be defined, but /api/ is disallowed in robots.txt — so the URL that
+  // gets published and crawled is the one beside the page it mirrors:
+  // /about-me.md, /side-projects/audiobolo.md, /index.md for the home page.
+  async rewrites() {
+    return [
+      {
+        source: "/:path*.md",
+        destination: "/api/md/:path*",
+      },
+    ];
+  },
   async headers() {
+    // The <link rel="alternate" type="text/markdown"> in each page's head
+    // already points at its mirror, but a crawler that only issues a HEAD
+    // request — or that reads headers before deciding whether to download the
+    // body — never sees it. The same relationship as a Link header costs
+    // nothing and is checked by more clients than the tag is.
+    const markdownAlternates = indexableRoutes.map(({ path }) => ({
+      source: path,
+      headers: [
+        {
+          key: "Link",
+          value: `<${SITE_URL}/${markdownSlug(path)}.md>; rel="alternate"; type="text/markdown"`,
+        },
+      ],
+    }));
+
     return [
       {
         source: "/:path*",
         headers: securityHeaders,
       },
+      ...markdownAlternates,
     ];
   },
 };

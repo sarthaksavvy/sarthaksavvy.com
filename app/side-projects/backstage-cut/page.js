@@ -15,8 +15,12 @@ import { ogImages, pageMetadata } from "../../seo";
 import {
   breadcrumbSchema,
   graph,
+  organizationSchema,
+  personSchema,
   softwareApplicationSchema,
+  webPageSchema,
 } from "../../structuredData";
+import { projectByPath } from "../../content/projects";
 
 const SITE = "https://premier-pro-extension.vercel.app";
 
@@ -30,7 +34,19 @@ export const metadata = pageMetadata({
   image: ogImages.backstageCut,
 });
 
+// The same record the index page and the /side-projects/backstage-cut.md mirror
+// render from, so the product is described identically wherever it appears.
+const project = projectByPath("/side-projects/backstage-cut");
+
 const structuredData = graph(
+  personSchema(),
+  organizationSchema(),
+  webPageSchema({
+    path: "/side-projects/backstage-cut",
+    name: "Backstage Cut — AI extension for Adobe Premiere Pro",
+    description: DESCRIPTION,
+    primaryImage: project.image,
+  }),
   softwareApplicationSchema({
     name: "Backstage Cut",
     description: DESCRIPTION,
@@ -38,6 +54,7 @@ const structuredData = graph(
     path: "/side-projects/backstage-cut",
     image: ogImages.backstageCut.url,
     applicationCategory: "MultimediaApplication",
+    features: project.features,
   }),
   breadcrumbSchema([
     { name: "Side Projects", path: "/side-projects" },

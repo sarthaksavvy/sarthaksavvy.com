@@ -15,8 +15,12 @@ import { ogImages, pageMetadata } from "../../seo";
 import {
   breadcrumbSchema,
   graph,
+  organizationSchema,
+  personSchema,
   softwareApplicationSchema,
+  webPageSchema,
 } from "../../structuredData";
+import { projectByPath } from "../../content/projects";
 
 const SITE = "https://apps.apple.com/us/app/expensorr/id6739472004";
 
@@ -35,7 +39,19 @@ export const metadata = pageMetadata({
   image: ogImages.expensorr,
 });
 
+// The same record the index page and the /side-projects/expensorr.md mirror
+// render from, so the product is described identically wherever it appears.
+const project = projectByPath("/side-projects/expensorr");
+
 const structuredData = graph(
+  personSchema(),
+  organizationSchema(),
+  webPageSchema({
+    path: "/side-projects/expensorr",
+    name: "Expensorr — expense tracking for iOS and Android",
+    description: DESCRIPTION,
+    primaryImage: project.image,
+  }),
   softwareApplicationSchema({
     name: "Expensorr",
     description: DESCRIPTION,
@@ -44,6 +60,7 @@ const structuredData = graph(
     image: ogImages.expensorr.url,
     applicationCategory: "FinanceApplication",
     operatingSystem: "iOS",
+    features: project.features,
   }),
   breadcrumbSchema([
     { name: "Side Projects", path: "/side-projects" },

@@ -1,5 +1,15 @@
-import { SITE_URL } from "./routes";
+import { SITE_URL, SITE_UPDATED, updatedFor } from "./routes";
 import { SITE_NAME, canonicalUrl } from "./seo";
+import {
+  CREDENTIALS,
+  DEFINITION,
+  EMAIL,
+  EXPERTISE,
+  HANDLE,
+  LOCATION,
+  SAME_AS,
+  SUMMARY,
+} from "./content/profile";
 
 // Schema.org descriptions of the site. Search engines read the pages fine on
 // their own; what they cannot infer is the *shape* of the thing they are
@@ -8,19 +18,18 @@ import { SITE_NAME, canonicalUrl } from "./seo";
 // that a project page describes an application. Saying so explicitly is what
 // makes a knowledge panel, a podcast result or a sitelink possible.
 //
+// Answer engines use the same markup for a different job. A model asked "who
+// is Sarthak Shrivastava" is choosing between a dozen sources, and the one it
+// can parse without inference is the one it quotes. `@id` references inside a
+// single `@graph` are what turn eleven separate pages into one entity it can
+// be confident about, rather than eleven pages that happen to share a name.
+//
 // Every fact below is already stated somewhere the visitor can read it. If a
 // claim is not on the site, it does not belong here either.
 
-const PERSON_ID = `${SITE_URL}/#person`;
+export const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
-
-const socialProfiles = [
-  "https://linkedin.com/in/sarthaksavvy",
-  "https://github.com/sarthaksavvy",
-  "https://x.com/sarthaksavvy",
-  "https://instagram.com/sarthaksavvy",
-  "https://youtube.com/bitfumes",
-];
+const BITFUMES_ID = `${SITE_URL}/#bitfumes`;
 
 /**
  * The Person every other schema on the site points back at. Cross-page `@id`
@@ -32,53 +41,74 @@ export function personSchema() {
     "@type": "Person",
     "@id": PERSON_ID,
     name: SITE_NAME,
-    alternateName: "sarthaksavvy",
+    alternateName: [HANDLE, "Sarthak"],
+    // `disambiguatingDescription` is the field a knowledge graph reads when it
+    // has two entities with the same name and has to pick one. It wants the
+    // single sentence that could only be this person.
+    disambiguatingDescription: DEFINITION,
     jobTitle: ["AI Consultant", "Founder", "Software Engineer"],
-    description:
-      "India-based founder, content creator, developer and AI consultant — " +
-      "passionate about building products and automating daily work.",
+    description: SUMMARY,
     url: SITE_URL,
-    image: canonicalUrl("/images/sarthak.jpg"),
-    email: "mailto:hello@sarthaksavvy.com",
+    mainEntityOfPage: canonicalUrl("/about-me"),
+    image: {
+      "@type": "ImageObject",
+      url: canonicalUrl("/images/sarthak.jpg"),
+      width: 1200,
+      height: 1247,
+      caption: SITE_NAME,
+    },
+    email: `mailto:${EMAIL}`,
+    nationality: { "@type": "Country", name: LOCATION.country },
     address: {
       "@type": "PostalAddress",
-      addressCountry: "IN",
+      addressCountry: LOCATION.countryCode,
     },
+    workLocation: {
+      "@type": "Place",
+      name: `${LOCATION.country} (remote worldwide)`,
+    },
+    knowsLanguage: ["en", "hi"],
     worksFor: [
-      {
-        "@type": "Organization",
-        name: "Bitfumes",
-        url: "https://bitfumes.com",
-      },
+      { "@id": BITFUMES_ID },
       {
         "@type": "Organization",
         name: "Pfizer",
       },
     ],
-    knowsAbout: [
-      "Artificial Intelligence",
-      "Large Language Models",
-      "AI Automation",
-      "Laravel",
-      "JavaScript",
-      "Python",
-      "AWS",
-      "Docker",
-      "DevOps",
-      "Full-stack Development",
+    founder: { "@id": BITFUMES_ID },
+    knowsAbout: EXPERTISE,
+    award: CREDENTIALS.map((credential) => credential.name),
+    hasCredential: CREDENTIALS.map((credential) => ({
+      "@type": "EducationalOccupationalCredential",
+      name: credential.name,
+      description: credential.detail,
+      ...(credential.year ? { dateCreated: credential.year } : {}),
+    })),
+    sameAs: SAME_AS,
+  };
+}
+
+/**
+ * Bitfumes as an organisation in its own right. Without it, "founder of
+ * Bitfumes" is a string inside a Person node and Bitfumes is not an entity a
+ * model can attach anything to — including the YouTube channel and the courses,
+ * which are the two things most likely to be asked about.
+ */
+export function organizationSchema() {
+  return {
+    "@type": "Organization",
+    "@id": BITFUMES_ID,
+    name: "Bitfumes",
+    url: "https://bitfumes.com",
+    description:
+      "Developer education company and YouTube channel teaching Laravel, " +
+      "Docker, AWS, JavaScript and AI to software engineers.",
+    founder: { "@id": PERSON_ID },
+    sameAs: [
+      "https://bitfumes.com",
+      "https://youtube.com/bitfumes",
+      "https://courses.sarthaksavvy.com/",
     ],
-    award: "Docker Captain",
-    hasCredential: [
-      {
-        "@type": "EducationalOccupationalCredential",
-        name: "AWS Certified Solutions Architect",
-      },
-      {
-        "@type": "EducationalOccupationalCredential",
-        name: "AWS Certified Developer",
-      },
-    ],
-    sameAs: socialProfiles,
   };
 }
 
@@ -87,9 +117,24 @@ export function websiteSchema() {
     "@type": "WebSite",
     "@id": WEBSITE_ID,
     name: SITE_NAME,
+    alternateName: "sarthaksavvy.com",
+    description: DEFINITION,
     url: SITE_URL,
     inLanguage: "en",
+    dateModified: SITE_UPDATED,
     publisher: { "@id": PERSON_ID },
+    author: { "@id": PERSON_ID },
+    // The /ask box on this site answers questions about Sarthak from the site's
+    // own content. Declaring it as the site's search action is what lets an
+    // assistant — or a sitelinks searchbox — hand a question straight to it.
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/ask?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 }
 
@@ -105,15 +150,61 @@ export function graph(...nodes) {
 }
 
 /**
+ * The `WebPage` node every route should carry. It is the node that says when
+ * the page last changed, which entity it is about, and which part of it is
+ * worth reading aloud — three things a page cannot state any other way.
+ *
+ * `speakable` matters more than it looks: it is the only standard way to point
+ * a voice assistant at the part of a page that answers the question, rather
+ * than letting it read the navigation.
+ */
+export function webPageSchema({
+  path,
+  name,
+  description,
+  primaryImage,
+  breadcrumb = true,
+}) {
+  const url = canonicalUrl(path);
+
+  return {
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name,
+    description,
+    inLanguage: "en",
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": PERSON_ID },
+    dateModified: updatedFor(path),
+    ...(primaryImage
+      ? {
+          primaryImageOfPage: {
+            "@type": "ImageObject",
+            url: canonicalUrl(primaryImage),
+          },
+        }
+      : {}),
+    ...(breadcrumb ? { breadcrumb: { "@id": `${url}#breadcrumb` } } : {}),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "[data-speakable]"],
+    },
+  };
+}
+
+/**
  * Breadcrumbs let a result show "sarthaksavvy.com › Side Projects › AudioBolo"
  * instead of a bare URL. `trail` is ordered from the root down; the home crumb
  * is added here so no caller has to remember it.
  */
 export function breadcrumbSchema(trail) {
   const crumbs = [{ name: "Home", path: "/" }, ...trail];
+  const last = trail.at(-1);
 
   return {
     "@type": "BreadcrumbList",
+    ...(last ? { "@id": `${canonicalUrl(last.path)}#breadcrumb` } : {}),
     itemListElement: crumbs.map(({ name, path }, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -165,8 +256,6 @@ export function isoDate(humanDate) {
  * conference listing and this page can be recognised as the same appearance.
  */
 export function speakingEventsSchema(events) {
-  const person = personSchema();
-
   const items = events
     .map((event) => {
       const startDate = isoDate(event.date);
@@ -177,6 +266,7 @@ export function speakingEventsSchema(events) {
         name: event.title.trim(),
         description: event.description,
         startDate,
+        endDate: startDate,
         eventStatus: "https://schema.org/EventScheduled",
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
         location: {
@@ -184,10 +274,14 @@ export function speakingEventsSchema(events) {
           name: event.conference,
           address: event.location,
         },
+        organizer: {
+          "@type": "Organization",
+          name: event.conference,
+        },
         ...(event.images?.length
           ? { image: canonicalUrl(event.images[0]) }
           : {}),
-        performer: person,
+        performer: { "@id": PERSON_ID },
       };
     })
     .filter(Boolean);
@@ -195,6 +289,7 @@ export function speakingEventsSchema(events) {
   return {
     "@type": "ItemList",
     name: "Talks by Sarthak Shrivastava",
+    numberOfItems: items.length,
     itemListElement: items.map((item, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -226,12 +321,17 @@ export function professionalServiceSchema({
     description,
     url: canonicalUrl(path),
     image: canonicalUrl("/images/sarthak.jpg"),
-    provider: personSchema(),
+    provider: { "@id": PERSON_ID },
     founder: { "@id": PERSON_ID },
     address: {
       "@type": "PostalAddress",
-      addressCountry: "IN",
+      addressCountry: LOCATION.countryCode,
     },
+    // The service is delivered remotely, so the area it serves is not the
+    // country it is based in — without this, a local-intent query in another
+    // country has no reason to surface it.
+    areaServed: { "@type": "Place", name: "Worldwide" },
+    availableLanguage: ["English", "Hindi"],
     serviceType: services.map((service) => service.title),
     knowsAbout: [
       "AI Consulting",
@@ -250,7 +350,9 @@ export function professionalServiceSchema({
           "@type": "Service",
           name: title,
           description: summary,
+          serviceType: title,
           provider: { "@id": PERSON_ID },
+          areaServed: { "@type": "Place", name: "Worldwide" },
         },
       })),
     },
@@ -259,8 +361,9 @@ export function professionalServiceSchema({
 
 /**
  * Questions a visitor asks before they book a call. Google can show these
- * directly under the result, which is worth more on a page whose whole job is
- * to answer "can this person do the thing I need". `answer` is plain text on
+ * directly under the result, and an answer engine looking for a short,
+ * attributable answer to a question will take a `Question`/`acceptedAnswer`
+ * pair over a paragraph it has to summarise itself. `answer` is plain text on
  * purpose: it has to be the same string the page renders, or the markup is
  * describing a page that does not exist.
  */
@@ -291,16 +394,49 @@ export function softwareApplicationSchema({
   image,
   applicationCategory,
   operatingSystem,
+  features,
 }) {
   return {
     "@type": "SoftwareApplication",
+    "@id": `${canonicalUrl(path)}#software`,
     name,
     description,
     url,
     image: canonicalUrl(image),
     applicationCategory,
     ...(operatingSystem ? { operatingSystem } : {}),
+    ...(features?.length ? { featureList: features } : {}),
     mainEntityOfPage: canonicalUrl(path),
-    author: personSchema(),
+    author: { "@id": PERSON_ID },
+    creator: { "@id": PERSON_ID },
+    publisher: { "@id": PERSON_ID },
+  };
+}
+
+/**
+ * The five projects as an ordered list of applications rather than an ordered
+ * list of links. A crawler reading the link version learns that five pages
+ * exist; reading this one it learns what each of them is, which is the
+ * difference between being listed and being recommended.
+ */
+export function projectListSchema(projects) {
+  return {
+    "@type": "ItemList",
+    name: "Side projects by Sarthak Shrivastava",
+    numberOfItems: projects.length,
+    itemListElement: projects.map((project, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: softwareApplicationSchema({
+        name: project.name,
+        description: project.summary,
+        url: project.link,
+        path: project.projectLink,
+        image: project.image,
+        applicationCategory: project.category,
+        operatingSystem: project.platform,
+        features: project.features,
+      }),
+    })),
   };
 }

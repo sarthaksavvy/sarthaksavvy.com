@@ -15,8 +15,12 @@ import { ogImages, pageMetadata } from "../../seo";
 import {
   breadcrumbSchema,
   graph,
+  organizationSchema,
+  personSchema,
   softwareApplicationSchema,
+  webPageSchema,
 } from "../../structuredData";
+import { projectByPath } from "../../content/projects";
 
 const SITE = "https://mezohub.com";
 
@@ -30,7 +34,19 @@ export const metadata = pageMetadata({
   image: ogImages.mezohub,
 });
 
+// The same record the index page and the /side-projects/mezohub.md mirror
+// render from, so the product is described identically wherever it appears.
+const project = projectByPath("/side-projects/mezohub");
+
 const structuredData = graph(
+  personSchema(),
+  organizationSchema(),
+  webPageSchema({
+    path: "/side-projects/mezohub",
+    name: "Mezohub — collaboration platform for builders",
+    description: DESCRIPTION,
+    primaryImage: project.image,
+  }),
   softwareApplicationSchema({
     name: "Mezohub",
     description: DESCRIPTION,
@@ -39,6 +55,7 @@ const structuredData = graph(
     image: ogImages.mezohub.url,
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Web",
+    features: project.features,
   }),
   breadcrumbSchema([
     { name: "Side Projects", path: "/side-projects" },

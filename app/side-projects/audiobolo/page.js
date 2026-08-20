@@ -16,8 +16,12 @@ import { ogImages, pageMetadata } from "../../seo";
 import {
   breadcrumbSchema,
   graph,
+  organizationSchema,
+  personSchema,
   softwareApplicationSchema,
+  webPageSchema,
 } from "../../structuredData";
+import { projectByPath } from "../../content/projects";
 
 const SITE = "https://audiobolo.com";
 
@@ -31,7 +35,19 @@ export const metadata = pageMetadata({
   image: ogImages.audiobolo,
 });
 
+// The same record the index page and the /side-projects/audiobolo.md mirror
+// render from, so the product is described identically wherever it appears.
+const project = projectByPath("/side-projects/audiobolo");
+
 const structuredData = graph(
+  personSchema(),
+  organizationSchema(),
+  webPageSchema({
+    path: "/side-projects/audiobolo",
+    name: "AudioBolo — AI voice-to-text for macOS",
+    description: DESCRIPTION,
+    primaryImage: project.image,
+  }),
   softwareApplicationSchema({
     name: "AudioBolo",
     description: DESCRIPTION,
@@ -40,6 +56,7 @@ const structuredData = graph(
     image: ogImages.audiobolo.url,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "macOS",
+    features: project.features,
   }),
   breadcrumbSchema([
     { name: "Side Projects", path: "/side-projects" },

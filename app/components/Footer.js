@@ -7,6 +7,10 @@ const links = [
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
   { href: "/about-me", label: "About Me" },
+  // Not in the header — eight links do not fit that row. It belongs in the
+  // footer regardless: the FAQ is the page most likely to be the answer to a
+  // query, and a sitewide link is what gets it crawled early and often.
+  { href: "/faq", label: "FAQ" },
 ];
 
 // The icon is the whole of each link, so its alt text is the only accessible

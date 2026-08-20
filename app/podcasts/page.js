@@ -3,14 +3,31 @@ import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
+import AnswerBlock from "../components/content/AnswerBlock";
+import FaqSection from "../components/content/FaqSection";
+import SectionHeading from "../components/content/SectionHeading";
 import JsonLd from "../components/JsonLd";
 import { canonicalUrl, ogImages, pageMetadata } from "../seo";
-import { breadcrumbSchema, graph, personSchema } from "../structuredData";
+import {
+  PERSON_ID,
+  breadcrumbSchema,
+  faqSchema,
+  graph,
+  organizationSchema,
+  personSchema,
+  webPageSchema,
+} from "../structuredData";
+import { faqGroup } from "../content/faqs";
+import { getSubscriberCount } from "../../lib/youtube";
+
+const DESCRIPTION =
+  "Conversations with the Laravel community — including Taylor Otwell, " +
+  "James Brooks and Freek Van der Herten — hosted by AI consultant Sarthak " +
+  "Shrivastava.";
 
 export const metadata = pageMetadata({
   title: "Laravel India Podcast — Hosted by Sarthak Shrivastava",
-  description:
-    "Conversations with the Laravel community — including Taylor Otwell, James Brooks and Freek Van der Herten — hosted by AI consultant Sarthak Shrivastava.",
+  description: DESCRIPTION,
   path: "/podcasts",
   image: ogImages.podcast,
 });
@@ -30,12 +47,30 @@ const platforms = [
   },
 ];
 
+// Everyone named on the page, as records rather than as a clause in a
+// sentence. The same three feed the PodcastSeries `actor` list below.
+const guests = [
+  { name: "Taylor Otwell", role: "Creator of Laravel" },
+  { name: "James Brooks", role: "Laravel core team member" },
+  { name: "Freek Van der Herten", role: "Laravel developer at Spatie" },
+];
+
 // `sameAs` is what ties this page to the show as Apple, Spotify and YouTube
 // already know it, so the three listings and this page are understood as one
 // podcast rather than four unrelated URLs.
-const structuredData = graph(
+function buildStructuredData(faqs) {
+  return graph(
+  personSchema(),
+  organizationSchema(),
+  webPageSchema({
+    path: "/podcasts",
+    name: "Laravel India Podcast, hosted by Sarthak Shrivastava",
+    description: DESCRIPTION,
+    primaryImage: ogImages.podcast.url,
+  }),
   {
     "@type": "PodcastSeries",
+    "@id": `${canonicalUrl("/podcasts")}#podcast`,
     name: "Laravel India Podcast",
     url: canonicalUrl("/podcasts"),
     description:
@@ -43,13 +78,28 @@ const structuredData = graph(
       "including Taylor Otwell, James Brooks and Freek Van der Herten.",
     image: canonicalUrl(ogImages.podcast.url),
     inLanguage: "en",
-    author: personSchema(),
+    // Named guests are entities in their own right. A crawler that can only
+    // read "including Taylor Otwell" as prose learns nothing it can act on;
+    // as `actor` nodes, the show becomes findable from the guest's name.
+    actor: guests.map((guest) => ({
+      "@type": "Person",
+      name: guest.name,
+      description: guest.role,
+    })),
+    author: { "@id": PERSON_ID },
+    producer: { "@id": PERSON_ID },
     sameAs: platforms.map((platform) => platform.href),
   },
+  faqSchema(faqs),
   breadcrumbSchema([{ name: "Podcasts", path: "/podcasts" }])
-);
+  );
+}
 
-export default function Podcasts() {
+export default async function Podcasts() {
+  const subscribers = await getSubscriberCount();
+  const faqs = faqGroup("podcast", subscribers).faqs;
+  const structuredData = buildStructuredData(faqs);
+
   return (
     <div className="py-10 px-6 sm:px-10">
       <JsonLd data={structuredData} />
@@ -67,6 +117,21 @@ export default function Podcasts() {
             </p>
           </Reveal>
         </div>
+
+        {/* The show's own description is inside a card, phrased for someone
+            already looking at it. This is the version that survives being
+            quoted: it names the host, the guests and where to listen. */}
+        <Reveal>
+          <AnswerBlock className="mb-16">
+            <p>
+              The Laravel India Podcast is hosted by Sarthak Shrivastava and
+              features guests from the worldwide Laravel community, including
+              Taylor Otwell (creator of Laravel), James Brooks (Laravel core
+              team) and Freek Van der Herten (Spatie). There are 12 or more
+              episodes, available on Apple Podcasts, Spotify and YouTube.
+            </p>
+          </AnswerBlock>
+        </Reveal>
 
         <Reveal>
           <TiltCard className="border border-line rounded-3xl p-8 hover:border-ink/40 transition-colors">
@@ -113,6 +178,33 @@ export default function Podcasts() {
             </div>
           </TiltCard>
         </Reveal>
+
+        {/* The guests were a clause inside one sentence. As named entries they
+            are three more things this page can be found by — someone searching
+            "Taylor Otwell podcast" is looking for exactly this episode list,
+            and a clause buried in a paragraph is not what gets matched. */}
+        <div className="mt-24">
+          <Reveal>
+            <SectionHeading>Guests</SectionHeading>
+          </Reveal>
+          <Reveal>
+            <dl className="grid md:grid-cols-3 gap-8 mb-24">
+              {guests.map((guest) => (
+                <div
+                  key={guest.name}
+                  className="border border-line rounded-3xl p-8 bg-paper"
+                >
+                  <dt className="font-display italic text-2xl mb-3">
+                    {guest.name}
+                  </dt>
+                  <dd className="text-ink/70 leading-relaxed">{guest.role}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+
+          <FaqSection faqs={faqs} id="podcast-faq" />
+        </div>
       </div>
     </div>
   );

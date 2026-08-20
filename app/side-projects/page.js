@@ -5,117 +5,62 @@ import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
+import AnswerBlock from "../components/content/AnswerBlock";
+import FaqSection from "../components/content/FaqSection";
 import JsonLd from "../components/JsonLd";
-import { canonicalUrl, pageMetadata } from "../seo";
-import { breadcrumbSchema, graph } from "../structuredData";
+import { pageMetadata } from "../seo";
+import {
+  breadcrumbSchema,
+  faqSchema,
+  graph,
+  organizationSchema,
+  personSchema,
+  projectListSchema,
+  webPageSchema,
+} from "../structuredData";
+import { PROJECTS } from "../content/projects";
+import { faqGroup } from "../content/faqs";
+import { getSubscriberCount } from "../../lib/youtube";
+
+const DESCRIPTION =
+  "AI apps built by AI consultant Sarthak Shrivastava — an AI voice-to-text " +
+  "tool, a Premiere Pro AI extension, an expense tracker and a LinkedIn AI " +
+  "assistant.";
 
 export const metadata = pageMetadata({
-  title: "Sarthak Shrivastava - Side Projects",
-  description:
-    "AI apps built by AI consultant Sarthak Shrivastava — an AI voice-to-text tool, a Premiere Pro AI extension, an expense tracker and a LinkedIn AI assistant.",
+  title: "Side Projects by Sarthak Shrivastava — AI Apps & Tools",
+  description: DESCRIPTION,
   path: "/side-projects",
 });
 
-export default function SideProjects() {
-  const projects = [
-    {
-      id: 4,
-      name: "Backstage Cut",
-      description:
-        "An AI-powered Premiere Pro extension that automates the repetitive parts of editing — transcription, captions, zooms, B-roll and chapters — without ever leaving the timeline.",
-      image: "/images/projects/backstage-cut.png",
-      link: "https://premier-pro-extension.vercel.app",
-      projectLink: "/side-projects/backstage-cut",
-      tags: ["AI", "Premiere Pro", "Video Editing"],
-      features: [
-        "One-click transcription and captions in English, Hindi and Hinglish",
-        "Punch-in zooms timed to dialogue, with editable keyframes",
-        "B-roll matched from your own folder and frame-aligned",
-        "YouTube chapter markers generated from the transcript",
-      ],
-    },
-    {
-      id: 5,
-      name: "AudioBolo",
-      description:
-        "An AI voice transcription app for macOS that turns speech into accurate, context-aware text — so you can type at the speed of thought.",
-      image: "/images/projects/audiobolo.png",
-      link: "https://audiobolo.com",
-      projectLink: "/side-projects/audiobolo",
-      tags: ["AI", "macOS App", "Productivity"],
-      features: [
-        "Screen context awareness for more accurate transcripts",
-        "Auto-learns from your corrections over time",
-        "@Filename tagging for AI coding tools like Cursor",
-        "Custom modes for posts, emails and meeting notes",
-      ],
-    },
-    {
-      id: 2,
-      name: "Expensorr",
-      description:
-        "A simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
-      image: "/images/projects/expensorr.png",
-      link: "https://apps.apple.com/us/app/expensorr/id6739472004",
-      projectLink: "/side-projects/expensorr",
-      tags: ["Finance", "Tracking", "Mobile App"],
-      features: [
-        "Receipt scanning and categorization",
-        "Budget planning and alerts",
-        "Expense reports and analytics",
-        "Multi-currency support",
-      ],
-    },
-    {
-      id: 1,
-      name: "Mezohub",
-      description:
-        "A centralized platform for connecting developers, designers, and entrepreneurs to collaborate on innovative projects.",
-      image: "/images/projects/mezohub.jpg",
-      link: "https://mezohub.com",
-      projectLink: "/side-projects/mezohub",
-      tags: ["Collaboration", "Platform", "Community"],
-      features: [
-        "Project discovery and matching",
-        "Integrated messaging system",
-        "Skill-based team formation",
-        "Project showcase portfolio",
-      ],
-    },
-    {
-      id: 3,
-      name: "Ginger",
-      description:
-        "A Chrome extension that helps users generate human-like comments using AI on LinkedIn posts and reply to existing comments effortlessly.",
-      image: "/images/projects/ginger.jpg",
-      link: "https://chromewebstore.google.com/detail/ginger-linkedin-ai-assist/ijolijeckddogpijopofibpplokamjba",
-      projectLink: "/side-projects/ginger",
-      tags: ["AI", "Chrome Extension", "LinkedIn"],
-      features: [
-        "Human-like LinkedIn comment generation",
-        "Reply to comments with AI assistance",
-        "No sign-in required to get started",
-        "100 free generations for guests, 300 for signed-in users",
-      ],
-    },
-  ];
-
-  // Listing the projects as an ordered set of pages gives the index a reason
-  // to be crawled past its own copy: each entry names a detail page a crawler
-  // might otherwise only reach by following a card link.
-  const structuredData = graph(
-    {
-      "@type": "ItemList",
-      name: "Side projects by Sarthak Shrivastava",
-      itemListElement: projects.map((project, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: project.name,
-        url: canonicalUrl(project.projectLink),
-      })),
-    },
-    breadcrumbSchema([{ name: "Side Projects", path: "/side-projects" }])
+// The catalogue moved to app/content/projects.js. It was five records with no
+// behaviour attached, and the markdown mirror at /side-projects.md, the
+// ItemList markup below and each project's own page all need the same five —
+// so keeping them inside this component meant four places to edit a feature
+// list and three chances to forget one.
+function buildStructuredData(faqs) {
+  return graph(
+  personSchema(),
+  organizationSchema(),
+  webPageSchema({
+    path: "/side-projects",
+    name: "Side projects by Sarthak Shrivastava",
+    description: DESCRIPTION,
+  }),
+  // An ordered list of applications rather than an ordered list of links: a
+  // crawler reading the link version learns five pages exist, and reading this
+  // one learns what each of them is.
+  projectListSchema(PROJECTS),
+  faqSchema(faqs),
+  breadcrumbSchema([{ name: "Side Projects", path: "/side-projects" }])
   );
+}
+
+export default async function SideProjects() {
+  const projects = PROJECTS;
+  const subscribers = await getSubscriberCount();
+  const faqs = faqGroup("projects", subscribers).faqs;
+  const structuredData = buildStructuredData(faqs);
 
   return (
     <div className="py-10 px-6 sm:px-10">
@@ -134,6 +79,24 @@ export default function SideProjects() {
             </p>
           </Reveal>
         </div>
+
+        {/* Names all five products in one paragraph. A grid of cards is the
+            right way to browse them and the wrong way to be asked "what has
+            Sarthak built" — the answer to that has to exist as a sentence
+            somewhere, or a model assembles one from whichever card it read. */}
+        <Reveal>
+          <AnswerBlock className="mb-16">
+            <p>
+              Sarthak Shrivastava has built and shipped five products, most of
+              them on top of large language models: Backstage Cut, an AI
+              extension for Adobe Premiere Pro; AudioBolo, an AI voice-to-text
+              app for macOS; Expensorr, an expense tracker for iOS and Android;
+              Mezohub, a collaboration platform for developers and designers;
+              and Ginger, a LinkedIn AI assistant for Chrome. All five are live
+              and publicly available.
+            </p>
+          </AnswerBlock>
+        </Reveal>
 
         <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {projects.map((project, i) => (
@@ -205,6 +168,8 @@ export default function SideProjects() {
             </StaggerItem>
           ))}
         </StaggerGroup>
+
+        <FaqSection faqs={faqs} id="projects-faq" />
 
         <Reveal className="border border-line rounded-3xl p-10 sm:p-14 text-center">
           <h2 className="font-display italic text-3xl sm:text-4xl mb-4">

@@ -3,21 +3,31 @@ import Link from "next/link";
 import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
+import AnswerBlock from "../components/content/AnswerBlock";
+import FaqSection from "../components/content/FaqSection";
+import SectionHeading from "../components/content/SectionHeading";
 import JsonLd from "../components/JsonLd";
 import { pageMetadata } from "../seo";
 import {
   breadcrumbSchema,
   faqSchema,
   graph,
+  organizationSchema,
+  personSchema,
   professionalServiceSchema,
+  webPageSchema,
 } from "../structuredData";
-
-const BOOKING_URL = "https://cal.com/sarthaksavvy";
-const EMAIL = "hello@sarthaksavvy.com";
-
-const DESCRIPTION =
-  "AI consultant working with teams on LLM features, AI automation and the " +
-  "path to production — from picking a model to shipping something people use.";
+import {
+  BOOKING_URL,
+  CONSULTING_DESCRIPTION as DESCRIPTION,
+  EMAIL,
+  buildServices,
+  caseStudies,
+  credentials,
+  engagementFormats,
+} from "../content/consulting";
+import { faqGroup } from "../content/faqs";
+import { getSubscriberCount } from "../../lib/youtube";
 
 export const metadata = pageMetadata({
   title: "AI Consultant — LLM Features & Automation | Sarthak Shrivastava",
@@ -25,104 +35,48 @@ export const metadata = pageMetadata({
   path: "/ai-consulting",
 });
 
-// Each area is one thing I have actually built, described in terms of the work
-// rather than the technology. `summary` is reused verbatim in the
-// ProfessionalService markup, so editing the copy here updates both.
-const services = [
-  {
-    title: "LLM features in your product",
-    summary:
-      "Taking a language model from a demo that impresses to a feature that survives real users: model choice, prompt design, timeouts, rate limits, and what the product does when the answer comes back wrong.",
-    evidence: "Built end to end in AudioBolo, Backstage Cut and the ask box on this site.",
-  },
-  {
-    title: "AI automation for everyday work",
-    summary:
-      "The repetitive middle of a workflow — transcribing, summarising, tagging, drafting, reformatting — is usually where the first hours come back. The useful part is deciding what to automate before anything gets built.",
-    evidence: "Backstage Cut does this for video editing; Ginger does it for LinkedIn.",
-  },
-  {
-    title: "Getting it into production, and keeping it there",
-    summary:
-      "Containers, deployment, cost and latency budgets, and the monitoring that tells you a model has quietly started answering badly.",
-    evidence: "Docker Captain, AWS Certified Solutions Architect and Developer.",
-  },
-  {
-    title: "Bringing your team along",
-    summary:
-      "Hands-on sessions so your engineers can extend the work afterwards, instead of owning a system only one person understands.",
-    evidence: "134K+ subscribers on YouTube and 100K+ students on Udemy.",
-  },
-];
-
-// Everything here is already stated elsewhere on the site — the about page and
-// the hero. Nothing on this page claims a credential that is not.
-const credentials = [
-  { value: "10+ yrs", label: "Building and shipping software" },
-  { value: "Docker", label: "Docker Captain since 2023" },
-  { value: "AWS ×2", label: "Solutions Architect and Developer" },
-  { value: "Bitfumes", label: "Founder and educator" },
-];
-
-// The answers are plain strings because they are rendered as-is *and* handed to
-// the FAQPage markup. Rich text here would mean the two copies could differ,
-// and structured data that does not match the visible page is worse than none.
-const faqs = [
-  {
-    question: "What does the work actually look like?",
-    answer:
-      "Three things, usually in this order: work out which part of your problem a language model genuinely solves, build that part, and leave your team able to maintain it. The first step is the one most projects skip, and it decides whether the rest is worth doing.",
-  },
-  {
-    question: "Do you build the feature, or only advise on it?",
-    answer:
-      "Both. I write the code — Laravel, JavaScript and Python — and I have shipped my own AI products end to end, so an engagement can be a design review, a working feature, or the whole path from idea to production.",
-  },
-  {
-    question: "We have not picked a model or a provider yet. Is that a problem?",
-    answer:
-      "No. That is usually the first decision rather than a prerequisite, and it depends on what you are optimising for: cost per call, latency, privacy, or how you plan to judge the output. Choosing before those are clear is how teams end up rebuilding.",
-  },
-  {
-    question: "Can you help a team that is new to LLMs?",
-    answer:
-      "That is most of the work. Teaching is what I have done longest, with 134K+ subscribers on YouTube and over 100K students on Udemy, and the same approach works inside a company: build something real, then hand over how it works.",
-  },
-  {
-    question: "Where are you based, and how do we start?",
-    answer:
-      "I am based in India and work with teams remotely. The quickest start is to book a call and bring the problem rather than a spec, or email hello@sarthaksavvy.com.",
-  },
-];
-
-// TODO(sarthak): engagement formats and what each one costs. Left empty rather
-// than filled with plausible-sounding numbers — the section renders only once
-// there is something real to put in it. Shape:
-// { name: "Advisory call", detail: "...", price: "..." }
-const engagementFormats = [];
-
-// TODO(sarthak): real client work, with permission to name it. Same reasoning:
-// an invented case study is worse for trust than no case study at all.
-// Shape: { client: "...", problem: "...", outcome: "...", href: "..." }
-const caseStudies = [];
-
-const structuredData = graph(
+// The services, credentials and questions all live in app/content/consulting.js
+// and app/content/faqs.js now rather than in this file. They were only ever
+// data, and three other surfaces need the same data: the ProfessionalService
+// markup below, the /ai-consulting.md mirror, and the sitewide /faq page. Once
+// two of those existed, keeping the arrays inside the component meant the copy
+// on this page and the copy an assistant reads could disagree — which is the
+// one failure mode structured data has no way to survive.
+function buildStructuredData(services, faqs) {
+  return graph(
+  personSchema(),
+  organizationSchema(),
   professionalServiceSchema({
     path: "/ai-consulting",
     name: "AI Consulting by Sarthak Shrivastava",
     description: DESCRIPTION,
     services,
   }),
+  webPageSchema({
+    path: "/ai-consulting",
+    name: "AI Consulting by Sarthak Shrivastava",
+    description: DESCRIPTION,
+    primaryImage: "/images/sarthak.jpg",
+  }),
   faqSchema(faqs),
   breadcrumbSchema([{ name: "AI Consulting", path: "/ai-consulting" }])
-);
+  );
+}
 
-export default function AiConsulting() {
+export default async function AiConsulting() {
+  // The evidence line under "Bringing your team along" quotes the live
+  // subscriber count, so the page and its markdown mirror have to read it from
+  // the same place rather than each carrying a copy.
+  const subscribers = await getSubscriberCount();
+  const services = buildServices(subscribers);
+  const faqs = faqGroup("consulting", subscribers).faqs;
+  const structuredData = buildStructuredData(services, faqs);
+
   return (
     <div className="py-10 px-6 sm:px-10">
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
-        <div className="mb-20 grid md:grid-cols-12 gap-6">
+        <div className="mb-16 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6">
               AI Consulting
@@ -140,11 +94,32 @@ export default function AiConsulting() {
           </Reveal>
         </div>
 
+        {/* The headline is a good headline and a bad answer: it says nothing
+            about who is offering what, to whom, from where. This paragraph is
+            the one an assistant can quote when asked what Sarthak's consulting
+            practice actually is. */}
+        <Reveal>
+          <AnswerBlock className="mb-24">
+            <p>
+              Sarthak Shrivastava is an AI consultant who works with teams on
+              LLM features, AI automation and the path to production — from
+              picking a model to shipping something people use. He is based in
+              India and works remotely with teams worldwide, in English or
+              Hindi.
+            </p>
+            <p>
+              He is a Docker Captain, an AWS Certified Solutions Architect and
+              Developer, and the founder of Bitfumes. Unusually for a
+              consultant, the AI products he points at are his own: AudioBolo
+              and Backstage Cut were both built and shipped end to end, so the
+              advice comes from having already made the mistakes.
+            </p>
+          </AnswerBlock>
+        </Reveal>
+
         <div className="mb-24">
           <Reveal>
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-              {"// Where I can help"}
-            </h2>
+            <SectionHeading>Where I can help</SectionHeading>
           </Reveal>
           <StaggerGroup className="grid md:grid-cols-2 gap-8">
             {services.map((service) => (
@@ -167,9 +142,7 @@ export default function AiConsulting() {
 
         <div className="mb-24">
           <Reveal>
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-              {"// What you are hiring"}
-            </h2>
+            <SectionHeading>What you are hiring</SectionHeading>
           </Reveal>
           <StaggerGroup className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {credentials.map((item) => (
@@ -208,9 +181,7 @@ export default function AiConsulting() {
         {engagementFormats.length > 0 && (
           <div className="mb-24">
             <Reveal>
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-                {"// How engagements work"}
-              </h2>
+              <SectionHeading>How engagements work</SectionHeading>
             </Reveal>
             <StaggerGroup className="grid md:grid-cols-3 gap-8">
               {engagementFormats.map((format) => (
@@ -237,9 +208,7 @@ export default function AiConsulting() {
         {caseStudies.length > 0 && (
           <div className="mb-24">
             <Reveal>
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-                {"// Selected work"}
-              </h2>
+              <SectionHeading>Selected work</SectionHeading>
             </Reveal>
             <StaggerGroup className="grid md:grid-cols-2 gap-8">
               {caseStudies.map((study) => (
@@ -261,27 +230,7 @@ export default function AiConsulting() {
           </div>
         )}
 
-        <div className="mb-24">
-          <Reveal>
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-              {"// Common questions"}
-            </h2>
-          </Reveal>
-          <StaggerGroup className="grid gap-6">
-            {faqs.map((faq) => (
-              <StaggerItem key={faq.question}>
-                <div className="border border-line rounded-3xl p-8 hover:border-ink/40 transition-colors bg-paper">
-                  <h3 className="font-display italic text-2xl mb-4">
-                    {faq.question}
-                  </h3>
-                  <p className="text-ink/70 leading-relaxed max-w-3xl">
-                    {faq.answer}
-                  </p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </div>
+        <FaqSection faqs={faqs} id="consulting-faq" />
 
         <Reveal>
           <div className="border border-line rounded-3xl p-10 sm:p-14">

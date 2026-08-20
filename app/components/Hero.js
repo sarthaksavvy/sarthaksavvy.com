@@ -7,7 +7,7 @@ import MagneticButton from "./motion/MagneticButton";
 
 const ParticleImage = dynamic(() => import("./motion/ParticleImage"), { ssr: false });
 
-export default function Hero({ subscribers = "134K+" }) {
+export default function Hero({ subscribers = "156K+" }) {
   return (
     // Was a <main>. The landmark now comes from the root layout, so keeping
     // one here would nest a second one inside it and split the home page's

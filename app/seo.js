@@ -1,4 +1,5 @@
 import { SITE_URL } from "./routes";
+import { markdownUrlFor } from "./content/markdown";
 
 export const SITE_NAME = "Sarthak Shrivastava";
 
@@ -79,6 +80,20 @@ export function canonicalUrl(path = "/") {
  * `path` must match the route registered in routes.js so the canonical URL
  * and the sitemap entry never drift apart.
  */
+// Google truncates a snippet to about 160 characters by default and caps how
+// much of a page an AI Overview may quote from. `max-snippet:-1` removes that
+// ceiling, `max-image-preview:large` allows the full-size image rather than a
+// thumbnail, and `max-video-preview:-1` does the same for video. None of the
+// three is the default, and an answer engine that can only quote 160 characters
+// of a page will usually quote a competitor who let it quote more.
+const generousPreviews = {
+  index: true,
+  follow: true,
+  "max-snippet": -1,
+  "max-image-preview": "large",
+  "max-video-preview": -1,
+};
+
 export function pageMetadata({
   title,
   description,
@@ -87,12 +102,18 @@ export function pageMetadata({
   type = "website",
 }) {
   const url = canonicalUrl(path);
+  // Points a crawler at the plain-markdown copy of this page. The markdown
+  // route declares the reverse relationship in a Link header, so either copy
+  // leads to the other and neither can be mistaken for a duplicate page.
+  const markdown = markdownUrlFor(path);
 
   return {
     title,
     description,
+    robots: generousPreviews,
     alternates: {
       canonical: url,
+      ...(markdown ? { types: { "text/markdown": `${SITE_URL}${markdown}` } } : {}),
     },
     openGraph: {
       type,
