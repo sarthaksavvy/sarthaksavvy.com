@@ -1,17 +1,38 @@
+import Link from "next/link";
 import { socialIcons } from "./SocialIcons";
 
 const links = [
+  { href: "/ai-consulting", label: "AI Consulting" },
   { href: "/podcasts", label: "Podcasts" },
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
   { href: "/about-me", label: "About Me" },
 ];
 
+// The icon is the whole of each link, so its alt text is the only accessible
+// name the link has. "x" on its own tells a screen reader nothing; the label
+// below is what gets read out instead.
 const socials = [
-  { href: "https://linkedin.com/in/sarthaksavvy", icon: "linkedin", label: "LinkedIn" },
-  { href: "https://github.com/sarthaksavvy", icon: "github", label: "GitHub" },
-  { href: "https://instagram.com/sarthaksavvy", icon: "instagram", label: "Instagram" },
-  { href: "https://x.com/sarthaksavvy", icon: "x", label: "X" },
+  {
+    href: "https://linkedin.com/in/sarthaksavvy",
+    icon: "linkedin",
+    label: "Sarthak Shrivastava on LinkedIn",
+  },
+  {
+    href: "https://github.com/sarthaksavvy",
+    icon: "github",
+    label: "Sarthak Shrivastava on GitHub",
+  },
+  {
+    href: "https://instagram.com/sarthaksavvy",
+    icon: "instagram",
+    label: "Sarthak Shrivastava on Instagram",
+  },
+  {
+    href: "https://x.com/sarthaksavvy",
+    icon: "x",
+    label: "Sarthak Shrivastava on X",
+  },
 ];
 
 export default function Footer() {
@@ -21,7 +42,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between gap-10 mb-16">
           <div>
             <p className="font-mono text-xs tracking-widest text-muted mb-3">
-              // LET&apos;S BUILD SOMETHING
+              {"// LET'S BUILD SOMETHING"}
             </p>
             <a
               href="mailto:hello@sarthaksavvy.com"
@@ -53,15 +74,13 @@ export default function Footer() {
           <span>© {new Date().getFullYear()} SARTHAK SHRIVASTAVA</span>
           <div className="flex gap-6 flex-wrap justify-center">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
-                target={l.external ? "_blank" : undefined}
-                rel={l.external ? "noreferrer" : undefined}
                 className="hover:text-ink transition-colors"
               >
                 {l.label.toUpperCase()}
-              </a>
+              </Link>
             ))}
           </div>
           <span>BUILT IN INDIA</span>

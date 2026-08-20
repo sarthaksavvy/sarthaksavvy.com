@@ -5,21 +5,16 @@ import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
+import JsonLd from "../components/JsonLd";
+import { canonicalUrl, pageMetadata } from "../seo";
+import { breadcrumbSchema, graph } from "../structuredData";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Sarthak Shrivastava - Side Projects",
-  description: "Side Projects by Sarthak Shrivastava",
-  alternates: {
-    canonical: "https://sarthaksavvy.com/side-projects",
-  },
-  openGraph: {
-    title: "Sarthak Shrivastava - Side Projects",
-    description: "Side Projects by Sarthak Shrivastava",
-    url: "https://sarthaksavvy.com/side-projects",
-    siteName: "Sarthak Shrivastava - Side Projects",
-    images: "/sarthak.jpg",
-  },
-};
+  description:
+    "AI apps built by AI consultant Sarthak Shrivastava — an AI voice-to-text tool, a Premiere Pro AI extension, an expense tracker and a LinkedIn AI assistant.",
+  path: "/side-projects",
+});
 
 export default function SideProjects() {
   const projects = [
@@ -105,8 +100,26 @@ export default function SideProjects() {
     },
   ];
 
+  // Listing the projects as an ordered set of pages gives the index a reason
+  // to be crawled past its own copy: each entry names a detail page a crawler
+  // might otherwise only reach by following a card link.
+  const structuredData = graph(
+    {
+      "@type": "ItemList",
+      name: "Side projects by Sarthak Shrivastava",
+      itemListElement: projects.map((project, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: project.name,
+        url: canonicalUrl(project.projectLink),
+      })),
+    },
+    breadcrumbSchema([{ name: "Side Projects", path: "/side-projects" }])
+  );
+
   return (
     <div className="py-10 px-6 sm:px-10">
+      <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
@@ -180,6 +193,7 @@ export default function SideProjects() {
                     <MagneticButton
                       href={project.link}
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 border border-ink/20 px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors"
                     >
                       Visit Project
@@ -193,15 +207,15 @@ export default function SideProjects() {
         </StaggerGroup>
 
         <Reveal className="border border-line rounded-3xl p-10 sm:p-14 text-center">
-          <h3 className="font-display italic text-3xl sm:text-4xl mb-4">
+          <h2 className="font-display italic text-3xl sm:text-4xl mb-4">
             Interested in collaborating?
-          </h3>
+          </h2>
           <p className="text-ink/70 mb-8 max-w-2xl mx-auto">
             I&apos;m always open to new ideas and collaborations on interesting
             projects. Let&apos;s create something amazing together!
           </p>
           <MagneticButton
-            href="mailto:sarthak@bitfumes.com"
+            href="mailto:hello@sarthaksavvy.com"
             className="bg-ink text-paper px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex items-center gap-2"
           >
             Get in Touch

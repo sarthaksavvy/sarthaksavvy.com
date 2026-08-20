@@ -9,9 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.56.0",
-    "@react-three/drei": "^9.99.0",
-    "@react-three/fiber": "^8.15.19",
     "axios": "^1.10.0",
     "cheerio": "^1.1.0",
     "framer-motion": "^12.42.2",
@@ -21,8 +18,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1",
-    "three": "^0.160.0"
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "eslint": "8.57.1",

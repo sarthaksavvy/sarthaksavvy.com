@@ -3,14 +3,29 @@ import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
 import { getSubscriberCount } from "../../lib/youtube";
+import JsonLd from "../components/JsonLd";
+import { canonicalUrl, pageMetadata } from "../seo";
+import { breadcrumbSchema, graph, personSchema } from "../structuredData";
 
-export const metadata = {
-  title: "About Me - Sarthaksavvy",
-  description: "Get to know Sarthak Shrivastava's journey in tech.",
-  alternates: {
-    canonical: "https://sarthaksavvy.com/about-me",
+export const metadata = pageMetadata({
+  title: "About Sarthak Shrivastava — AI Consultant & Docker Captain",
+  description:
+    "The path from software engineer to AI consultant: founding Bitfumes, becoming a Docker Captain, earning AWS certifications, and teaching 100K+ developers.",
+  path: "/about-me",
+});
+
+// The page a crawler should treat as the profile of the person, which is what
+// makes the roles, credentials and social links here attributable rather than
+// loose text on a page.
+const structuredData = graph(
+  {
+    "@type": "ProfilePage",
+    url: canonicalUrl("/about-me"),
+    name: "About Sarthak Shrivastava",
+    mainEntity: personSchema(),
   },
-};
+  breadcrumbSchema([{ name: "About Me", path: "/about-me" }])
+);
 
 const currentRoles = [
   "Founder of Bitfumes",
@@ -61,6 +76,7 @@ const AboutPage = async () => {
   ];
   return (
     <div className="py-10 px-6 sm:px-10">
+      <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
@@ -104,7 +120,7 @@ const AboutPage = async () => {
         <div className="mb-24">
           <Reveal>
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-              // Professional Journey
+              {"// Professional Journey"}
             </h2>
           </Reveal>
           <StaggerGroup className="grid md:grid-cols-2 gap-8">
@@ -120,7 +136,7 @@ const AboutPage = async () => {
         <div className="mb-24">
           <Reveal>
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-muted mb-8">
-              // Achievements
+              {"// Achievements"}
             </h2>
           </Reveal>
           <StaggerGroup className="grid md:grid-cols-2 gap-8 mb-8">
@@ -156,7 +172,7 @@ const AboutPage = async () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <MagneticButton
-                href="mailto:sarthak@bitfumes.com"
+                href="mailto:hello@sarthaksavvy.com"
                 className="bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex"
               >
                 Get in Touch
@@ -164,6 +180,7 @@ const AboutPage = async () => {
               <MagneticButton
                 href="https://youtube.com/@sarthaksavvy"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="border border-ink/20 px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors inline-flex"
               >
                 Watch My Content

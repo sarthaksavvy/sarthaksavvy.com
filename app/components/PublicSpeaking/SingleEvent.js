@@ -22,7 +22,7 @@ export default function SingleEvent({ event, index = 0 }) {
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h3 className="font-display italic text-2xl mb-2">{event.title}</h3>
+              <h2 className="font-display italic text-2xl mb-2">{event.title}</h2>
               <p className="text-accent font-medium mb-2">{event.conference}</p>
             </div>
           </div>

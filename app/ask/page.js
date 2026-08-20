@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useCallback, useEffect, useRef, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
@@ -72,6 +72,11 @@ const markdownComponents = {
   hr: () => <hr className="border-line my-8" />,
 };
 
+// Matches the `maxLength` on the textarea and the ceiling the API enforces.
+const MAX_QUESTION_LENGTH = 1000;
+// Longer answers need more headroom than a typical fetch timeout allows.
+const REQUEST_TIMEOUT_MS = 45000;
+
 const POPULAR_QUESTIONS = [
   "What are Sarthak's main areas of expertise?",
   "Tell me about Sarthak's side projects",
@@ -87,64 +92,125 @@ function AskPageContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const searchParams = useSearchParams();
+  const resultsRef = useRef(null);
+  // Every request takes a ticket. Only the holder of the current ticket is
+  // allowed to write to state, so a superseded request cannot resolve late and
+  // overwrite the answer to the question the visitor is actually reading.
+  const requestTicketRef = useRef(0);
+  const activeRequestRef = useRef(null);
+
+  const cancelActiveRequest = useCallback(() => {
+    requestTicketRef.current += 1;
+
+    const active = activeRequestRef.current;
+    if (!active) return;
+
+    clearTimeout(active.timeoutId);
+    active.controller.abort();
+    activeRequestRef.current = null;
+  }, []);
+
+  const handleAskQuestion = useCallback(
+    async (questionText) => {
+      const trimmed = questionText.trim();
+      if (!trimmed) return;
+
+      // The floating ask widget is rendered from the root layout, so it is on
+      // this page too: asking from it while an answer is still loading used to
+      // leave two requests racing, and the slower one won. That could settle
+      // the page on the previous question's answer, displayed underneath the
+      // new question's text, with no way to tell the two apart.
+      cancelActiveRequest();
+      const ticket = requestTicketRef.current;
+      const isCurrent = () => requestTicketRef.current === ticket;
+
+      setLoading(true);
+      setError("");
+      setAnswer("");
+
+      // Submitting disables both the textarea and the button, and a disabled
+      // element cannot hold focus — so the browser dropped the keyboard
+      // visitor back onto <body> and they had to tab in from the top of the
+      // document again. Moving focus to the results panel keeps them where the
+      // page is about to change, and gives a screen reader the progress text.
+      resultsRef.current?.focus();
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(
+        () => controller.abort(),
+        REQUEST_TIMEOUT_MS
+      );
+      activeRequestRef.current = { controller, timeoutId };
+
+      try {
+        const response = await fetch("/api/ask", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ question: trimmed }),
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+
+          if (response.status === 429) {
+            throw new Error(errorData.error || "Too many requests. Please wait before asking another question.");
+          } else if (response.status === 400) {
+            throw new Error(errorData.error || "Invalid question format.");
+          } else if (response.status === 408) {
+            throw new Error("Request timeout. Please try again with a shorter question.");
+          } else {
+            throw new Error(errorData.error || "Failed to get answer");
+          }
+        }
+
+        const data = await response.json();
+        if (!isCurrent()) return;
+        setAnswer(data.answer);
+      } catch (err) {
+        // A superseded or unmounted request aborts by design. Reporting that
+        // as a failure would put a timeout message on screen at the exact
+        // moment the replacement request is working correctly.
+        if (!isCurrent()) return;
+
+        if (err.name === 'AbortError') {
+          setError("Request timeout. Please try again with a shorter question.");
+        } else {
+          setError(err.message || "Sorry, I couldn't process your question right now. Please try again.");
+        }
+        console.error("Error:", err);
+      } finally {
+        // Cleared here rather than only on the success path, where a failed
+        // request left its 45s timer running with the controller still
+        // referenced by it.
+        clearTimeout(timeoutId);
+        if (activeRequestRef.current?.controller === controller) {
+          activeRequestRef.current = null;
+        }
+        if (isCurrent()) setLoading(false);
+      }
+    },
+    [cancelActiveRequest]
+  );
 
   useEffect(() => {
     const q = searchParams.get("q");
-    if (q) {
-      setQuestion(q);
-      handleAskQuestion(q);
-    }
-  }, [searchParams]);
+    if (!q) return;
 
-  const handleAskQuestion = async (questionText) => {
-    if (!questionText.trim()) return;
+    // `maxLength` only constrains typing, so a shared or hand-edited `?q=` can
+    // arrive longer than the API accepts. Left as-is it seeded the box with a
+    // question the counter read as "1400/1000" and every submit came back as a
+    // 400, with no hint that the length was the problem.
+    const seeded = q.slice(0, MAX_QUESTION_LENGTH);
+    setQuestion(seeded);
+    handleAskQuestion(seeded);
+  }, [searchParams, handleAskQuestion]);
 
-    setLoading(true);
-    setError("");
-    setAnswer("");
-
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 45000); // 45s — longer answers need more headroom
-
-      const response = await fetch("/api/ask", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ question: questionText }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-
-        if (response.status === 429) {
-          throw new Error(errorData.error || "Too many requests. Please wait before asking another question.");
-        } else if (response.status === 400) {
-          throw new Error(errorData.error || "Invalid question format.");
-        } else if (response.status === 408) {
-          throw new Error("Request timeout. Please try again with a shorter question.");
-        } else {
-          throw new Error(errorData.error || "Failed to get answer");
-        }
-      }
-
-      const data = await response.json();
-      setAnswer(data.answer);
-    } catch (err) {
-      if (err.name === 'AbortError') {
-        setError("Request timeout. Please try again with a shorter question.");
-      } else {
-        setError(err.message || "Sorry, I couldn't process your question right now. Please try again.");
-      }
-      console.error("Error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Navigating away mid-answer should stop the request, not let it run to
+  // completion against a page nobody is looking at.
+  useEffect(() => cancelActiveRequest, [cancelActiveRequest]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -220,47 +286,78 @@ function AskPageContent() {
           </form>
         </Reveal>
 
-        {/* Answer Section */}
-        {(loading || answer || error) && (
-          <div className="border border-line rounded-3xl p-8 sm:p-10 mb-10">
-            <h2 className="text-xs font-mono uppercase tracking-widest mb-6 text-muted">
-              Answer
-            </h2>
+        {/* Answer Section. The wrapper stays mounted even when there is
+            nothing to show: it has to exist before it can take focus on
+            submit, and a live region that appears in the same paint as its
+            first message is not reliably announced. */}
+        <div
+          ref={resultsRef}
+          tabIndex={-1}
+          aria-busy={loading}
+          className="focus:outline-none"
+        >
+          {/* The answer replaces the panel contents without moving focus or
+              scrolling, so nothing signals to a screen reader that the page
+              responded. This carries the state change as one short sentence,
+              rather than making the whole panel live and having it read a
+              several-hundred-word answer aloud unprompted. */}
+          <p aria-live="polite" className="sr-only">
+            {loading
+              ? "Searching through Sarthak's information."
+              : error
+                ? `That question could not be answered. ${error}`
+                : answer
+                  ? "The answer is ready, below the question box."
+                  : ""}
+          </p>
 
-            {loading && (
-              <div className="flex items-center gap-3 text-ink/60">
-                <span className="w-4 h-4 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-                <span className="font-mono text-xs tracking-widest uppercase">
-                  Searching through Sarthak&apos;s information
-                </span>
-              </div>
-            )}
+          {(loading || answer || error) && (
+            <div className="border border-line rounded-3xl p-8 sm:p-10 mb-10">
+              <h2 className="text-xs font-mono uppercase tracking-widest mb-6 text-muted">
+                Answer
+              </h2>
 
-            {error && (
-              <div className="border border-accent/40 bg-accent/5 text-ink/80 rounded-2xl p-5">
-                {error}
-              </div>
-            )}
+              {loading && (
+                <div className="flex items-center gap-3 text-ink/60">
+                  <span
+                    aria-hidden="true"
+                    className="w-4 h-4 border-2 border-accent border-t-transparent rounded-full animate-spin"
+                  />
+                  <span className="font-mono text-xs tracking-widest uppercase">
+                    Searching through Sarthak&apos;s information
+                  </span>
+                </div>
+              )}
 
-            {answer && (
-              <div className="text-lg text-ink/80 leading-relaxed">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={markdownComponents}
-                >
-                  {answer}
-                </ReactMarkdown>
-              </div>
-            )}
-          </div>
-        )}
+              {error && (
+                <div className="border border-accent/40 bg-accent/5 text-ink/80 rounded-2xl p-5">
+                  {error}
+                </div>
+              )}
+
+              {answer && (
+                <div className="text-lg text-ink/80 leading-relaxed">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={markdownComponents}
+                  >
+                    {answer}
+                  </ReactMarkdown>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         {/* Suggested Questions */}
         {!loading && !answer && !error && (
           <div className="mb-20">
-            <h3 className="text-xs font-mono uppercase tracking-widest mb-6 text-muted">
+            {/* An h2, not an h3: this is a top-level section of the page,
+                sibling to "Answer". As an h3 it skipped a level, because it
+                only ever renders when the "Answer" h2 is absent. */}
+            <h2 className="text-xs font-mono uppercase tracking-widest mb-6 text-muted">
               Popular Questions
-            </h3>
+            </h2>
             <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {POPULAR_QUESTIONS.map((suggestedQ) => (
                 <StaggerItem key={suggestedQ}>

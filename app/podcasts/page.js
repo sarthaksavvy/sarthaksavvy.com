@@ -3,21 +3,17 @@ import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
+import JsonLd from "../components/JsonLd";
+import { canonicalUrl, ogImages, pageMetadata } from "../seo";
+import { breadcrumbSchema, graph, personSchema } from "../structuredData";
 
-export const metadata = {
-  title: "Sarthak Shrivastava - Podcasts",
-  description: "Podcasts by Sarthak Shrivastava",
-  alternates: {
-    canonical: "https://sarthaksavvy.com/podcasts",
-  },
-  openGraph: {
-    title: "Sarthak Shrivastava - Podcasts",
-    description: "Podcasts by Sarthak Shrivastava",
-    url: "https://sarthaksavvy.com/podcasts",
-    siteName: "Sarthak Shrivastava - Podcasts",
-    images: "/laravel-india-podcast.png",
-  },
-};
+export const metadata = pageMetadata({
+  title: "Laravel India Podcast — Hosted by Sarthak Shrivastava",
+  description:
+    "Conversations with the Laravel community — including Taylor Otwell, James Brooks and Freek Van der Herten — hosted by AI consultant Sarthak Shrivastava.",
+  path: "/podcasts",
+  image: ogImages.podcast,
+});
 
 const platforms = [
   {
@@ -34,9 +30,29 @@ const platforms = [
   },
 ];
 
+// `sameAs` is what ties this page to the show as Apple, Spotify and YouTube
+// already know it, so the three listings and this page are understood as one
+// podcast rather than four unrelated URLs.
+const structuredData = graph(
+  {
+    "@type": "PodcastSeries",
+    name: "Laravel India Podcast",
+    url: canonicalUrl("/podcasts"),
+    description:
+      "Conversations with guests from the worldwide Laravel community, " +
+      "including Taylor Otwell, James Brooks and Freek Van der Herten.",
+    image: canonicalUrl(ogImages.podcast.url),
+    inLanguage: "en",
+    author: personSchema(),
+    sameAs: platforms.map((platform) => platform.href),
+  },
+  breadcrumbSchema([{ name: "Podcasts", path: "/podcasts" }])
+);
+
 export default function Podcasts() {
   return (
     <div className="py-10 px-6 sm:px-10">
+      <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
@@ -57,7 +73,7 @@ export default function Podcasts() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
               <div className="rounded-2xl overflow-hidden md:rotate-1">
                 <Image
-                  src="/images/laravel-india-podcast.png"
+                  src="/images/laravel-india-podcast.jpg"
                   alt="Latest episode cover"
                   className="object-cover w-full h-auto"
                   width={400}
@@ -86,6 +102,7 @@ export default function Podcasts() {
                       key={p.label}
                       href={p.href}
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="bg-ink text-paper hover:bg-accent transition-colors px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase inline-flex"
                     >
                       {p.label}

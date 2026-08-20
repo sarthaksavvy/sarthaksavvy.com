@@ -9,7 +9,10 @@ const ParticleImage = dynamic(() => import("./motion/ParticleImage"), { ssr: fal
 
 export default function Hero({ subscribers = "134K+" }) {
   return (
-    <main className="relative px-6 sm:px-10 max-w-[1400px] mx-auto pt-6 sm:pt-10 pb-20 min-h-[90vh]">
+    // Was a <main>. The landmark now comes from the root layout, so keeping
+    // one here would nest a second one inside it and split the home page's
+    // content across two landmarks with the same name.
+    <section className="relative px-6 sm:px-10 max-w-[1400px] mx-auto pt-6 sm:pt-10 pb-20 min-h-[90vh]">
       <div className="hidden md:block absolute right-[2%] top-[2%] w-[42%] h-[70vh] max-h-[640px] z-10">
         <ParticleImage src="/images/sarthak.jpg" className="w-full h-full" />
       </div>
@@ -97,6 +100,6 @@ export default function Hero({ subscribers = "134K+" }) {
           <span className="md:text-right">Bitfumes Founder</span>
         </motion.div>
       </div>
-    </main>
+    </section>
   );
 }

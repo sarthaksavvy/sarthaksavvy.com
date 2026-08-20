@@ -2,54 +2,75 @@ import {
   ArrowLeft,
   ArrowRight,
   CheckCircle,
-  Code,
   ExternalLink,
   MessageCircle,
+  Search,
   Share2,
   Users,
 } from "lucide-react";
 import Link from "next/link";
 import ClientImage from "../../components/ClientImage";
+import JsonLd from "../../components/JsonLd";
+import { ogImages, pageMetadata } from "../../seo";
+import {
+  breadcrumbSchema,
+  graph,
+  softwareApplicationSchema,
+} from "../../structuredData";
 
-export const metadata = {
-  title: "Mezohub - Backend Deployment Platform | Sarthak Shrivastava",
-  description:
-    "Mezohub is a platform for developers, freelancers, and entrepreneurs to deploy your backend project with ease.",
-  openGraph: {
-    title: "Mezohub - Backend Deployment Platform | Sarthak Shrivastava",
-    description:
-      "Mezohub is a platform for developers, freelancers, and entrepreneurs to deploy your backend project with ease.",
-    url: "https://sarthaksavvy.com/side-projects/mezohub",
-    siteName: "Sarthak Shrivastava - Mezohub",
-    images: "/images/projects/mezohub.jpg",
-  },
-};
+const SITE = "https://mezohub.com";
+
+const DESCRIPTION =
+  "Mezohub is a centralized platform for connecting developers, designers, and entrepreneurs to collaborate on innovative projects.";
+
+export const metadata = pageMetadata({
+  title: "Mezohub - Collaboration Platform | Sarthak Shrivastava",
+  description: DESCRIPTION,
+  path: "/side-projects/mezohub",
+  image: ogImages.mezohub,
+});
+
+const structuredData = graph(
+  softwareApplicationSchema({
+    name: "Mezohub",
+    description: DESCRIPTION,
+    url: SITE,
+    path: "/side-projects/mezohub",
+    image: ogImages.mezohub.url,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+  }),
+  breadcrumbSchema([
+    { name: "Side Projects", path: "/side-projects" },
+    { name: "Mezohub", path: "/side-projects/mezohub" },
+  ])
+);
 
 export default function MezohubProject() {
   const features = [
     {
-      icon: <Users size={24} className="text-accent" />,
-      title: "Team Formation",
+      icon: <Search size={24} className="text-accent" />,
+      title: "Project Discovery",
       description:
-        "Deploy your backend project with ease. Our intelligent matching algorithm connects you with the right people.",
+        "Browse projects looking for collaborators, and get matched with the ones that fit your skills and interests.",
     },
     {
-      icon: <Share2 size={24} className="text-accent" />,
-      title: "Project Showcase",
+      icon: <Users size={24} className="text-accent" />,
+      title: "Skill-Based Team Formation",
       description:
-        "Deploy your backend project with ease. Our intelligent matching algorithm connects you with the right people.",
+        "Build a team around the skills a project actually needs, connecting developers, designers, and entrepreneurs.",
     },
     {
       icon: <MessageCircle size={24} className="text-accent" />,
       title: "Integrated Messaging",
       description:
-        "Deploy your backend project with ease. Our intelligent matching algorithm connects you with the right people.",
+        "Message collaborators directly inside Mezohub, so coordinating a team doesn't mean jumping to another app.",
     },
     {
-      icon: <Code size={24} className="text-accent" />,
-      title: "Resource Sharing",
+      icon: <Share2 size={24} className="text-accent" />,
+      title: "Project Showcase",
       description:
-        "Deploy your backend project with ease. Our intelligent matching algorithm connects you with the right people.",
+        "Showcase finished and in-progress work in a public portfolio, so it's discoverable by the wider community.",
     },
   ];
 
@@ -57,34 +78,35 @@ export default function MezohubProject() {
     {
       title: "For Developers",
       points: [
-        "Deploy your backend project with ease",
-        "Showcase your coding skills and portfolio",
-        "Connect with designers and other professionals",
-        "Learn new technologies through collaboration",
+        "Discover projects that match your skills",
+        "Get matched onto teams through skill-based team formation",
+        "Coordinate with teammates via integrated messaging",
+        "Showcase what you've built in a public portfolio",
       ],
     },
     {
       title: "For Designers",
       points: [
-        "Deploy your backend project with ease",
-        "Showcase your coding skills and portfolio",
-        "Connect with designers and other professionals",
-        "Learn new technologies through collaboration",
+        "Find projects that need design collaborators",
+        "Join teams through skill-based matching",
+        "Stay in sync with the team via integrated messaging",
+        "Build a portfolio of the projects you've shipped",
       ],
     },
     {
       title: "For Entrepreneurs",
       points: [
-        "Deploy your backend project with ease",
-        "Showcase your coding skills and portfolio",
-        "Connect with designers and other professionals",
-        "Learn new technologies through collaboration",
+        "Discover developers and designers for your idea",
+        "Form a team through skill-based matching",
+        "Keep the team aligned with integrated messaging",
+        "Showcase your project to attract collaborators",
       ],
     },
   ];
 
   return (
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
+      <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
         {/* Back Navigation */}
         <div className="mb-12">
@@ -103,7 +125,7 @@ export default function MezohubProject() {
             <h1 className="font-display text-5xl md:text-6xl mb-6">Mezohub</h1>
             <p className="text-xl text-ink/70 mb-8">
               A platform for connecting developers, designers, and entrepreneurs
-              to deploy their backend project with ease. Mezohub bridges the gap
+              to collaborate on innovative projects. Mezohub bridges the gap
               between ideas and execution.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -136,15 +158,16 @@ export default function MezohubProject() {
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">
             <p className="text-ink/70 mb-6">
-              Mezohub was born out of the need to deploy your backend project
-              with ease. The platform solves the common problem of deployment
-              and deployment of backend projects.
+              Mezohub solves a different problem than most project tools:
+              finding the right people to build with. It&apos;s a dedicated
+              space where developers, designers, and entrepreneurs can
+              discover projects and each other.
             </p>
             <p className="text-ink/70">
-              As a developer, I often found it challenging to deploy my backend
-              project with ease. Mezohub addresses this by creating a dedicated
-              space where skills, projects, and ideas can converge, making the
-              collaboration process more efficient and productive.
+              Project discovery, skill-based team formation, integrated
+              messaging, and portfolio showcases live in one place, so
+              collaboration doesn&apos;t mean stitching together five
+              separate tools.
             </p>
           </div>
         </div>
@@ -253,6 +276,7 @@ export default function MezohubProject() {
             <a
               href="https://mezohub.com"
               target="_blank"
+              rel="noopener noreferrer"
               className="bg-ink text-paper px-8 py-3 rounded-full font-medium hover:bg-accent transition-colors inline-flex items-center gap-2"
             >
               Visit Platform

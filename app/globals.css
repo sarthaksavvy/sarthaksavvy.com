@@ -7,7 +7,12 @@
   --foreground: #171410;
 }
 
-* {
+/* Scrolling is a property of the scrolling container, so this only ever had to
+   be set on the root. Applying it to every element on the page meant the
+   browser carried the property on thousands of nodes that never scroll, and it
+   also caught the ones that do scroll for a reason — the photo strips on the
+   speaking page, the ask panel — animating jumps that should be instant. */
+html {
   scroll-behavior: smooth;
 }
 
@@ -40,5 +45,29 @@ body {
     opacity: 0.04;
     mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* The CSS half of "Reduce motion". Framer Motion is handled in MotionProvider;
+   these are the animations that run straight from the stylesheet, and they are
+   the ones that never stop on their own: the marquee scrolls the whole width of
+   the viewport forever, and the ping, pulse and blink loops sit in the corner
+   of the eye for as long as the page is open. WCAG asks that moving content
+   which starts by itself and runs past five seconds can be turned off; for a
+   visitor who has said "reduce motion" at the OS level, that is exactly what
+   they have asked for.
+
+   Placed after every @tailwind directive on purpose — these override utility
+   classes of the same specificity, so source order is what decides. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee,
+  .animate-blink,
+  .animate-ping,
+  .animate-pulse {
+    animation: none;
   }
 }

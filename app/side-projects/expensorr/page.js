@@ -8,21 +8,48 @@ import {
   Smartphone,
   Star,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import JsonLd from "../../components/JsonLd";
+import { ogImages, pageMetadata } from "../../seo";
+import {
+  breadcrumbSchema,
+  graph,
+  softwareApplicationSchema,
+} from "../../structuredData";
 
-export const metadata = {
+const SITE = "https://apps.apple.com/us/app/expensorr/id6739472004";
+
+// The QR sources are 1000x1000 but land in a 192px box with 16px of padding
+// on each side. Declaring the size they are actually drawn at is what lets
+// next/image ship a thumbnail instead of the full-resolution original.
+const QR_RENDERED_SIZE = 160;
+
+const DESCRIPTION =
+  "Expensorr is a simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.";
+
+export const metadata = pageMetadata({
   title: "Expensorr - Expense Tracking App | Sarthak Shrivastava",
-  description:
-    "Expensorr is a simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
-  openGraph: {
-    title: "Expensorr - Expense Tracking App | Sarthak Shrivastava",
-    description:
-      "Expensorr is a simple yet powerful expense tracking application that helps you monitor and manage your personal finances with ease.",
-    url: "https://sarthaksavvy.com/side-projects/expensorr",
-    siteName: "Sarthak Shrivastava - Expensorr",
-    images: "/images/projects/expensorr.png",
-  },
-};
+  description: DESCRIPTION,
+  path: "/side-projects/expensorr",
+  image: ogImages.expensorr,
+});
+
+const structuredData = graph(
+  softwareApplicationSchema({
+    name: "Expensorr",
+    description: DESCRIPTION,
+    url: SITE,
+    path: "/side-projects/expensorr",
+    image: ogImages.expensorr.url,
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "iOS",
+  }),
+  breadcrumbSchema([
+    { name: "Side Projects", path: "/side-projects" },
+    { name: "Expensorr", path: "/side-projects/expensorr" },
+  ])
+);
 
 export default function ExpensorrProject() {
   const features = [
@@ -72,6 +99,7 @@ export default function ExpensorrProject() {
 
   return (
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
+      <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
         {/* Back Navigation */}
         <div className="mb-12">
@@ -95,7 +123,7 @@ export default function ExpensorrProject() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://apps.apple.com/us/app/expensorr/id6739472004"
+                href={SITE}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 rounded-full font-medium hover:bg-accent transition-colors"
@@ -112,14 +140,21 @@ export default function ExpensorrProject() {
               </a>
             </div>
           </div>
-          <div className="relative h-80 rounded-3xl overflow-hidden shadow-xl bg-paper border border-line p-6">
+          {/* The "Get App" button above links here, so this panel owns the
+              #download target. */}
+          <div
+            id="download"
+            className="relative h-80 scroll-mt-24 rounded-3xl overflow-hidden shadow-xl bg-paper border border-line p-6"
+          >
             <div className="grid grid-cols-2 h-full gap-4">
               {/* iOS QR Code */}
               <div className="flex flex-col items-center justify-center">
                 <div className="relative h-48 w-48 mb-3 bg-white p-4 rounded-xl">
-                  <img
+                  <Image
                     src="/images/projects/qr/expensorr-ios.jpg"
-                    alt="iOS QR Code"
+                    alt="QR code linking to Expensorr on the App Store"
+                    width={QR_RENDERED_SIZE}
+                    height={QR_RENDERED_SIZE}
                     className="object-contain h-full w-full"
                   />
                 </div>
@@ -129,9 +164,11 @@ export default function ExpensorrProject() {
               {/* Android QR Code */}
               <div className="flex flex-col items-center justify-center">
                 <div className="relative h-48 w-48 mb-3 bg-white p-4 rounded-xl">
-                  <img
+                  <Image
                     src="/images/projects/qr/expensorr-android.jpg"
-                    alt="Android QR Code"
+                    alt="QR code linking to Expensorr on Google Play"
+                    width={QR_RENDERED_SIZE}
+                    height={QR_RENDERED_SIZE}
                     className="object-contain h-full w-full"
                   />
                 </div>
@@ -260,7 +297,9 @@ export default function ExpensorrProject() {
                     />
                   ))}
                 </div>
-                <p className="text-ink/70 mb-6">"{testimonial.text}"</p>
+                <p className="text-ink/70 mb-6">
+                  &quot;{testimonial.text}&quot;
+                </p>
                 <p className="font-semibold">{testimonial.author}</p>
               </div>
             ))}
@@ -311,8 +350,9 @@ export default function ExpensorrProject() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="https://apps.apple.com/us/app/expensorr/id6739472004"
+              href={SITE}
               target="_blank"
+              rel="noopener noreferrer"
               className="bg-ink text-paper px-8 py-3 rounded-full font-medium hover:bg-accent transition-colors inline-flex items-center gap-2"
             >
               Download Now
