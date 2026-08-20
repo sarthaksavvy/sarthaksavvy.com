@@ -9,7 +9,7 @@ const navLinks = [
   { href: "/podcasts", label: "Podcasts" },
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
-  { href: "https://youtube.com/bitfumes", label: "Youtube", external: true },
+  { href: "https://youtube.com/@sarthaksavvy", label: "Youtube", external: true },
   { href: "https://courses.sarthaksavvy.com/", label: "Courses", external: true },
   { href: "/about-me", label: "About Me" },
 ];

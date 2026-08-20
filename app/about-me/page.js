@@ -2,6 +2,7 @@ import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
+import { getSubscriberCount } from "../../lib/youtube";
 
 export const metadata = {
   title: "About Me - Sarthaksavvy",
@@ -31,8 +32,7 @@ const recognition = [
   "AWS Certified Developer",
 ];
 
-const stats = [
-  { value: "134K+", label: "YouTube Subscribers" },
+const baseStats = [
   { value: "100K+", label: "Students on Udemy" },
   { value: "3,000+", label: "Positive Course Reviews" },
 ];
@@ -53,7 +53,12 @@ function ListCard({ title, items }) {
   );
 }
 
-const AboutPage = () => {
+const AboutPage = async () => {
+  const subscribers = await getSubscriberCount();
+  const stats = [
+    { value: subscribers, label: "YouTube Subscribers" },
+    ...baseStats,
+  ];
   return (
     <div className="py-10 px-6 sm:px-10">
       <div className="max-w-[1400px] mx-auto">
@@ -157,7 +162,7 @@ const AboutPage = () => {
                 Get in Touch
               </MagneticButton>
               <MagneticButton
-                href="https://youtube.com/bitfumes"
+                href="https://youtube.com/@sarthaksavvy"
                 target="_blank"
                 className="border border-ink/20 px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors inline-flex"
               >

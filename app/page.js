@@ -1,5 +1,6 @@
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
+import { getSubscriberCount } from "../lib/youtube";
 
 export const metadata = {
   title: "Sarthak Shrivastava - Sarthaksavvy",
@@ -16,10 +17,11 @@ export const metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const subscribers = await getSubscriberCount();
   return (
     <>
-      <Hero />
+      <Hero subscribers={subscribers} />
       <Marquee />
     </>
   );

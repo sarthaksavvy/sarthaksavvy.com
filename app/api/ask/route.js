@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
+import { getSubscriberCount } from "../../../lib/youtube";
 
 const SITE_URL = "https://sarthaksavvy.com";
 // Pinned deliberately: the "~...-latest" alias resolves to a snapshot served by
@@ -94,10 +95,12 @@ async function scrapeWebsiteContent() {
       .map((result) => result.value)
       .join("");
 
+    const subscribers = await getSubscriberCount();
+
     const linkedinContent = `
 === LinkedIn Profile Information ===
 Sarthak Shrivastava (sarthaksavvy) is a full-stack developer, Docker Captain, and founder of Bitfumes.
-He works as a Software Engineer at Pfizer and is a content creator with 134K+ YouTube subscribers and 100K+ Udemy students.
+He works as a Software Engineer at Pfizer and is a content creator with ${subscribers} YouTube subscribers and 100K+ Udemy students.
 His expertise includes Laravel, JavaScript, Python, AWS, Docker, AI/LLMs, and he's passionate about building and automating daily tasks.
 LinkedIn: https://linkedin.com/in/sarthaksavvy
 `;
@@ -113,6 +116,7 @@ LinkedIn: https://linkedin.com/in/sarthaksavvy
     return finalContent;
   } catch (error) {
     console.error("Error scraping content:", error);
+    const subscribers = await getSubscriberCount();
     const fallbackContent = `
 === Fallback Information about Sarthak Shrivastava ===
 Sarthak Shrivastava is an India-based founder, content creator, developer and AI consultant passionate about building and automating daily tasks.
@@ -121,7 +125,7 @@ Professional Background:
 - Founder of Bitfumes
 - Software Engineer at Pfizer
 - Docker Captain
-- Content Creator with 134K+ YouTube subscribers
+- Content Creator with ${subscribers} YouTube subscribers
 - 100K+ Udemy students
 
 Core Expertise:
@@ -133,7 +137,7 @@ Core Expertise:
 Contact:
 - Website: https://sarthaksavvy.com
 - LinkedIn: https://linkedin.com/in/sarthaksavvy
-- YouTube: https://youtube.com/bitfumes
+- YouTube: https://youtube.com/@sarthaksavvy
 - Email: sarthak@bitfumes.com
 - Courses: https://bitfumes.com
 

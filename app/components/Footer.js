@@ -1,5 +1,4 @@
-import Link from "next/link";
-import Image from "next/image";
+import { socialIcons } from "./SocialIcons";
 
 const links = [
   { href: "/podcasts", label: "Podcasts" },
@@ -9,10 +8,10 @@ const links = [
 ];
 
 const socials = [
-  { href: "https://linkedin.com/in/sarthaksavvy", icon: "linkedin" },
-  { href: "https://github.com/sarthaksavvy", icon: "github" },
-  { href: "https://instagram.com/sarthaksavvy", icon: "instagram" },
-  { href: "https://x.com/sarthaksavvy", icon: "x" },
+  { href: "https://linkedin.com/in/sarthaksavvy", icon: "linkedin", label: "LinkedIn" },
+  { href: "https://github.com/sarthaksavvy", icon: "github", label: "GitHub" },
+  { href: "https://instagram.com/sarthaksavvy", icon: "instagram", label: "Instagram" },
+  { href: "https://x.com/sarthaksavvy", icon: "x", label: "X" },
 ];
 
 export default function Footer() {
@@ -32,17 +31,21 @@ export default function Footer() {
             </a>
           </div>
           <div className="flex gap-3 flex-wrap items-start">
-            {socials.map((s) => (
-              <a
-                key={s.icon}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                className="w-11 h-11 rounded-full border border-ink/20 flex items-center justify-center hover:border-ink hover:bg-ink hover:[&_img]:invert transition-colors"
-              >
-                <Image src={`/images/icons/${s.icon}.svg`} alt={s.icon} width={18} height={18} />
-              </a>
-            ))}
+            {socials.map((s) => {
+              const Icon = socialIcons[s.icon];
+              return (
+                <a
+                  key={s.icon}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  className="w-11 h-11 rounded-full border border-ink/20 text-ink/60 flex items-center justify-center hover:border-ink hover:bg-ink hover:text-paper transition-colors"
+                >
+                  <Icon className="w-[18px] h-[18px]" />
+                </a>
+              );
+            })}
           </div>
         </div>
 
