@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import { Fraunces } from "next/font/google";
+import Script from "next/script";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FloatingChatWidget from "./components/FloatingChatWidget";
@@ -40,6 +41,18 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`}
     >
       <body className="grain">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-MN3X8W00H5"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-MN3X8W00H5');
+          `}
+        </Script>
         <EntryGate />
         <div className="min-h-screen bg-paper text-ink w-full overflow-x-hidden">
           <Header />
