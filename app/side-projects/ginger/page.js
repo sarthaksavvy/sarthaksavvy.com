@@ -6,7 +6,6 @@ import {
   MessageSquare,
   RefreshCw,
   Shield,
-  Star,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
@@ -89,24 +88,6 @@ export default function GingerProject() {
       title: "Generous Free Usage",
       description:
         "Enjoy 100 free comment generations as a guest user. Sign in to unlock 300 generations for even more networking opportunities.",
-    },
-  ];
-
-  const testimonials = [
-    {
-      text: "Ginger has transformed how I engage on LinkedIn. The comments it generates are indistinguishable from what I would write myself!",
-      author: "Emma R.",
-      rating: 5,
-    },
-    {
-      text: "This extension has saved me countless hours while helping me maintain an active presence on LinkedIn. A must-have for professionals.",
-      author: "David K.",
-      rating: 5,
-    },
-    {
-      text: "The ability to reply to comments with AI assistance has significantly increased my engagement rates. Highly recommended.",
-      author: "Alex M.",
-      rating: 4,
     },
   ];
 
@@ -270,40 +251,6 @@ export default function GingerProject() {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Testimonials */}
-        <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
-            User Testimonials
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-paper border border-line rounded-3xl p-8 shadow-lg"
-              >
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={20}
-                      fill={i < testimonial.rating ? "#FF5A1F" : "none"}
-                      className={
-                        i < testimonial.rating
-                          ? "text-accent"
-                          : "text-muted"
-                      }
-                    />
-                  ))}
-                </div>
-                <p className="text-ink/70 mb-6 italic">
-                  &quot;{testimonial.text}&quot;
-                </p>
-                <p className="font-medium">- {testimonial.author}</p>
-              </div>
-            ))}
           </div>
         </div>
 
