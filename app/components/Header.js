@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const navLinks = [
@@ -39,6 +39,9 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const toggleRef = useRef(null);
+  const panelRef = useRef(null);
+  const wasOpenRef = useRef(false);
 
   useEffect(() => {
     setIsOpen(false);
@@ -52,6 +55,31 @@ export default function Header() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Every other overlay on the site (the entry gate, the floating chat panel)
+  // closes on Escape and hands focus back to whatever opened it. This one did
+  // neither: a keyboard visitor who opened the menu had no way to close it
+  // short of tabbing through all seven links, or reaching for the mouse.
+  useEffect(() => {
+    if (isOpen) {
+      wasOpenRef.current = true;
+      panelRef.current?.querySelector("a")?.focus();
+
+      function onKeyDown(event) {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          setIsOpen(false);
+        }
+      }
+      document.addEventListener("keydown", onKeyDown);
+      return () => document.removeEventListener("keydown", onKeyDown);
+    }
+
+    if (wasOpenRef.current) {
+      wasOpenRef.current = false;
+      toggleRef.current?.focus();
+    }
+  }, [isOpen]);
 
   return (
     <header
@@ -83,6 +111,7 @@ export default function Header() {
             what carries that same state to a screen reader, and aria-controls
             ties the button to the panel it opens. */}
         <button
+          ref={toggleRef}
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className="lg:hidden relative z-40 w-8 h-6 flex flex-col justify-between"
@@ -109,6 +138,7 @@ export default function Header() {
         {isOpen && (
           <motion.div
             id="mobile-nav"
+            ref={panelRef}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
