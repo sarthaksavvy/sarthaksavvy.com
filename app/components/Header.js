@@ -23,6 +23,7 @@ function NavLink({ href, label, external, pathname, onClick }) {
       onClick={onClick}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
+      aria-current={isActive ? "page" : undefined}
       className="group relative font-mono text-xs tracking-widest uppercase text-ink/70 hover:text-ink transition-colors"
     >
       {label}
@@ -160,6 +161,9 @@ export default function Header() {
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
+                    aria-current={
+                      !link.external && pathname === link.href ? "page" : undefined
+                    }
                     onClick={() => setIsOpen(false)}
                     className="font-display italic text-2xl"
                   >
