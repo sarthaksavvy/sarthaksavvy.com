@@ -5,6 +5,7 @@ import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
 import AnswerBlock from "../components/content/AnswerBlock";
 import FaqSection from "../components/content/FaqSection";
+import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
 import { pageMetadata } from "../seo";
 import {
@@ -31,6 +32,10 @@ export const metadata = pageMetadata({
   path: "/public-speaking",
 });
 
+// The same trail feeds the BreadcrumbList markup and the visible
+// breadcrumb nav below, so the two cannot drift apart.
+const BREADCRUMB_TRAIL = [{ name: "Public Speaking", path: "/public-speaking" }];
+
 function buildStructuredData(faqs) {
   return graph(
   personSchema(),
@@ -42,7 +47,7 @@ function buildStructuredData(faqs) {
   }),
   speakingEventsSchema(speakingEvents),
   faqSchema(faqs),
-  breadcrumbSchema([{ name: "Public Speaking", path: "/public-speaking" }])
+  breadcrumbSchema(BREADCRUMB_TRAIL)
   );
 }
 
@@ -55,6 +60,7 @@ export default async function SpeakingTimeline() {
     <div className="py-10 px-6 sm:px-10">
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
+        <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">

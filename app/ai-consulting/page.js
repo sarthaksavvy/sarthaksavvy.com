@@ -6,6 +6,7 @@ import MagneticButton from "../components/motion/MagneticButton";
 import AnswerBlock from "../components/content/AnswerBlock";
 import FaqSection from "../components/content/FaqSection";
 import SectionHeading from "../components/content/SectionHeading";
+import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
 import { pageMetadata } from "../seo";
 import {
@@ -42,6 +43,11 @@ export const metadata = pageMetadata({
 // two of those existed, keeping the arrays inside the component meant the copy
 // on this page and the copy an assistant reads could disagree — which is the
 // one failure mode structured data has no way to survive.
+//
+// The same trail feeds the BreadcrumbList markup and the visible
+// breadcrumb nav below, so the two cannot drift apart.
+const BREADCRUMB_TRAIL = [{ name: "AI Consulting", path: "/ai-consulting" }];
+
 function buildStructuredData(services, faqs) {
   return graph(
   personSchema(),
@@ -59,7 +65,7 @@ function buildStructuredData(services, faqs) {
     primaryImage: "/images/sarthak.jpg",
   }),
   faqSchema(faqs),
-  breadcrumbSchema([{ name: "AI Consulting", path: "/ai-consulting" }])
+  breadcrumbSchema(BREADCRUMB_TRAIL)
   );
 }
 
@@ -76,6 +82,7 @@ export default async function AiConsulting() {
     <div className="py-10 px-6 sm:px-10">
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
+        <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         <div className="mb-16 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6">

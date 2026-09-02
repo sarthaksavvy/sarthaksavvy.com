@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import JsonLd from "../../components/JsonLd";
 import { ogImages, pageMetadata } from "../../seo";
 import {
@@ -42,6 +43,13 @@ export const metadata = pageMetadata({
 // render from, so the product is described identically wherever it appears.
 const project = projectByPath("/side-projects/expensorr");
 
+// The same trail feeds the BreadcrumbList markup and the visible
+// breadcrumb nav below, so the two cannot drift apart.
+const BREADCRUMB_TRAIL = [
+  { name: "Side Projects", path: "/side-projects" },
+  { name: "Expensorr", path: "/side-projects/expensorr" },
+];
+
 const structuredData = graph(
   personSchema(),
   organizationSchema(),
@@ -61,10 +69,7 @@ const structuredData = graph(
     operatingSystem: "iOS",
     features: project.features,
   }),
-  breadcrumbSchema([
-    { name: "Side Projects", path: "/side-projects" },
-    { name: "Expensorr", path: "/side-projects/expensorr" },
-  ])
+  breadcrumbSchema(BREADCRUMB_TRAIL)
 );
 
 export default function ExpensorrProject() {
@@ -99,6 +104,7 @@ export default function ExpensorrProject() {
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
       <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
+        <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         {/* Back Navigation */}
         <div className="mb-12">
           <Link

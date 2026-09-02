@@ -8,6 +8,7 @@ import KeyFacts from "../components/content/KeyFacts";
 import FaqSection from "../components/content/FaqSection";
 import SectionHeading from "../components/content/SectionHeading";
 import { getSubscriberCount } from "../../lib/youtube";
+import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
 import { canonicalUrl, pageMetadata } from "../seo";
 import {
@@ -40,6 +41,10 @@ export const metadata = pageMetadata({
   path: "/about-me",
 });
 
+// The same trail feeds the BreadcrumbList markup and the visible
+// breadcrumb nav below, so the two cannot drift apart.
+const BREADCRUMB_TRAIL = [{ name: "About Me", path: "/about-me" }];
+
 // The page a crawler should treat as the profile of the person, which is what
 // makes the roles, credentials and social links here attributable rather than
 // loose text on a page. ProfilePage carries the Person; WebPage carries when
@@ -62,7 +67,7 @@ function buildStructuredData(faqs) {
     primaryImage: "/images/about-me.jpg",
   }),
   faqSchema(faqs),
-  breadcrumbSchema([{ name: "About Me", path: "/about-me" }])
+  breadcrumbSchema(BREADCRUMB_TRAIL)
   );
 }
 
@@ -94,6 +99,7 @@ const AboutPage = async () => {
     <div className="py-10 px-6 sm:px-10">
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
+        <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         <div className="mb-16 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
