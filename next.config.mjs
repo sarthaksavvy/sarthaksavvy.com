@@ -1,8 +1,42 @@
+// The only third-party script the site loads is Google's gtag.js, and the
+// only inline script is the small config snippet that calls it (layout.js).
+// Everything else — images, fonts, the /ask fetches — is same-origin, so the
+// policy below can name Google explicitly and default everything else to
+// 'self' instead of allowing arbitrary origins.
+//
+// 'unsafe-inline' stays on script-src and style-src because the gtag config
+// snippet is an inline <script> and React's `style={{...}}` props render as
+// inline `style=""` attributes throughout the motion components — replacing
+// either with nonces would need per-request middleware this app doesn't have.
+// The policy still blocks the two things that matter most for this site: a
+// script tag pointed at an attacker-controlled domain, and the page being
+// framed by someone else's site.
+//
+// Next's dev server evals its own HMR bundles, which a production CSP would
+// block — so 'unsafe-eval' is scoped to development only.
+const isDev = process.env.NODE_ENV !== "production";
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline' ${isDev ? "'unsafe-eval' " : ""}https://www.googletagmanager.com`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self' data:",
+  "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join("; ");
+
 // Baseline response headers the app never set on its own. None of these
 // depend on how a page is rendered, so applying them to every route is safe:
 // there is no framing, no cross-origin embedding and no use of camera/mic/
 // geolocation anywhere on the site for these to interfere with.
 const securityHeaders = [
+  // Restricts every resource the page can load or connect to. See the
+  // comment above for why 'unsafe-inline' is still needed and what stays
+  // blocked despite it.
+  { key: "Content-Security-Policy", value: csp },
   // Stops a browser from guessing a response's MIME type from its content,
   // which is how a misconfigured upload or an old browser can be tricked
   // into executing something served as plain text or an image.
