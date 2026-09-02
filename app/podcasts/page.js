@@ -6,6 +6,7 @@ import TiltCard from "../components/motion/TiltCard";
 import AnswerBlock from "../components/content/AnswerBlock";
 import FaqSection from "../components/content/FaqSection";
 import SectionHeading from "../components/content/SectionHeading";
+import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
 import { canonicalUrl, ogImages, pageMetadata } from "../seo";
 import {
@@ -55,6 +56,10 @@ const guests = [
   { name: "Freek Van der Herten", role: "Laravel developer at Spatie" },
 ];
 
+// The same trail feeds the BreadcrumbList markup and the visible
+// breadcrumb nav below, so the two cannot drift apart.
+const BREADCRUMB_TRAIL = [{ name: "Podcasts", path: "/podcasts" }];
+
 // `sameAs` is what ties this page to the show as Apple, Spotify and YouTube
 // already know it, so the three listings and this page are understood as one
 // podcast rather than four unrelated URLs.
@@ -91,7 +96,7 @@ function buildStructuredData(faqs) {
     sameAs: platforms.map((platform) => platform.href),
   },
   faqSchema(faqs),
-  breadcrumbSchema([{ name: "Podcasts", path: "/podcasts" }])
+  breadcrumbSchema(BREADCRUMB_TRAIL)
   );
 }
 
@@ -104,6 +109,7 @@ export default async function Podcasts() {
     <div className="py-10 px-6 sm:px-10">
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
+        <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">

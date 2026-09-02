@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import ClientImage from "../../components/ClientImage";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import JsonLd from "../../components/JsonLd";
 import { ogImages, pageMetadata } from "../../seo";
 import {
@@ -38,6 +39,13 @@ export const metadata = pageMetadata({
 // render from, so the product is described identically wherever it appears.
 const project = projectByPath("/side-projects/mezohub");
 
+// The same trail feeds the BreadcrumbList markup and the visible
+// breadcrumb nav below, so the two cannot drift apart.
+const BREADCRUMB_TRAIL = [
+  { name: "Side Projects", path: "/side-projects" },
+  { name: "Mezohub", path: "/side-projects/mezohub" },
+];
+
 const structuredData = graph(
   personSchema(),
   organizationSchema(),
@@ -57,10 +65,7 @@ const structuredData = graph(
     operatingSystem: "Web",
     features: project.features,
   }),
-  breadcrumbSchema([
-    { name: "Side Projects", path: "/side-projects" },
-    { name: "Mezohub", path: "/side-projects/mezohub" },
-  ])
+  breadcrumbSchema(BREADCRUMB_TRAIL)
 );
 
 export default function MezohubProject() {
@@ -125,6 +130,7 @@ export default function MezohubProject() {
     <div className="min-h-screen bg-paper text-ink py-16 px-6">
       <JsonLd data={structuredData} />
       <div className="container mx-auto max-w-6xl">
+        <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         {/* Back Navigation */}
         <div className="mb-12">
           <Link

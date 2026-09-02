@@ -3,6 +3,7 @@ import Reveal from "../components/motion/Reveal";
 import AnswerBlock from "../components/content/AnswerBlock";
 import FaqSection from "../components/content/FaqSection";
 import MagneticButton from "../components/motion/MagneticButton";
+import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
 import { pageMetadata } from "../seo";
 import {
@@ -40,6 +41,10 @@ export const metadata = pageMetadata({
 // question and a self-contained paragraph underneath it, which is the shape a
 // model can lift whole and attribute.
 //
+// The same trail feeds the BreadcrumbList markup and the visible
+// breadcrumb nav below, so the two cannot drift apart.
+const BREADCRUMB_TRAIL = [{ name: "FAQ", path: "/faq" }];
+
 // The same set feeds the FAQPage markup and the /faq.md mirror, so all three
 // copies are one copy.
 function buildStructuredData(faqs) {
@@ -52,7 +57,7 @@ function buildStructuredData(faqs) {
     description: DESCRIPTION,
   }),
   faqSchema(faqs),
-  breadcrumbSchema([{ name: "FAQ", path: "/faq" }])
+  breadcrumbSchema(BREADCRUMB_TRAIL)
   );
 }
 
@@ -65,6 +70,7 @@ export default async function FaqPage() {
     <div className="py-10 px-6 sm:px-10">
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
+        <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         <div className="mb-16 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6">
