@@ -3,6 +3,7 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 import { getSubscriberCount } from "../../../lib/youtube";
+import { buildServices, credentials } from "../../content/consulting";
 
 const SITE_URL = "https://sarthaksavvy.com";
 // Pinned deliberately: the "~...-latest" alias resolves to a snapshot served by
@@ -79,6 +80,11 @@ LinkedIn: https://linkedin.com/in/sarthaksavvy
 }
 
 function fallbackContent(subscribers) {
+  const services = buildServices(subscribers)
+    .map((service) => `- ${service.title}: ${service.summary}`)
+    .join("\n");
+  const creds = credentials.map((c) => `- ${c.value}: ${c.label}`).join("\n");
+
   return `
 === Fallback Information about Sarthak Shrivastava ===
 Sarthak Shrivastava is an India-based founder, content creator, developer and AI consultant passionate about building and automating daily tasks.
@@ -95,6 +101,12 @@ Core Expertise:
 - AWS, Docker, AI/LLMs
 - Full-stack development
 - Content creation and education
+
+AI Consulting Services:
+${services}
+
+Credentials:
+${creds}
 
 Contact:
 - Website: https://sarthaksavvy.com
@@ -126,10 +138,12 @@ async function scrapeWebsiteContent() {
 
   const pages = [
     "/",
+    "/ai-consulting",
     "/about-me",
     "/side-projects",
     "/public-speaking",
     "/podcasts",
+    "/faq",
   ];
 
   const scrapePromises = pages.map(async (page) => {
