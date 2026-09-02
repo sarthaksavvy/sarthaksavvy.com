@@ -37,6 +37,19 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    // Next's image optimizer defaults to caching an optimized image for only
+    // 60 seconds, which is fine for a feed of constantly-changing thumbnails
+    // but not for a site whose photos (the portrait, project screenshots,
+    // podcast art) are static assets that rarely change. Every /images/* file
+    // on this site goes through <ClientImage>, i.e. next/image, so the
+    // 60-second default means the optimizer re-derives and re-serves the same
+    // resized image on almost every request instead of letting a CDN or
+    // browser hold onto it. A month is long enough to matter for repeat
+    // visits and short enough that a swapped project screenshot is not stuck
+    // stale for a meaningful stretch of time.
+    minimumCacheTTL: 2678400,
+  },
   // Plain-markdown mirrors of every page, for LLMs and answer engines. The
   // handler lives under /api/md/... because that is where a catch-all route
   // can be defined, but /api/ is disallowed in robots.txt — so the URL that
