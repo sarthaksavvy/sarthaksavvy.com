@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { socialIcons } from "./SocialIcons";
+import { YOUTUBE_URL } from "../content/profile";
 
 const links = [
   { href: "/ai-consulting", label: "AI Consulting" },
@@ -26,6 +27,11 @@ const socials = [
     href: "https://github.com/sarthaksavvy",
     icon: "github",
     label: "Sarthak Shrivastava on GitHub",
+  },
+  {
+    href: YOUTUBE_URL,
+    icon: "youtube",
+    label: "Sarthak Shrivastava on YouTube",
   },
   {
     href: "https://instagram.com/sarthaksavvy",
