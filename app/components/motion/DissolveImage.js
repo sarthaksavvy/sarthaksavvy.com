@@ -33,7 +33,13 @@ export default function DissolveImage({ src, alt, className = "" }) {
         sizes="(max-width: 768px) 100vw, 50vw"
         className="object-cover grayscale-[0.6] scale-105 transition-transform duration-700"
       />
+      {/* The same photo again, revealed through a mask that follows the
+          cursor — a second copy of a picture that is already on screen, not a
+          second picture. Described it would be announced twice in a row, and
+          where this sits inside a link that is the link's whole accessible
+          name: "Ginger Ginger". Same treatment as ParticleImage's hover layer. */}
       <div
+        aria-hidden="true"
         className="absolute inset-0 transition-opacity duration-300"
         style={{
           opacity: hovering ? 1 : 0,
@@ -43,7 +49,7 @@ export default function DissolveImage({ src, alt, className = "" }) {
       >
         <Image
           src={src}
-          alt={alt}
+          alt=""
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover"

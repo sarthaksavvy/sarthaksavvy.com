@@ -113,7 +113,18 @@ export default async function SideProjects() {
                   i % 2 === 1 ? "md:mt-12" : ""
                 }`}
               >
-                <Link href={project.projectLink}>
+                {/* Clicking the screenshot goes where the heading link
+                    directly beneath it goes, under the same name. Two links to
+                    one destination is one extra Tab stop and one extra
+                    "AudioBolo, link" per card for anyone listing the page's
+                    links — fifteen entries for five projects. The picture stays
+                    clickable for a mouse; the heading is the one that is
+                    reachable and announced. */}
+                <Link
+                  href={project.projectLink}
+                  aria-hidden="true"
+                  tabIndex={-1}
+                >
                   <div className="h-64 relative bg-line">
                     <DissolveImage src={project.image} alt={project.name} className="h-full w-full" />
                   </div>
@@ -150,10 +161,17 @@ export default async function SideProjects() {
                     </ul>
                   </div>
 
+                  {/* "View Details" and "Visit Project" appear five times each
+                      on this page, and a links list or a link read on its own
+                      carries no card around it to say which project it belongs
+                      to. The visible label stays as it is; the accessible name
+                      names the project, and says which of the two leaves the
+                      site. */}
                   <div className="flex flex-wrap gap-3">
                     <MagneticButton
                       as={Link}
                       href={project.projectLink}
+                      aria-label={`View details about ${project.name}`}
                       className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors"
                     >
                       View Details
@@ -164,6 +182,7 @@ export default async function SideProjects() {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`Visit the ${project.name} website (opens in a new tab)`}
                       className="inline-flex items-center gap-2 border border-ink/20 px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors"
                     >
                       Visit Project
