@@ -22,6 +22,7 @@ import {
 import { PROJECTS } from "../content/projects";
 import { faqGroup } from "../content/faqs";
 import { getSubscriberCount } from "../../lib/youtube";
+import { EMAIL } from "../content/profile";
 
 const DESCRIPTION =
   "AI apps built by AI consultant Sarthak Shrivastava — an AI voice-to-text " +
@@ -206,7 +207,7 @@ export default async function SideProjects() {
             projects. Let&apos;s create something amazing together!
           </p>
           <MagneticButton
-            href="mailto:hello@sarthaksavvy.com"
+            href={`mailto:${EMAIL}`}
             className="bg-ink text-paper px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex items-center gap-2"
           >
             Get in Touch
