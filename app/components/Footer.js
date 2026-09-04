@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { socialIcons } from "./SocialIcons";
+import { EMAIL } from "../content/profile";
 
 const links = [
   { href: "/ai-consulting", label: "AI Consulting" },
@@ -49,10 +50,10 @@ export default function Footer() {
               {"// LET'S BUILD SOMETHING"}
             </p>
             <a
-              href="mailto:hello@sarthaksavvy.com"
+              href={`mailto:${EMAIL}`}
               className="font-display italic text-4xl sm:text-6xl hover:text-accent transition-colors"
             >
-              hello@sarthaksavvy.com
+              {EMAIL}
             </a>
           </div>
           <div className="flex gap-3 flex-wrap items-start">
