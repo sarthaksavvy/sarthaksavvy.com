@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { socialIcons } from "./SocialIcons";
-import { EMAIL } from "../content/profile";
+import { EMAIL, SOCIAL_PROFILES } from "../content/profile";
 
 const links = [
   { href: "/ai-consulting", label: "AI Consulting" },
@@ -17,28 +17,26 @@ const links = [
 // The icon is the whole of each link, so its alt text is the only accessible
 // name the link has. "x" on its own tells a screen reader nothing; the label
 // below is what gets read out instead.
-const socials = [
-  {
-    href: "https://linkedin.com/in/sarthaksavvy",
-    icon: "linkedin",
-    label: "Sarthak Shrivastava on LinkedIn",
-  },
-  {
-    href: "https://github.com/sarthaksavvy",
-    icon: "github",
-    label: "Sarthak Shrivastava on GitHub",
-  },
-  {
-    href: "https://instagram.com/sarthaksavvy",
-    icon: "instagram",
-    label: "Sarthak Shrivastava on Instagram",
-  },
-  {
-    href: "https://x.com/sarthaksavvy",
-    icon: "x",
-    label: "Sarthak Shrivastava on X",
-  },
+//
+// Hrefs come from content/profile.js's SOCIAL_PROFILES — the same list the
+// schema.org `sameAs` graph is built from — rather than being retyped here.
+// A profile URL that changes in one of the two places and not the other is
+// exactly the kind of drift content/profile.js exists to prevent.
+const FOOTER_SOCIAL_ICONS = [
+  { profileLabel: "LinkedIn", icon: "linkedin" },
+  { profileLabel: "GitHub", icon: "github" },
+  { profileLabel: "Instagram", icon: "instagram" },
+  { profileLabel: "X (Twitter)", icon: "x", displayName: "X" },
 ];
+
+const socials = FOOTER_SOCIAL_ICONS.map(({ profileLabel, icon, displayName }) => {
+  const profile = SOCIAL_PROFILES.find((p) => p.label === profileLabel);
+  return {
+    href: profile.href,
+    icon,
+    label: `Sarthak Shrivastava on ${displayName ?? profileLabel}`,
+  };
+});
 
 export default function Footer() {
   return (
