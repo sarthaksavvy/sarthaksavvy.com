@@ -256,6 +256,8 @@ export function isoDate(humanDate) {
  * conference listing and this page can be recognised as the same appearance.
  */
 export function speakingEventsSchema(events) {
+  const today = new Date().toISOString().slice(0, 10);
+
   const items = events
     .map((event) => {
       const startDate = isoDate(event.date);
@@ -267,7 +269,14 @@ export function speakingEventsSchema(events) {
         description: event.description,
         startDate,
         endDate: startDate,
-        eventStatus: "https://schema.org/EventScheduled",
+        // Google never shows Event rich results for a date that has already
+        // passed, and asserting "EventScheduled" for a talk that already
+        // happened is simply false — so the field is only emitted while the
+        // event is still upcoming. Past talks keep every other field; only
+        // this one temporal claim is dropped.
+        ...(startDate >= today
+          ? { eventStatus: "https://schema.org/EventScheduled" }
+          : {}),
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
         location: {
           "@type": "Place",
