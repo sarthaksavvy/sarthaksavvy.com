@@ -142,7 +142,7 @@ export default async function FaqPage() {
             <div className="flex flex-wrap gap-4">
               <MagneticButton
                 href={`mailto:${EMAIL}`}
-                className="bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex"
+                className="bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink transition-colors inline-flex"
               >
                 Email Me
               </MagneticButton>

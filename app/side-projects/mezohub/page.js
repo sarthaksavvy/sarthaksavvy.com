@@ -156,7 +156,7 @@ export default function MezohubProject() {
                 href="https://mezohub.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 rounded-full font-medium hover:bg-accent transition-colors"
+                className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 rounded-full font-medium hover:bg-accent hover:text-ink transition-colors"
               >
                 Visit Mezohub
                 <ExternalLink size={18} />
@@ -300,7 +300,7 @@ export default function MezohubProject() {
               href="https://mezohub.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-ink text-paper px-8 py-3 rounded-full font-medium hover:bg-accent transition-colors inline-flex items-center gap-2"
+              className="bg-ink text-paper px-8 py-3 rounded-full font-medium hover:bg-accent hover:text-ink transition-colors inline-flex items-center gap-2"
             >
               Visit Platform
               <ExternalLink size={20} />

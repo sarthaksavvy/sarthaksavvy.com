@@ -38,7 +38,7 @@ export default function Error({ error, reset }) {
           <button
             type="button"
             onClick={() => reset()}
-            className="bg-ink text-paper px-7 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex items-center gap-3"
+            className="bg-ink text-paper px-7 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink transition-colors inline-flex items-center gap-3"
           >
             Try again
             <RotateCcw size={16} aria-hidden="true" />

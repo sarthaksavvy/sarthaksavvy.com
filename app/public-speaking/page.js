@@ -126,7 +126,7 @@ export default async function SpeakingTimeline() {
           </p>
           <MagneticButton
             href={`mailto:${EMAIL}`}
-            className="bg-ink text-paper px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex items-center gap-2"
+            className="bg-ink text-paper px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink transition-colors inline-flex items-center gap-2"
           >
             Get in Touch
             <ArrowRight size={16} />

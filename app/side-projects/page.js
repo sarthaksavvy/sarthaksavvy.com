@@ -173,7 +173,7 @@ export default async function SideProjects() {
                       as={Link}
                       href={project.projectLink}
                       aria-label={`View details about ${project.name}`}
-                      className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors"
+                      className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink transition-colors"
                     >
                       View Details
                       <ArrowRight size={16} />
@@ -208,7 +208,7 @@ export default async function SideProjects() {
           </p>
           <MagneticButton
             href={`mailto:${EMAIL}`}
-            className="bg-ink text-paper px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex items-center gap-2"
+            className="bg-ink text-paper px-8 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink transition-colors inline-flex items-center gap-2"
           >
             Get in Touch
             <ArrowRight size={16} />
