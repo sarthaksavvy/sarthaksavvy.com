@@ -173,7 +173,7 @@ export default function BackstageCutProject() {
                 href={SITE}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 rounded-full font-medium hover:bg-accent transition-colors"
+                className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 rounded-full font-medium hover:bg-accent hover:text-ink transition-colors"
               >
                 Try Backstage Cut
                 <ExternalLink size={18} />
@@ -348,7 +348,7 @@ export default function BackstageCutProject() {
               href={SITE}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-ink text-paper px-8 py-4 rounded-full font-medium hover:bg-accent transition-colors text-lg"
+              className="inline-flex items-center gap-2 bg-ink text-paper px-8 py-4 rounded-full font-medium hover:bg-accent hover:text-ink transition-colors text-lg"
             >
               Visit Backstage Cut
               <ExternalLink size={20} />

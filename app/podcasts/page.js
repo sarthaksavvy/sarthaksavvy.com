@@ -174,7 +174,7 @@ export default async function Podcasts() {
                       href={p.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-ink text-paper hover:bg-accent transition-colors px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase inline-flex"
+                      className="bg-ink text-paper hover:bg-accent hover:text-ink transition-colors px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase inline-flex"
                     >
                       {p.label}
                     </MagneticButton>

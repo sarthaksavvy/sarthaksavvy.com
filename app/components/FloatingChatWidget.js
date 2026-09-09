@@ -135,7 +135,7 @@ export default function FloatingChatWidget({
             <button
               type="submit"
               disabled={!question.trim()}
-              className="bg-ink text-paper px-4 py-2 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-ink text-paper px-4 py-2 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Ask
             </button>
@@ -157,7 +157,7 @@ export default function FloatingChatWidget({
       type="button"
       onClick={() => onOpenChange(true)}
       aria-expanded={false}
-      className={`pointer-events-auto max-w-full text-left bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-3 ${className}`}
+      className={`pointer-events-auto max-w-full text-left bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-3 ${className}`}
     >
       <span>Ask anything about Sarthak</span>
       <span

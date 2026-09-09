@@ -49,7 +49,7 @@ export default function NotFound() {
                 href={destination.href}
                 className={
                   i === 0
-                    ? "bg-ink text-paper px-7 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors inline-flex items-center gap-3"
+                    ? "bg-ink text-paper px-7 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink transition-colors inline-flex items-center gap-3"
                     : "border border-ink/25 text-ink px-7 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors inline-flex items-center gap-3"
                 }
               >

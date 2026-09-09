@@ -223,7 +223,7 @@ export default function EntryGate() {
             <div className="flex items-center justify-center gap-4">
               <button
                 onClick={() => enter(true)}
-                className="font-mono text-xs tracking-widest px-6 py-3 rounded-full border border-ink bg-ink text-paper hover:bg-accent hover:border-accent transition-colors"
+                className="font-mono text-xs tracking-widest px-6 py-3 rounded-full border border-ink bg-ink text-paper hover:bg-accent hover:text-ink hover:border-accent transition-colors"
               >
                 SOUND ON
               </button>
