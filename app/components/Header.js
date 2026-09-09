@@ -4,14 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { COURSES_URL, YOUTUBE_URL } from "../content/profile";
 
 const navLinks = [
   { href: "/ai-consulting", label: "AI Consulting" },
   { href: "/podcasts", label: "Podcasts" },
   { href: "/public-speaking", label: "Public Speaking" },
   { href: "/side-projects", label: "Side Projects" },
-  { href: "https://youtube.com/@sarthaksavvy", label: "Youtube", external: true },
-  { href: "https://courses.sarthaksavvy.com/", label: "Courses", external: true },
+  { href: YOUTUBE_URL, label: "Youtube", external: true },
+  { href: COURSES_URL, label: "Courses", external: true },
   { href: "/about-me", label: "About Me" },
 ];
 

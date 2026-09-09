@@ -11,6 +11,13 @@ import { SITE_NAME } from "./seo";
 // was removed when that SVG replaced it, but this manifest kept pointing at
 // the now-deleted file, so the only icon a visitor's browser could find here
 // was a 404 and "Add to Home Screen" had nothing to show.
+//
+// The SVG alone passes in most browsers, but Android's install prompt and a
+// Lighthouse PWA installability audit both look for a bitmap in the manifest
+// at 192x192 and 512x512 specifically — an SVG-only icon set fails that
+// check even though it renders fine. `/icon-192.png` and `/icon-512.png` are
+// the same mark rendered at build time (see app/icon-192.png/route.js and
+// app/icon-512.png/route.js) so there is a real bitmap at both sizes.
 export default function manifest() {
   return {
     name: SITE_NAME,
@@ -25,6 +32,16 @@ export default function manifest() {
         src: "/icon.svg",
         sizes: "any",
         type: "image/svg+xml",
+      },
+      {
+        src: "/icon-192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        src: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
       },
     ],
   };
