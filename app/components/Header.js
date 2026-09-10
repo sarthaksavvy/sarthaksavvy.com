@@ -44,6 +44,13 @@ export default function Header() {
   const toggleRef = useRef(null);
   const panelRef = useRef(null);
   const wasOpenRef = useRef(false);
+  // True unless a mobile nav link is about to navigate the page away, in
+  // which case restoring focus to the toggle button on close would fight the
+  // navigation: the panel unmounts, this effect runs, and focus would snap
+  // back to "Open menu" on whatever page the link just navigated to instead
+  // of following the link. Escape and re-toggling the button both leave this
+  // true, so they keep the original close-and-restore behavior.
+  const restoreFocusOnCloseRef = useRef(true);
 
   useEffect(() => {
     setIsOpen(false);
@@ -79,7 +86,10 @@ export default function Header() {
 
     if (wasOpenRef.current) {
       wasOpenRef.current = false;
-      toggleRef.current?.focus();
+      if (restoreFocusOnCloseRef.current) {
+        toggleRef.current?.focus();
+      }
+      restoreFocusOnCloseRef.current = true;
     }
   }, [isOpen]);
 
@@ -165,7 +175,14 @@ export default function Header() {
                     aria-current={
                       !link.external && pathname === link.href ? "page" : undefined
                     }
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      // External links open in a new tab and leave this page
+                      // in place, so the toggle should still get focus back.
+                      // Internal links navigate this page away — see the ref
+                      // declaration above for why that case skips it.
+                      if (!link.external) restoreFocusOnCloseRef.current = false;
+                      setIsOpen(false);
+                    }}
                     className="font-display italic text-2xl"
                   >
                     {link.label}
