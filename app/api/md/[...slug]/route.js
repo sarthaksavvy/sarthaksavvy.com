@@ -32,7 +32,8 @@ content in one file is at ${SITE_URL}/llms-full.txt.
 }
 
 export async function GET(request, { params }) {
-  const slug = (params.slug ?? []).join("/");
+  const { slug: slugParts } = await params;
+  const slug = (slugParts ?? []).join("/");
   const page = markdownPages.find((candidate) => candidate.slug === slug);
   if (!page) return notFound();
 
