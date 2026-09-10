@@ -35,7 +35,7 @@ const markdownComponents = {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+      className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
     >
       {children}
     </a>
@@ -224,7 +224,7 @@ function AskPageContent() {
         <div className="mb-16 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-7">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              Ask <span className="italic text-accent">Anything.</span>
+              Ask <span className="italic text-accentText">Anything.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-5 flex items-end">

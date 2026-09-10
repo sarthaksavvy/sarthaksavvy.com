@@ -15,7 +15,7 @@ export default function SingleEvent({ event, index = 0 }) {
     >
       <div className="absolute left-0 -translate-x-1/2 flex flex-col items-center">
         <div className="w-4 h-4 rounded-full bg-accent" />
-        <span className="text-sm text-accent mt-2 font-mono">{event.year}</span>
+        <span className="text-sm text-accentText mt-2 font-mono">{event.year}</span>
       </div>
 
       <div className="border border-line rounded-2xl hover:border-ink/40 transition-colors">
@@ -23,7 +23,7 @@ export default function SingleEvent({ event, index = 0 }) {
           <div className="flex justify-between items-start mb-4">
             <div>
               <h2 className="font-display italic text-2xl mb-2">{event.title}</h2>
-              <p className="text-accent font-medium mb-2">{event.conference}</p>
+              <p className="text-accentText font-medium mb-2">{event.conference}</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-4 text-sm text-muted mb-6 font-mono">
@@ -49,7 +49,7 @@ export default function SingleEvent({ event, index = 0 }) {
               {event.slides && (
                 <a
                   href={event.slides}
-                  className="flex items-center gap-2 text-accent hover:underline"
+                  className="flex items-center gap-2 text-accentText hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -60,7 +60,7 @@ export default function SingleEvent({ event, index = 0 }) {
               {event.recording && (
                 <a
                   href={event.recording}
-                  className="flex items-center gap-2 text-accent hover:underline"
+                  className="flex items-center gap-2 text-accentText hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

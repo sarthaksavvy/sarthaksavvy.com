@@ -22,7 +22,7 @@ export default function Hero({ subscribers = "156K+" }) {
           <motion.p
             initial="hidden"
             animate="show"
-            className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6 flex flex-wrap gap-x-2"
+            className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accentText mb-6 flex flex-wrap gap-x-2"
           >
             {["Founder", "Builder", "AI Consultant", "10+ Years"].map((word, i) => (
               <span key={word} className="overflow-hidden inline-block">
@@ -61,7 +61,7 @@ export default function Hero({ subscribers = "156K+" }) {
                   }}
                   className="block"
                 >
-                  {i === 1 ? <span className="italic text-accent">{line}.</span> : line}
+                  {i === 1 ? <span className="italic text-accentText">{line}.</span> : line}
                 </motion.span>
               </span>
             ))}

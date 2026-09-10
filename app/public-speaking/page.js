@@ -64,7 +64,7 @@ export default async function SpeakingTimeline() {
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              Public <span className="italic text-accent">Speaking.</span>
+              Public <span className="italic text-accentText">Speaking.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-4 flex items-end">
@@ -94,7 +94,7 @@ export default async function SpeakingTimeline() {
               enquiries to{" "}
               <a
                 href={`mailto:${EMAIL}`}
-                className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
               >
                 {EMAIL}
               </a>

@@ -50,7 +50,7 @@ export default function Footer() {
             </p>
             <a
               href={`mailto:${EMAIL}`}
-              className="font-display italic text-4xl sm:text-6xl hover:text-accent transition-colors"
+              className="font-display italic text-4xl sm:text-6xl hover:text-accentText transition-colors"
             >
               {EMAIL}
             </a>

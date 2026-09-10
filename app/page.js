@@ -129,7 +129,7 @@ export default async function Home() {
                   href="https://bitfumes.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                  className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
                 >
                   Bitfumes
                 </a>
@@ -138,14 +138,14 @@ export default async function Home() {
                 students on Udemy, hosts the{" "}
                 <Link
                   href="/podcasts"
-                  className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                  className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
                 >
                   Laravel India Podcast
                 </Link>
                 , and{" "}
                 <Link
                   href="/public-speaking"
-                  className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                  className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
                 >
                   speaks at conferences
                 </Link>{" "}
@@ -195,7 +195,7 @@ export default async function Home() {
                     href={item.href}
                     className="group block h-full border border-line rounded-3xl p-8 bg-paper hover:border-ink/40 transition-colors"
                   >
-                    <h3 className="font-display italic text-2xl mb-3 group-hover:text-accent transition-colors">
+                    <h3 className="font-display italic text-2xl mb-3 group-hover:text-accentText transition-colors">
                       {item.label}
                     </h3>
                     <p className="text-ink/70 leading-relaxed">
@@ -214,7 +214,7 @@ export default async function Home() {
               More answers are on the{" "}
               <Link
                 href="/faq"
-                className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
               >
                 frequently asked questions page
               </Link>

@@ -202,7 +202,7 @@ export default function BackstageCutProject() {
         {/* Project Overview */}
         <div className="mb-20">
           <h2
-            className="font-display italic text-3xl mb-6 text-accent"
+            className="font-display italic text-3xl mb-6 text-accentText"
             id="overview"
           >
             Project Overview
@@ -228,7 +228,7 @@ export default function BackstageCutProject() {
 
         {/* Key Features */}
         <div className="mb-20" id="features">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Key Features
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -249,7 +249,7 @@ export default function BackstageCutProject() {
 
         {/* How It Works */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             How It Works
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">
@@ -269,7 +269,7 @@ export default function BackstageCutProject() {
 
         {/* Pricing */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Pricing
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -280,7 +280,7 @@ export default function BackstageCutProject() {
               >
                 <div className="flex items-baseline justify-between mb-6">
                   <h3 className="text-2xl font-bold">{plan.name}</h3>
-                  <span className="font-display italic text-3xl text-accent">
+                  <span className="font-display italic text-3xl text-accentText">
                     {plan.price}
                   </span>
                 </div>
@@ -302,7 +302,7 @@ export default function BackstageCutProject() {
 
         {/* Requirements */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Requirements
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -335,7 +335,7 @@ export default function BackstageCutProject() {
 
         {/* CTA */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Get Started Now
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg text-center">
