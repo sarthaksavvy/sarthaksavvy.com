@@ -15,7 +15,7 @@
 export const NAME = "Sarthak Shrivastava";
 export const HANDLE = "sarthaksavvy";
 export const EMAIL = "hello@sarthaksavvy.com";
-export const BOOKING_URL = "https://cal.com/sarthaksavvy";
+export const BOOKING_URL = "https://cal.com/sarthaksavvy/ai-consultancy-discovery-call";
 export const COURSES_URL = "https://courses.sarthaksavvy.com/";
 export const YOUTUBE_URL = "https://youtube.com/@sarthaksavvy";
 
