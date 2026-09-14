@@ -66,7 +66,7 @@ const structuredData = graph(
     path: "/side-projects/expensorr",
     image: ogImages.expensorr.url,
     applicationCategory: "FinanceApplication",
-    operatingSystem: "iOS",
+    operatingSystem: project.platform,
     features: project.features,
   }),
   breadcrumbSchema(BREADCRUMB_TRAIL)
