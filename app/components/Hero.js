@@ -4,10 +4,11 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { StaggerGroup, StaggerItem } from "./motion/Stagger";
 import MagneticButton from "./motion/MagneticButton";
+import { FALLBACK_SUBSCRIBERS } from "../content/profile";
 
 const ParticleImage = dynamic(() => import("./motion/ParticleImage"), { ssr: false });
 
-export default function Hero({ subscribers = "156K+" }) {
+export default function Hero({ subscribers = FALLBACK_SUBSCRIBERS }) {
   return (
     // Was a <main>. The landmark now comes from the root layout, so keeping
     // one here would nest a second one inside it and split the home page's
