@@ -49,12 +49,26 @@ const platforms = [
 ];
 
 // Everyone named on the page, as records rather than as a clause in a
-// sentence. The same three feed the PodcastSeries `actor` list below.
+// sentence. The same three feed the PodcastSeries `actor` list below, the
+// two prose paragraphs above it, and the guest cards further down — one
+// list instead of four independent copies that can drift out of sync (the
+// two paragraphs used to give Taylor Otwell two different job titles).
 const guests = [
   { name: "Taylor Otwell", role: "Creator of Laravel" },
   { name: "James Brooks", role: "Laravel core team member" },
   { name: "Freek Van der Herten", role: "Laravel developer at Spatie" },
 ];
+
+// "A (x), B (y) and C (z)" — the phrasing both prose paragraphs need.
+function guestSentence(list) {
+  return list
+    .map(({ name, role }) => `${name} (${role})`)
+    .reduce((sentence, entry, i, arr) => {
+      if (i === 0) return entry;
+      const sep = i === arr.length - 1 ? " and " : ", ";
+      return `${sentence}${sep}${entry}`;
+    }, "");
+}
 
 // The same trail feeds the BreadcrumbList markup and the visible
 // breadcrumb nav below, so the two cannot drift apart.
@@ -131,10 +145,9 @@ export default async function Podcasts() {
           <AnswerBlock className="mb-16">
             <p>
               The Laravel India Podcast is hosted by Sarthak Shrivastava and
-              features guests from the worldwide Laravel community, including
-              Taylor Otwell (creator of Laravel), James Brooks (Laravel core
-              team) and Freek Van der Herten (Spatie). There are 12 or more
-              episodes, available on Apple Podcasts, Spotify and YouTube.
+              features guests from the worldwide Laravel community, including{" "}
+              {guestSentence(guests)}. There are 12 or more episodes,
+              available on Apple Podcasts, Spotify and YouTube.
             </p>
           </AnswerBlock>
         </Reveal>
@@ -156,10 +169,9 @@ export default async function Podcasts() {
                   Laravel India Podcast
                 </h2>
                 <p className="text-ink/70 leading-relaxed">
-                  Laravel India Podcast is a podcast that has guest from Laravel
-                  Community from worldwide including peoples like Taylor Otwell
-                  (Laravel CEO), James Brooks (Laravel Core Team Member), Freek
-                  Van der Herten (Spatie Laravel Developer), and many more.
+                  Laravel India Podcast is a podcast with guests from the
+                  Laravel community worldwide, including{" "}
+                  {guestSentence(guests)}, and many more.
                 </p>
                 <div className="flex gap-4 text-sm text-muted font-mono">
                   <span className="flex items-center gap-2">
