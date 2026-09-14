@@ -4,8 +4,18 @@ import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 import { getSubscriberCount } from "../../../lib/youtube";
 import { buildServices, credentials } from "../../content/consulting";
+import {
+  EMAIL,
+  COURSES_URL,
+  SOCIAL_PROFILES,
+  YOUTUBE_URL,
+} from "../../content/profile";
+import { SITE_URL } from "../../routes";
 
-const SITE_URL = "https://sarthaksavvy.com";
+const LINKEDIN_URL = SOCIAL_PROFILES.find(
+  (profile) => profile.label === "LinkedIn"
+)?.href;
+
 // Pinned deliberately: the "~...-latest" alias resolves to a snapshot served by
 // a slower provider pool (13-66s vs 5-7s in benchmarks).
 const MODEL = "deepseek/deepseek-v4-flash";
@@ -75,7 +85,7 @@ function linkedinContent(subscribers) {
 Sarthak Shrivastava (sarthaksavvy) is a full-stack developer, Docker Captain, and founder of Bitfumes.
 He works as a Software Engineer at Pfizer and is a content creator with ${subscribers} YouTube subscribers and 100K+ Udemy students.
 His expertise includes Laravel, JavaScript, Python, AWS, Docker, AI/LLMs, and he's passionate about building and automating daily tasks.
-LinkedIn: https://linkedin.com/in/sarthaksavvy
+LinkedIn: ${LINKEDIN_URL}
 `;
 }
 
@@ -109,11 +119,11 @@ Credentials:
 ${creds}
 
 Contact:
-- Website: https://sarthaksavvy.com
-- LinkedIn: https://linkedin.com/in/sarthaksavvy
-- YouTube: https://youtube.com/@sarthaksavvy
-- Email: hello@sarthaksavvy.com
-- Courses: https://courses.sarthaksavvy.com/
+- Website: ${SITE_URL}
+- LinkedIn: ${LINKEDIN_URL}
+- YouTube: ${YOUTUBE_URL}
+- Email: ${EMAIL}
+- Courses: ${COURSES_URL}
 
 Side Projects:
 - Mezohub: A centralized platform for connecting developers, designers, and entrepreneurs
