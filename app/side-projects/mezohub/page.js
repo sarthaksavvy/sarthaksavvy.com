@@ -61,7 +61,7 @@ const structuredData = graph(
     url: SITE,
     path: "/side-projects/mezohub",
     image: ogImages.mezohub.url,
-    applicationCategory: "DeveloperApplication",
+    applicationCategory: project.category,
     operatingSystem: "Web",
     features: project.features,
   }),
