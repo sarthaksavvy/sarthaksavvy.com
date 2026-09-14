@@ -30,11 +30,11 @@ export default function NotFound() {
     <div className="py-10 px-6 sm:px-10 min-h-[70vh] flex items-center">
       <div className="max-w-[1400px] mx-auto w-full">
         <Reveal>
-          <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6">
+          <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accentText mb-6">
             404
           </p>
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-            Page not <span className="italic text-accent">found.</span>
+            Page not <span className="italic text-accentText">found.</span>
           </h1>
           <p className="text-lg text-ink/70 mb-12 max-w-lg leading-relaxed">
             The link is broken, or the page moved. Here&apos;s where everyone

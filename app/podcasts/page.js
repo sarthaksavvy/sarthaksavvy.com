@@ -113,7 +113,7 @@ export default async function Podcasts() {
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              My <span className="italic text-accent">Podcast.</span>
+              My <span className="italic text-accentText">Podcast.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-4 flex items-end">

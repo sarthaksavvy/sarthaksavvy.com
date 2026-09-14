@@ -85,11 +85,11 @@ export default async function AiConsulting() {
         <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         <div className="mb-16 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
-            <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6">
+            <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accentText mb-6">
               AI Consulting
             </p>
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              Ship the AI feature, <span className="italic text-accent">not the demo.</span>
+              Ship the AI feature, <span className="italic text-accentText">not the demo.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-4 flex items-end">
@@ -155,7 +155,7 @@ export default async function AiConsulting() {
             {credentials.map((item) => (
               <StaggerItem key={item.label}>
                 <div className="h-full border border-line rounded-3xl p-8 bg-paper">
-                  <div className="font-display text-3xl sm:text-4xl text-accent mb-2">
+                  <div className="font-display text-3xl sm:text-4xl text-accentText mb-2">
                     {item.value}
                   </div>
                   <div className="text-sm text-ink/70">{item.label}</div>
@@ -169,14 +169,14 @@ export default async function AiConsulting() {
               here — is on the{" "}
               <Link
                 href="/about-me"
-                className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
               >
                 about page
               </Link>
               , and the AI products I have shipped are in{" "}
               <Link
                 href="/side-projects"
-                className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
               >
                 side projects
               </Link>
@@ -198,7 +198,7 @@ export default async function AiConsulting() {
                       <h3 className="font-display italic text-2xl">
                         {format.name}
                       </h3>
-                      <span className="font-mono text-xs tracking-widest text-accent shrink-0">
+                      <span className="font-mono text-xs tracking-widest text-accentText shrink-0">
                         {format.price}
                       </span>
                     </div>

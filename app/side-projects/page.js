@@ -77,7 +77,7 @@ export default async function SideProjects() {
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              Side <span className="italic text-accent">Projects.</span>
+              Side <span className="italic text-accentText">Projects.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-4 flex items-end">
@@ -142,7 +142,7 @@ export default async function SideProjects() {
                     ))}
                   </div>
                   <Link href={project.projectLink}>
-                    <h2 className="font-display italic text-3xl mb-3 hover:text-accent transition-colors">
+                    <h2 className="font-display italic text-3xl mb-3 hover:text-accentText transition-colors">
                       {project.name}
                     </h2>
                   </Link>

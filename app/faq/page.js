@@ -73,11 +73,11 @@ export default async function FaqPage() {
         <Breadcrumbs trail={BREADCRUMB_TRAIL} />
         <div className="mb-16 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
-            <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6">
+            <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accentText mb-6">
               FAQ
             </p>
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              Questions, <span className="italic text-accent">answered.</span>
+              Questions, <span className="italic text-accentText">answered.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-4 flex items-end">
@@ -132,7 +132,7 @@ export default async function FaqPage() {
               Ask it directly — the{" "}
               <Link
                 href="/ask"
-                className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
               >
                 ask box
               </Link>{" "}

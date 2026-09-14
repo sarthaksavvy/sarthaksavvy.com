@@ -103,7 +103,7 @@ const AboutPage = async () => {
         <div className="mb-16 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              About <span className="italic text-accent">me.</span>
+              About <span className="italic text-accentText">me.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-4 flex items-end">
@@ -141,7 +141,7 @@ const AboutPage = async () => {
               />
             </div>
             <div className="md:col-span-7 space-y-6">
-              <h2 className="font-display italic text-4xl text-accent">
+              <h2 className="font-display italic text-4xl text-accentText">
                 Hello, I&apos;m Sarthak
               </h2>
               <p className="text-ink/70 text-lg leading-relaxed">
@@ -155,7 +155,7 @@ const AboutPage = async () => {
                 language model into a product,{" "}
                 <Link
                   href="/ai-consulting"
-                  className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                  className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
                 >
                   that is what I do as a consultant
                 </Link>

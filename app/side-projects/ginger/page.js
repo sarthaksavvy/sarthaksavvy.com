@@ -175,7 +175,7 @@ export default function GingerProject() {
 
         {/* Project Overview */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-6 text-accent" id="overview">
+          <h2 className="font-display italic text-3xl mb-6 text-accentText" id="overview">
             Project Overview
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">
@@ -199,7 +199,7 @@ export default function GingerProject() {
 
         {/* Key Features */}
         <div className="mb-20" id="features">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Key Features
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -220,7 +220,7 @@ export default function GingerProject() {
 
         {/* How It Works */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             How It Works
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">
@@ -262,7 +262,7 @@ export default function GingerProject() {
 
         {/* Download Section */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Get Started Now
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg text-center">

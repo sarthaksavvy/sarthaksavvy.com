@@ -16,7 +16,7 @@ export default function KeyFacts({ facts, asOf, className = "" }) {
             <dt className="text-xs font-mono uppercase tracking-widest text-muted mb-2">
               {fact.label}
             </dt>
-            <dd className="font-display text-2xl sm:text-3xl text-accent leading-tight">
+            <dd className="font-display text-2xl sm:text-3xl text-accentText leading-tight">
               {fact.value}
             </dd>
             {fact.note && (

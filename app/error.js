@@ -23,11 +23,11 @@ export default function Error({ error, reset }) {
   return (
     <div className="py-10 px-6 sm:px-10 min-h-[70vh] flex items-center">
       <div className="max-w-[1400px] mx-auto w-full">
-        <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accent mb-6">
+        <p className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accentText mb-6">
           Error
         </p>
         <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-          Something <span className="italic text-accent">broke.</span>
+          Something <span className="italic text-accentText">broke.</span>
         </h1>
         <p className="text-lg text-ink/70 mb-12 max-w-lg leading-relaxed">
           This page hit an unexpected error. It has been logged — in the

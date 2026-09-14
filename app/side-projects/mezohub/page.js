@@ -176,7 +176,7 @@ export default function MezohubProject() {
 
         {/* Project Overview */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-6 text-accent">
+          <h2 className="font-display italic text-3xl mb-6 text-accentText">
             Project Overview
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">
@@ -197,7 +197,7 @@ export default function MezohubProject() {
 
         {/* Key Features */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Key Features
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -218,7 +218,7 @@ export default function MezohubProject() {
 
         {/* Benefits for Different Users */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Who Benefits
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -249,7 +249,7 @@ export default function MezohubProject() {
 
         {/* Technologies Used */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-6 text-accent">
+          <h2 className="font-display italic text-3xl mb-6 text-accentText">
             Technologies Used
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">

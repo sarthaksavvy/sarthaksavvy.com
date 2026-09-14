@@ -184,7 +184,7 @@ export default function ExpensorrProject() {
 
         {/* Project Overview */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-6 text-accent">
+          <h2 className="font-display italic text-3xl mb-6 text-accentText">
             Project Overview
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">
@@ -207,7 +207,7 @@ export default function ExpensorrProject() {
 
         {/* Key Features */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             Key Features
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -228,7 +228,7 @@ export default function ExpensorrProject() {
 
         {/* App Screenshots */}
         {/* <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-8 text-accent">
+          <h2 className="font-display italic text-3xl mb-8 text-accentText">
             App Screenshots
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">
@@ -279,7 +279,7 @@ export default function ExpensorrProject() {
 
         {/* Technologies Used */}
         <div className="mb-20">
-          <h2 className="font-display italic text-3xl mb-6 text-accent">
+          <h2 className="font-display italic text-3xl mb-6 text-accentText">
             Technologies Used
           </h2>
           <div className="bg-paper border border-line rounded-3xl p-8 shadow-lg">
