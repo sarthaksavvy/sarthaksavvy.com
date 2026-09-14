@@ -57,7 +57,7 @@ export function buildFaqGroups(subscribers = FALLBACK_SUBSCRIBERS) {
           question: "What is Bitfumes?",
           answer:
             "Bitfumes is the developer education company and YouTube channel founded by Sarthak Shrivastava. It publishes tutorials and courses on Laravel, Docker, AWS, JavaScript and AI for software engineers, and is the channel behind the majority of his " +
-            FALLBACK_SUBSCRIBERS +
+            subscribers +
             " YouTube subscribers.",
         },
         {
@@ -110,7 +110,7 @@ export function buildFaqGroups(subscribers = FALLBACK_SUBSCRIBERS) {
           question: "Can you help a team that is new to LLMs?",
           answer:
             "That is most of the work. Teaching is what I have done longest, with " +
-            FALLBACK_SUBSCRIBERS +
+            subscribers +
             " subscribers on YouTube and over 100K students on Udemy, and the same approach works inside a company: build something real, then hand over how it works.",
         },
         {
