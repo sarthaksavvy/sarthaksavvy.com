@@ -68,6 +68,15 @@ import { SITE_URL, indexableRoutes, markdownSlug } from "./app/routes.js";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    // Next.js ships a default allowlist for this optimization (it already
+    // covers lucide-react), but framer-motion isn't on it. Nine client
+    // components import named exports from it (motion, useMotionValue,
+    // useReducedMotion, useSpring, AnimatePresence...); without this, each of
+    // those pulls in the package's full barrel file instead of just the
+    // submodules it actually uses.
+    optimizePackageImports: ["framer-motion"],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
