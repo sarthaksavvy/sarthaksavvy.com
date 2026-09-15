@@ -320,14 +320,15 @@ export default function ExpensorrProject() {
             efficiently. Available on iOS and Android.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
+            {/* Copy above promises both platforms, so this has to land on the
+                panel with both QR codes rather than on the iOS-only SITE link
+                the hero's "Download on iOS" button uses. */}
             <a
-              href={SITE}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#download"
               className="bg-ink text-paper px-8 py-3 rounded-full font-medium hover:bg-accent hover:text-ink transition-colors inline-flex items-center gap-2"
             >
               Download Now
-              <ExternalLink size={20} />
+              <ArrowRight size={20} />
             </a>
             <Link
               href="/side-projects"
