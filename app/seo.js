@@ -52,7 +52,7 @@ export const ogImages = {
     url: "/images/projects/mezohub.jpg",
     width: 1563,
     height: 1563,
-    alt: "Mezohub, a backend deployment platform",
+    alt: "Mezohub, a collaboration platform for developers, designers and entrepreneurs",
   },
 };
 
