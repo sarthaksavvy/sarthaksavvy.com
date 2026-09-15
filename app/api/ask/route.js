@@ -4,6 +4,7 @@ import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 import { getSubscriberCount } from "../../../lib/youtube";
 import { buildServices, credentials } from "../../content/consulting";
+import { PROJECTS } from "../../content/projects";
 import {
   EMAIL,
   COURSES_URL,
@@ -94,6 +95,9 @@ function fallbackContent(subscribers) {
     .map((service) => `- ${service.title}: ${service.summary}`)
     .join("\n");
   const creds = credentials.map((c) => `- ${c.value}: ${c.label}`).join("\n");
+  const projects = PROJECTS.map(
+    (project) => `- ${project.name}: ${project.summary}`
+  ).join("\n");
 
   return `
 === Fallback Information about Sarthak Shrivastava ===
@@ -126,9 +130,7 @@ Contact:
 - Courses: ${COURSES_URL}
 
 Side Projects:
-- Mezohub: A centralized platform for connecting developers, designers, and entrepreneurs
-- Expensorr: A simple yet powerful expense tracking application
-- Various other innovative projects showcasing technical skills
+${projects}
 `;
 }
 
