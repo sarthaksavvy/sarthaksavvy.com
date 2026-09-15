@@ -135,8 +135,9 @@ const AboutPage = async () => {
               <Image
                 src="/images/about-me.jpg"
                 alt="Sarthak Shrivastava, AI consultant and Docker Captain"
-                width={500}
-                height={500}
+                width={1200}
+                height={1504}
+                sizes="(min-width: 768px) 42vw, 100vw"
                 className="object-cover w-full h-auto"
               />
             </div>
