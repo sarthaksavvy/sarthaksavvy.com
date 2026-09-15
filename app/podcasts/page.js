@@ -1,4 +1,4 @@
-import { Clock } from "lucide-react";
+import { Clock, Youtube } from "lucide-react";
 import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
@@ -54,9 +54,24 @@ const platforms = [
 // list instead of four independent copies that can drift out of sync (the
 // two paragraphs used to give Taylor Otwell two different job titles).
 const guests = [
-  { name: "Taylor Otwell", role: "Creator of Laravel" },
-  { name: "James Brooks", role: "Laravel core team member" },
-  { name: "Freek Van der Herten", role: "Laravel developer at Spatie" },
+  {
+    name: "Taylor Otwell",
+    role: "Creator of Laravel",
+    photo: "/images/podcast-guests/taylor-otwell.jpg",
+    youtube: "https://www.youtube.com/watch?v=7rnXSu3gfVo",
+  },
+  {
+    name: "James Brooks",
+    role: "Laravel core team member",
+    photo: "/images/podcast-guests/james-brooks.jpg",
+    youtube: "https://www.youtube.com/@laravelindiapodcast",
+  },
+  {
+    name: "Freek Van der Herten",
+    role: "Laravel developer at Spatie",
+    photo: "/images/podcast-guests/freek-van-der-herten.jpg",
+    youtube: "https://www.youtube.com/@laravelindiapodcast",
+  },
 ];
 
 // "A (x), B (y) and C (z)" — the phrasing both prose paragraphs need.
@@ -206,19 +221,44 @@ export default async function Podcasts() {
             <SectionHeading>Guests</SectionHeading>
           </Reveal>
           <Reveal>
-            <dl className="grid md:grid-cols-3 gap-8 mb-24">
+            <div className="grid md:grid-cols-3 gap-8 mb-24">
               {guests.map((guest) => (
-                <div
+                <TiltCard
                   key={guest.name}
-                  className="border border-line rounded-3xl p-8 bg-paper"
+                  className="group border border-line rounded-3xl overflow-hidden bg-paper hover:border-ink/40 transition-colors"
                 >
-                  <dt className="font-display italic text-2xl mb-3">
-                    {guest.name}
-                  </dt>
-                  <dd className="text-ink/70 leading-relaxed">{guest.role}</dd>
-                </div>
+                  <a
+                    href={guest.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Watch ${guest.name} on the Laravel India Podcast YouTube channel`}
+                    className="block"
+                  >
+                    <div className="relative aspect-square overflow-hidden">
+                      <Image
+                        src={guest.photo}
+                        alt={guest.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(min-width: 768px) 33vw, 100vw"
+                      />
+                    </div>
+                    <div className="p-8">
+                      <h3 className="font-display italic text-2xl mb-3">
+                        {guest.name}
+                      </h3>
+                      <p className="text-ink/70 leading-relaxed mb-4">
+                        {guest.role}
+                      </p>
+                      <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-accentText">
+                        <Youtube size={16} />
+                        Watch on YouTube
+                      </span>
+                    </div>
+                  </a>
+                </TiltCard>
               ))}
-            </dl>
+            </div>
           </Reveal>
 
           <FaqSection faqs={faqs} id="podcast-faq" />
