@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Hero from "./components/Hero";
-import Marquee from "./components/Marquee";
+import MediaStrip from "./components/MediaStrip";
 import AnswerBlock from "./components/content/AnswerBlock";
 import KeyFacts from "./components/content/KeyFacts";
 import FaqSection from "./components/content/FaqSection";
 import SectionHeading from "./components/content/SectionHeading";
+import CredentialsScroller from "./components/CredentialsScroller";
 import Reveal from "./components/motion/Reveal";
 import { getSubscriberCount } from "../lib/youtube";
 import JsonLd from "./components/JsonLd";
@@ -18,6 +19,7 @@ import {
   websiteSchema,
 } from "./structuredData";
 import { faqGroup } from "./content/faqs";
+import { MEDIA_STRIP } from "./content/mediaStrip";
 import {
   CREDENTIALS,
   DEFINITION,
@@ -60,7 +62,7 @@ const directions = [
   },
   {
     href: "/training",
-    label: "Training",
+    label: "Corporate Training & Workshops",
     description:
       "Training sessions and talks on AI agents, LLM function calling, Laravel and Docker, in India, the UK and Mauritius.",
   },
@@ -111,8 +113,8 @@ export default async function Home() {
   return (
     <>
       <JsonLd data={structuredData} />
-      <Hero subscribers={subscribers} />
-      <Marquee />
+      <Hero />
+      <MediaStrip items={MEDIA_STRIP} />
 
       <div className="px-6 sm:px-10 py-20">
         <div className="max-w-[1400px] mx-auto">
@@ -121,8 +123,7 @@ export default async function Home() {
           </Reveal>
 
           <Reveal>
-            <AnswerBlock className="mb-10">
-              <p>{DEFINITION}</p>
+            <AnswerBlock wide className="mb-10">
               <p>
                 He founded{" "}
                 <a
@@ -133,9 +134,10 @@ export default async function Home() {
                 >
                   Bitfumes
                 </a>
-                , works as a software engineer at Pfizer, and was named a Docker
-                Captain in December 2023. He has taught more than 100,000
-                students on Udemy, hosts the{" "}
+                , which helps businesses save time and money by putting AI to
+                work. He previously worked as a Senior AI Architect at Pfizer and
+                has been a Docker Captain since December 2023. He has taught
+                100K+ students on Udemy, hosts the{" "}
                 <Link
                   href="/podcasts"
                   className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
@@ -148,36 +150,24 @@ export default async function Home() {
                   className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
                 >
                   delivers training
-                </Link>{" "}
-                on AI agents, LLM function calling, Laravel and Docker.{" "}
-                {LOCATION.statement}
+                </Link>
+                . {LOCATION.statement}
               </p>
+              <p>{DEFINITION}</p>
             </AnswerBlock>
-          </Reveal>
-
-          <Reveal>
-            <KeyFacts facts={facts} asOf={STATS_AS_OF} className="mb-24" />
           </Reveal>
 
           <Reveal>
             <SectionHeading>Recognition and certifications</SectionHeading>
           </Reveal>
           <Reveal>
-            <ul className="grid md:grid-cols-3 gap-8 mb-24">
-              {CREDENTIALS.map((credential) => (
-                <li
-                  key={credential.name}
-                  className="border border-line rounded-3xl p-8 bg-paper"
-                >
-                  <h3 className="font-display italic text-2xl mb-3">
-                    {credential.name}
-                  </h3>
-                  <p className="text-ink/70 leading-relaxed">
-                    {credential.detail}
-                  </p>
-                </li>
-              ))}
-            </ul>
+            <div className="mb-24">
+              <CredentialsScroller credentials={CREDENTIALS} />
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <KeyFacts facts={facts} asOf={STATS_AS_OF} className="mb-24" />
           </Reveal>
 
           <Reveal>

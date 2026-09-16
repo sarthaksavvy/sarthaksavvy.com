@@ -6,6 +6,7 @@ import TiltCard from "../components/motion/TiltCard";
 import PodcastScroller from "../components/PodcastScroller";
 import FaqSection from "../components/content/FaqSection";
 import SectionHeading from "../components/content/SectionHeading";
+import BigCount from "../components/content/BigCount";
 import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
 import { canonicalUrl, ogImages, pageMetadata } from "../seo";
@@ -19,6 +20,7 @@ import {
   webPageSchema,
 } from "../structuredData";
 import { faqGroup } from "../content/faqs";
+import { PODCAST_GUESTS as guests } from "../content/podcastGuests";
 import { getSubscriberCount } from "../../lib/youtube";
 
 const DESCRIPTION =
@@ -45,80 +47,6 @@ const platforms = [
   {
     label: "Youtube",
     href: "https://www.youtube.com/@laravelindiapodcast",
-  },
-];
-
-// Everyone named on the page, as records rather than as a clause in a
-// sentence. The same three feed the PodcastSeries `actor` list below, the
-// two prose paragraphs above it, and the guest cards further down — one
-// list instead of four independent copies that can drift out of sync (the
-// two paragraphs used to give Taylor Otwell two different job titles).
-const guests = [
-  {
-    name: "Taylor Otwell",
-    role: "Creator of Laravel",
-    photo: "/images/podcast-guests/taylor-otwell.jpg",
-    youtube: "https://www.youtube.com/watch?v=ytHZP1kqlIk",
-  },
-  {
-    name: "James Brooks",
-    role: "Laravel core team member",
-    photo: "/images/podcast-guests/james-brooks.jpg",
-    youtube: "https://www.youtube.com/watch?v=WkDoWfW2eLI",
-  },
-  {
-    name: "Freek Van der Herten",
-    role: "Laravel developer at Spatie",
-    photo: "/images/podcast-guests/freek-van-der-herten.jpg",
-    youtube: "https://www.youtube.com/watch?v=8VTw7jeBd6g",
-  },
-  {
-    name: "Nuno Maduro",
-    role: "Laravel core team member, Laravel Cloud",
-    photo: "/images/podcast-guests/nuno-maduro.jpg",
-    youtube: "https://www.youtube.com/watch?v=auxt6OQJCPQ",
-  },
-  {
-    name: "Guus Leeuw",
-    role: "DevOps consultant",
-    photo: "/images/podcast-guests/guus-leeuw.jpg",
-    youtube: "https://www.youtube.com/watch?v=OSJQpcUC5FQ",
-  },
-  {
-    name: "Gaurav Makhecha",
-    role: "Founder, FreshBits",
-    photo: "/images/podcast-guests/gaurav-makhecha.jpg",
-    youtube: "https://www.youtube.com/watch?v=jCSoqfjUMOM",
-  },
-  {
-    name: "Caneco",
-    role: "Developer and designer",
-    photo: "/images/podcast-guests/caneco.jpg",
-    youtube: "https://www.youtube.com/watch?v=SL2BXxWE4qI",
-  },
-  {
-    name: "Drishti",
-    role: "International Tech Speaker",
-    photo: "/images/podcast-guests/drishti.jpg",
-    youtube: "https://www.youtube.com/watch?v=yL7i2pKDuaI",
-  },
-  {
-    name: "Francisco Madeira",
-    role: "Co-author of Termwind",
-    photo: "/images/podcast-guests/francisco-madeira.jpg",
-    youtube: "https://www.youtube.com/watch?v=FdOAc2l-K1I",
-  },
-  {
-    name: "Joe",
-    role: "Laravel core team member",
-    photo: "/images/podcast-guests/joe.jpg",
-    youtube: "https://www.youtube.com/watch?v=3OFROaozHrs",
-  },
-  {
-    name: "Bobby Bouwmann",
-    role: "Laravel evangelist",
-    photo: "/images/podcast-guests/bobby-bouwmann.jpg",
-    youtube: "https://www.youtube.com/watch?v=aWdsH3EEoSQ",
   },
 ];
 
@@ -193,8 +121,10 @@ export default async function Podcasts() {
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
               My <span className="italic text-accentText">Podcast.</span>
             </h1>
+            <BigCount value={guests.length} label="Podcast episodes" className="md:hidden" />
           </Reveal>
-          <Reveal delay={0.1} className="hidden md:flex md:col-span-4 items-end">
+          <Reveal delay={0.1} className="hidden md:flex md:col-span-4 flex-col items-end justify-end gap-6">
+            <BigCount value={guests.length} label="Podcast episodes" className="justify-end" />
             <p className="text-lg text-ink/70">
               Exploring web development through conversations with industry
               experts and deep dives into modern technologies.

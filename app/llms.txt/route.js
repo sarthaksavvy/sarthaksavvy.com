@@ -44,11 +44,11 @@ ${section("Everything in one file", [
 
 ${section("Key facts", [
   "- Name: Sarthak Shrivastava (username: sarthaksavvy)",
-  "- Role: AI consultant, software engineer, developer educator",
+  "- Role: AI consultant, corporate trainer, developer educator",
   "- Founder of: Bitfumes",
-  "- Employer: Pfizer (software engineer)",
+  "- Previously: Senior AI Architect at Pfizer",
   "- Recognition: Docker Captain (December 2023)",
-  "- Certifications: AWS Certified Solutions Architect, AWS Certified Developer",
+  "- Certifications: AWS Certified Cloud Practitioner, AWS Certified Developer",
   `- Reach: ${subscribers} YouTube subscribers, 100K+ Udemy students, 3,000+ positive course reviews`,
   "- Based in: India — works with teams remotely worldwide",
   "- Hosts: the Laravel India Podcast",

@@ -5,7 +5,9 @@ import Reveal from "../components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "../components/motion/Stagger";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
-import AnswerBlock from "../components/content/AnswerBlock";
+import ProjectsScroller from "../components/ProjectsScroller";
+import SectionHeading from "../components/content/SectionHeading";
+import BigCount from "../components/content/BigCount";
 import FaqSection from "../components/content/FaqSection";
 import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
@@ -30,7 +32,7 @@ const DESCRIPTION =
   "assistant.";
 
 export const metadata = pageMetadata({
-  title: "Side Projects by Sarthak Shrivastava — AI Apps & Tools",
+  title: "Products by Sarthak Shrivastava — AI Apps & Tools",
   description: DESCRIPTION,
   path: "/side-projects",
 });
@@ -43,7 +45,7 @@ export const metadata = pageMetadata({
 //
 // The same trail feeds the BreadcrumbList markup and the visible
 // breadcrumb nav below, so the two cannot drift apart.
-const BREADCRUMB_TRAIL = [{ name: "Side Projects", path: "/side-projects" }];
+const BREADCRUMB_TRAIL = [{ name: "Products", path: "/side-projects" }];
 
 function buildStructuredData(faqs) {
   return graph(
@@ -51,8 +53,9 @@ function buildStructuredData(faqs) {
   organizationSchema(),
   webPageSchema({
     path: "/side-projects",
-    name: "Side projects by Sarthak Shrivastava",
+    name: "Products by Sarthak Shrivastava",
     description: DESCRIPTION,
+    speakable: ["h1"],
   }),
   // An ordered list of applications rather than an ordered list of links: a
   // crawler reading the link version learns five pages exist, and reading this
@@ -74,13 +77,15 @@ export default async function SideProjects() {
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <Breadcrumbs trail={BREADCRUMB_TRAIL} />
-        <div className="mb-20 grid md:grid-cols-12 gap-6">
+        <div className="mb-6 md:mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              Side <span className="italic text-accentText">Projects.</span>
+              <span className="italic text-accentText">Products.</span>
             </h1>
+            <BigCount value={projects.length} label="Products" className="md:hidden" />
           </Reveal>
-          <Reveal delay={0.1} className="md:col-span-4 flex items-end">
+          <Reveal delay={0.1} className="hidden md:flex md:col-span-4 flex-col items-end justify-end gap-6">
+            <BigCount value={projects.length} label="Products" className="justify-end" />
             <p className="text-lg text-ink/70">
               Exploring my creativity through passion projects — each one an
               opportunity to innovate and solve real-world problems.
@@ -88,23 +93,25 @@ export default async function SideProjects() {
           </Reveal>
         </div>
 
-        {/* Names all five products in one paragraph. A grid of cards is the
-            right way to browse them and the wrong way to be asked "what has
-            Sarthak built" — the answer to that has to exist as a sentence
-            somewhere, or a model assembles one from whichever card it read. */}
-        <Reveal>
-          <AnswerBlock className="mb-16">
-            <p>
-              Sarthak Shrivastava has built and shipped five products, most of
-              them on top of large language models: Backstage Cut, an AI
-              extension for Adobe Premiere Pro; AudioBolo, an AI voice-to-text
-              app for macOS; Expensorr, an expense tracker for iOS and Android;
-              Mezohub, a collaboration platform for developers and designers;
-              and Ginger, a LinkedIn AI assistant for Chrome. All five are live
-              and publicly available.
+        <div className="mb-16">
+          <Reveal>
+            <SectionHeading>Highlights</SectionHeading>
+          </Reveal>
+          <Reveal>
+            <p className="text-sm text-muted font-mono uppercase tracking-widest mb-6">
+              Tap a project to see the details
             </p>
-          </AnswerBlock>
-        </Reveal>
+          </Reveal>
+          <Reveal>
+            <ProjectsScroller projects={projects} />
+          </Reveal>
+          {/* Same copy as the desktop intro column, shown here instead on
+              mobile so the scroller isn't pushed below the fold by it. */}
+          <p className="md:hidden text-lg text-ink/70 mt-8">
+            Exploring my creativity through passion projects — each one an
+            opportunity to innovate and solve real-world problems.
+          </p>
+        </div>
 
         <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {projects.map((project, i) => (

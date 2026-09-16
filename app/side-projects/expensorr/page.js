@@ -46,7 +46,7 @@ const project = projectByPath("/side-projects/expensorr");
 // The same trail feeds the BreadcrumbList markup and the visible
 // breadcrumb nav below, so the two cannot drift apart.
 const BREADCRUMB_TRAIL = [
-  { name: "Side Projects", path: "/side-projects" },
+  { name: "Products", path: "/side-projects" },
   { name: "Expensorr", path: "/side-projects/expensorr" },
 ];
 
@@ -112,7 +112,7 @@ export default function ExpensorrProject() {
             className="inline-flex items-center gap-2 text-ink/70 hover:text-ink transition-colors"
           >
             <ArrowLeft size={20} />
-            Back to Side Projects
+            Back to Products
           </Link>
         </div>
 

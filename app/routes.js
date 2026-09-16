@@ -13,12 +13,12 @@ export const SITE_URL = "https://sarthaksavvy.com";
 // which of two sources to quote, so it is worth keeping honest: bump the date
 // on a page when you change what that page says.
 export const indexableRoutes = [
-  { path: "/", changeFrequency: "monthly", priority: 1, updated: "2026-08-20" },
-  { path: "/ai-consulting", changeFrequency: "monthly", priority: 0.9, updated: "2026-08-20" },
-  { path: "/about-me", changeFrequency: "monthly", priority: 0.8, updated: "2026-08-20" },
-  { path: "/faq", changeFrequency: "monthly", priority: 0.8, updated: "2026-08-20" },
-  { path: "/side-projects", changeFrequency: "monthly", priority: 0.8, updated: "2026-08-20" },
-  { path: "/podcasts", changeFrequency: "monthly", priority: 0.7, updated: "2026-08-20" },
+  { path: "/", changeFrequency: "monthly", priority: 1, updated: "2026-09-16" },
+  { path: "/ai-consulting", changeFrequency: "monthly", priority: 0.9, updated: "2026-09-16" },
+  { path: "/about-me", changeFrequency: "monthly", priority: 0.8, updated: "2026-09-16" },
+  { path: "/faq", changeFrequency: "monthly", priority: 0.8, updated: "2026-09-16" },
+  { path: "/side-projects", changeFrequency: "monthly", priority: 0.8, updated: "2026-09-16" },
+  { path: "/podcasts", changeFrequency: "monthly", priority: 0.7, updated: "2026-09-16" },
   { path: "/training", changeFrequency: "monthly", priority: 0.7, updated: "2026-09-16" },
   { path: "/side-projects/backstage-cut", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
   { path: "/side-projects/audiobolo", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },

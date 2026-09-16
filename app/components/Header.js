@@ -9,8 +9,8 @@ import { COURSES_URL, YOUTUBE_URL } from "../content/profile";
 const navLinks = [
   { href: "/ai-consulting", label: "AI Consulting" },
   { href: "/podcasts", label: "Podcasts" },
-  { href: "/training", label: "Training" },
-  { href: "/side-projects", label: "Side Projects" },
+  { href: "/training", label: "Corporate Training" },
+  { href: "/side-projects", label: "Products" },
   { href: YOUTUBE_URL, label: "Youtube", external: true },
   { href: COURSES_URL, label: "Courses", external: true },
   { href: "/about-me", label: "About Me" },

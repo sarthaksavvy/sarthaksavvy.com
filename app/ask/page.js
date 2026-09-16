@@ -79,7 +79,7 @@ const REQUEST_TIMEOUT_MS = 45000;
 
 const POPULAR_QUESTIONS = [
   "What are Sarthak's main areas of expertise?",
-  "Tell me about Sarthak's side projects",
+  "Tell me about Sarthak's products",
   "What is Sarthak's professional background?",
   "How can I get in touch with Sarthak?",
   "What technologies does Sarthak work with?",

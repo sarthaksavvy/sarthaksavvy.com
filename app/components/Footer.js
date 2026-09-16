@@ -5,8 +5,8 @@ import { EMAIL, SOCIAL_PROFILES } from "../content/profile";
 const links = [
   { href: "/ai-consulting", label: "AI Consulting" },
   { href: "/podcasts", label: "Podcasts" },
-  { href: "/training", label: "Training" },
-  { href: "/side-projects", label: "Side Projects" },
+  { href: "/training", label: "Corporate Training" },
+  { href: "/side-projects", label: "Products" },
   { href: "/about-me", label: "About Me" },
   // Not in the header — eight links do not fit that row. It belongs in the
   // footer regardless: the FAQ is the page most likely to be the answer to a
@@ -50,7 +50,7 @@ export default function Footer() {
             </p>
             <a
               href={`mailto:${EMAIL}`}
-              className="font-display italic text-4xl sm:text-6xl hover:text-accentText transition-colors"
+              className="font-display italic text-[1.75rem] sm:text-5xl lg:text-6xl break-words hover:text-accentText transition-colors"
             >
               {EMAIL}
             </a>

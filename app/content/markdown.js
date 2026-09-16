@@ -106,7 +106,7 @@ ${bullets(EXPERTISE)}
 
 - [AI consulting](${absolute("/ai-consulting")}) — how ${NAME} works with teams on LLM features and AI automation.
 - [About](${absolute("/about-me")}) — background, roles and credentials in full.
-- [Side projects](${absolute("/side-projects")}) — the AI products he has shipped.
+- [Products](${absolute("/side-projects")}) — the AI products he has shipped.
 - [Training](${absolute("/training")}) — training sessions, workshops and conference talks.
 - [Podcasts](${absolute("/podcasts")}) — the Laravel India Podcast.
 - [FAQ](${absolute("/faq")}) — direct answers to the most common questions.
@@ -215,7 +215,7 @@ ${faqMarkdown(faqGroup("consulting", subscribers).faqs)}
 }
 
 function projectsMarkdown({ subscribers }) {
-  return `# Side projects by ${NAME}
+  return `# Products by ${NAME}
 
 ${NAME} builds and ships his own products, most of them built on top of large
 language models. Each one below is live and publicly available.
@@ -399,7 +399,7 @@ export const markdownPages = [
   },
   {
     path: "/side-projects",
-    title: `Side projects by ${NAME}`,
+    title: `Products by ${NAME}`,
     description:
       "AudioBolo, Backstage Cut, Ginger, Expensorr and Mezohub — AI products built and shipped by Sarthak Shrivastava.",
     build: projectsMarkdown,

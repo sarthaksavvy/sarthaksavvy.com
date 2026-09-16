@@ -18,14 +18,23 @@ const HOST = "sarthaksavvy.com";
 const KEY = "f01811ec9e2ab6eec70f823c45fa7d65";
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 
-const { indexableRoutes } = await import("../app/routes.js");
-const { markdownPages } = await import("../app/content/markdown.js");
+// Only routes.js, never the content layer. This runs under plain Node, which
+// cannot load app/content/markdown.js: it imports trainings.json without an
+// import attribute and uses extensionless relative imports, both of which
+// only webpack resolves — so importing it here crashed the script before it
+// sent anything.
+//
+// Nothing is lost by deriving the mirror URLs from the routes instead.
+// markdown.js throws at build time if any route in routes.js has no mirror,
+// and every mirror's slug is `markdownSlug(path)` — the helper routes.js holds
+// precisely so that Node-loaded callers like this one never need markdown.js.
+const { indexableRoutes, markdownSlug } = await import("../app/routes.js");
 
 // Both the HTML pages and their markdown mirrors: the mirrors are real,
 // crawlable URLs and benefit from the same nudge.
 const urlList = [
   ...indexableRoutes.map((route) => `https://${HOST}${route.path === "/" ? "" : route.path}`),
-  ...markdownPages.map((page) => `https://${HOST}/${page.slug}.md`),
+  ...indexableRoutes.map((route) => `https://${HOST}/${markdownSlug(route.path)}.md`),
   `https://${HOST}/llms.txt`,
   `https://${HOST}/llms-full.txt`,
 ];

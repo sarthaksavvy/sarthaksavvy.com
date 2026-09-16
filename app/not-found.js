@@ -21,7 +21,7 @@ export const metadata = {
 const destinations = [
   { href: "/", label: "Home" },
   { href: "/ai-consulting", label: "AI Consulting" },
-  { href: "/side-projects", label: "Side Projects" },
+  { href: "/side-projects", label: "Products" },
   { href: "/about-me", label: "About Me" },
 ];
 

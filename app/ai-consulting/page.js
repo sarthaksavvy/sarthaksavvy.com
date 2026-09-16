@@ -115,7 +115,7 @@ export default async function AiConsulting() {
               Hindi.
             </p>
             <p>
-              He is a Docker Captain, an AWS Certified Solutions Architect and
+              He is a Docker Captain, an AWS Certified Cloud Practitioner and
               Developer, and the founder of Bitfumes. Unusually for a
               consultant, the AI products he points at are his own: AudioBolo
               and Backstage Cut were both built and shipped end to end, so the
@@ -178,7 +178,7 @@ export default async function AiConsulting() {
                 href="/side-projects"
                 className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
               >
-                side projects
+                products
               </Link>
               .
             </p>

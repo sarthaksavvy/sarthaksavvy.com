@@ -1,8 +1,13 @@
 "use client";
 
-import { Calendar, ExternalLink, MapPin, Quote, Users } from "lucide-react";
+import { Calendar, ExternalLink, Linkedin, MapPin, Quote, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import PhotoStack from "./PhotoStack";
+
+// "Recooty" -> "Recooty's", "Aubergine Solutions" -> "Aubergine Solutions'".
+function possessive(name) {
+  return name.endsWith("s") ? `${name}’` : `${name}’s`;
+}
 
 export default function SingleEvent({ event, index = 0 }) {
   return (
@@ -81,6 +86,34 @@ export default function SingleEvent({ event, index = 0 }) {
                   Watch Recording
                 </a>
               )}
+              {/* The post written at the time of the event — proof the talk
+                  actually happened, not just a claim on this page. */}
+              {event.linkedin && (
+                <a
+                  href={event.linkedin}
+                  className="flex items-center gap-2 text-accentText hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Linkedin size={16} />
+                  See the LinkedIn post
+                </a>
+              )}
+              {/* Write-ups by the host or venue. Someone else vouching for the
+                  session is stronger proof than his own post, so they get their
+                  own links rather than being folded into the one above. */}
+              {event.coverage?.map((post) => (
+                <a
+                  key={post.url}
+                  href={post.url}
+                  className="flex items-center gap-2 text-accentText hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Linkedin size={16} />
+                  {possessive(post.by)} post
+                </a>
+              ))}
             </div>
           </div>
         </div>

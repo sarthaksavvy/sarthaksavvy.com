@@ -7,6 +7,7 @@ import AnswerBlock from "../components/content/AnswerBlock";
 import KeyFacts from "../components/content/KeyFacts";
 import FaqSection from "../components/content/FaqSection";
 import SectionHeading from "../components/content/SectionHeading";
+import CredentialCard from "../components/content/CredentialCard";
 import { getSubscriberCount } from "../../lib/youtube";
 import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
@@ -146,7 +147,7 @@ const AboutPage = async () => {
               </h2>
               <p className="text-ink/70 text-lg leading-relaxed">
                 Known as &ldquo;sarthaksavvy&rdquo; in the tech community, I&apos;m a
-                full-stack developer, Docker Captain, and founder of Bitfumes. My
+                corporate trainer, Docker Captain, and founder of Bitfumes. My
                 journey in technology has been driven by a passion for learning
                 and sharing knowledge.
               </p>
@@ -193,17 +194,13 @@ const AboutPage = async () => {
           <Reveal>
             <dl className="grid md:grid-cols-3 gap-8">
               {CREDENTIALS.map((credential) => (
-                <div
+                <CredentialCard
                   key={credential.name}
-                  className="border border-line rounded-3xl p-8 bg-paper"
-                >
-                  <dt className="font-display italic text-2xl mb-3">
-                    {credential.name}
-                  </dt>
-                  <dd className="text-ink/70 leading-relaxed">
-                    {credential.detail}
-                  </dd>
-                </div>
+                  credential={credential}
+                  as="div"
+                  titleAs="dt"
+                  detailAs="dd"
+                />
               ))}
             </dl>
           </Reveal>

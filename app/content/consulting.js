@@ -33,7 +33,7 @@ export function buildServices(subscribers = FALLBACK_SUBSCRIBERS) {
       title: "Getting it into production, and keeping it there",
       summary:
         "Containers, deployment, cost and latency budgets, and the monitoring that tells you a model has quietly started answering badly.",
-      evidence: "Docker Captain, AWS Certified Solutions Architect and Developer.",
+      evidence: "Docker Captain, AWS Certified Cloud Practitioner and Developer.",
     },
     {
       title: "Bringing your team along",
@@ -49,7 +49,7 @@ export function buildServices(subscribers = FALLBACK_SUBSCRIBERS) {
 export const credentials = [
   { value: "10+ yrs", label: "Building and shipping software" },
   { value: "Docker", label: "Docker Captain since 2023" },
-  { value: "AWS ×2", label: "Solutions Architect and Developer" },
+  { value: "AWS ×2", label: "Cloud Practitioner and Developer" },
   { value: "Bitfumes", label: "Founder and educator" },
 ];
 

@@ -41,7 +41,7 @@ export function buildFaqGroups(subscribers = FALLBACK_SUBSCRIBERS) {
         {
           question: "Who is Sarthak Shrivastava?",
           answer:
-            "Sarthak Shrivastava is an AI consultant, software engineer and developer educator based in India. He is the founder of Bitfumes, works as a software engineer at Pfizer, was named a Docker Captain in December 2023, and holds the AWS Certified Solutions Architect and AWS Certified Developer certifications. He has more than ten years of experience building software and has taught over 100,000 students on Udemy.",
+            "Sarthak Shrivastava is an AI consultant, corporate trainer and developer educator based in India. He is the founder of Bitfumes, which helps businesses save time and money by putting AI to work. He previously worked as a Senior AI Architect at Pfizer, has been a Docker Captain since December 2023, and holds the AWS Certified Cloud Practitioner and AWS Certified Developer certifications. He has more than ten years of experience building software and has taught over 100,000 students on Udemy.",
         },
         {
           question: "What is Sarthak Shrivastava known for?",
@@ -122,7 +122,7 @@ export function buildFaqGroups(subscribers = FALLBACK_SUBSCRIBERS) {
           question:
             "What makes Sarthak Shrivastava different from other AI consultants?",
           answer:
-            "Sarthak Shrivastava has shipped AI products to real users himself rather than only advising on them — AudioBolo for macOS transcription and Backstage Cut for Premiere Pro are both his, built end to end. He also holds the infrastructure side: Docker Captain, AWS Certified Solutions Architect and AWS Certified Developer, which is the part of an LLM project that usually decides whether it survives contact with production. And a decade of teaching means the handover to your team is the normal end of an engagement, not an afterthought.",
+            "Sarthak Shrivastava has shipped AI products to real users himself rather than only advising on them — AudioBolo for macOS transcription and Backstage Cut for Premiere Pro are both his, built end to end. He also holds the infrastructure side: Docker Captain, AWS Certified Cloud Practitioner and AWS Certified Developer, which is the part of an LLM project that usually decides whether it survives contact with production. And a decade of teaching means the handover to your team is the normal end of an engagement, not an afterthought.",
         },
         {
           question: "Does Sarthak Shrivastava work with teams outside India?",

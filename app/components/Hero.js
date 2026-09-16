@@ -2,26 +2,37 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { StaggerGroup, StaggerItem } from "./motion/Stagger";
-import MagneticButton from "./motion/MagneticButton";
-import { FALLBACK_SUBSCRIBERS } from "../content/profile";
 
 const ParticleImage = dynamic(() => import("./motion/ParticleImage"), { ssr: false });
 
 const TAGLINE_WORDS = ["Founder", "AI Consultant", "Builder", "Corporate Trainer"];
 
-export default function Hero({ subscribers = FALLBACK_SUBSCRIBERS }) {
+export default function Hero() {
   return (
     // Was a <main>. The landmark now comes from the root layout, so keeping
     // one here would nest a second one inside it and split the home page's
     // content across two landmarks with the same name.
-    <section className="relative px-6 sm:px-10 max-w-[1400px] mx-auto pt-6 sm:pt-10 pb-20 min-h-[90vh]">
-      <div className="relative z-0 grid grid-cols-1 md:grid-cols-12 gap-6">
-        <div className="md:col-span-8">
+    //
+    // The portrait is an ordinary grid column, so this section is exactly as
+    // tall as its taller column and nothing has to be tuned to match it. It
+    // used to be `lg:absolute`, which took it out of flow and left a
+    // `min-h-[…vh]` floor as the only thing holding the section open around
+    // it. That floor tracked viewport height while the photo stops growing at
+    // 640px, so the two could only agree at one window height: on taller
+    // screens a band of empty paper opened above the media strip, and on short
+    // ones the photo ran over the strip's top rule.
+    <section className="relative px-6 sm:px-10 max-w-[1400px] mx-auto pt-6 sm:pt-10 lg:pb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-6 lg:items-start">
+        {/* `contents` below `lg`: this wrapper drops out of the layout, so its
+            children become grid items themselves and `order` can slot the
+            portrait between the tagline and the heading on a phone. From `lg`
+            it is a real column again beside the photo. No gap-y on the grid,
+            so the phone layout keeps spacing from each element's own margin. */}
+        <div className="contents lg:block lg:col-span-7">
           <motion.p
             initial="hidden"
             animate="show"
-            className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accentText mb-6 flex flex-wrap gap-x-2"
+            className="order-1 font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accentText mb-6 flex flex-wrap gap-x-2"
           >
             {TAGLINE_WORDS.map((word, i) => (
               <span key={word} className="overflow-hidden inline-block">
@@ -47,17 +58,7 @@ export default function Hero({ subscribers = FALLBACK_SUBSCRIBERS }) {
             ))}
           </motion.p>
 
-          {/* On mobile this sits in normal flow, between the tagline above
-              and the heading below. From `md` up it's pulled out of flow
-              entirely and pinned as an overlay next to the text — `absolute`
-              looks up to the nearest positioned ancestor, which is the
-              <section> above, not this column, so it doesn't disturb the
-              col-span-8 layout on desktop. */}
-          <div className="relative w-full h-[50vh] max-h-[420px] mb-8 md:mb-0 md:absolute md:right-[2%] md:top-[2%] md:w-[42%] md:h-[70vh] md:max-h-[640px] z-10">
-            <ParticleImage src="/images/sarthak.jpg" className="w-full h-full" />
-          </div>
-
-          <h1 className="font-display text-6xl sm:text-8xl md:text-[7.5rem] leading-[0.95] mb-8">
+          <h1 className="order-3 font-display text-6xl sm:text-8xl lg:text-[7.5rem] leading-[0.95] mb-8">
             {["Hi, I am", "Sarthak"].map((line, i) => (
               <span key={line} className="block overflow-hidden">
                 <motion.span
@@ -80,35 +81,21 @@ export default function Hero({ subscribers = FALLBACK_SUBSCRIBERS }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6 }}
-            className="text-ink/70 text-lg sm:text-xl mb-12 max-w-lg leading-relaxed"
+            className="order-4 text-ink/70 text-lg sm:text-xl mb-12 lg:mb-0 max-w-lg leading-relaxed"
           >
-            India-based founder, content creator, developer and AI consultant
-            with 10+ years of experience — passionate about building products
-            and automating daily work.
+            India-based founder, AI consultant, content creator and corporate trainer
+            with 10+ years of experience — passionate about helping businesses
+            using AI.
           </motion.p>
-
-          <StaggerGroup className="flex flex-wrap items-center gap-4">
-            <StaggerItem>
-              <MagneticButton
-                href="/side-projects"
-                className="border border-ink/25 text-ink px-7 py-4 rounded-full font-mono text-xs tracking-widest uppercase hover:border-ink transition-colors inline-flex"
-              >
-                View Work
-              </MagneticButton>
-            </StaggerItem>
-          </StaggerGroup>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="md:col-span-4 flex md:flex-col justify-between items-start md:items-end gap-6 md:pt-4 font-mono text-xs tracking-widest text-muted uppercase pointer-events-none"
-        >
-          <span>Docker Captain</span>
-          <span className="md:text-right">{subscribers} Youtube Subs</span>
-          <span className="md:text-right">Bitfumes Founder</span>
-        </motion.div>
+        {/* Between the tagline and the heading on a phone (`order-2`); its own
+            column beside the text from `lg`. Switching at `lg` rather than `md`
+            matters: at 768px a side-by-side photo leaves the heading too
+            narrow for "Hi, I am" at display size. */}
+        <div className="order-2 lg:order-none relative w-full h-[50vh] max-h-[420px] mb-8 lg:mb-0 lg:col-span-5 lg:h-[70vh] lg:max-h-[640px]">
+          <ParticleImage src="/images/sarthak.jpg" className="w-full h-full" />
+        </div>
       </div>
     </section>
   );

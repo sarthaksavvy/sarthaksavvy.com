@@ -12,13 +12,21 @@
 //
 // `data-speakable` is what the WebPage node's SpeakableSpecification points at,
 // so a voice assistant reads this rather than the navigation.
-export default function AnswerBlock({ children, className = "" }) {
+//
+// `wide` lets a page run the text the full width of the card. It is opt-in:
+// the measure cap is the default because this block is shared, and dropping
+// it for one page re-typeset every other page to ~130 characters a line.
+export default function AnswerBlock({ children, className = "", wide = false }) {
   return (
     <div
       data-speakable
       className={`border border-line rounded-3xl p-8 sm:p-10 bg-paper ${className}`}
     >
-      <div className="text-lg sm:text-xl text-ink/80 leading-relaxed max-w-3xl space-y-4">
+      <div
+        className={`text-lg sm:text-xl text-ink/80 leading-relaxed space-y-4 ${
+          wide ? "" : "max-w-3xl"
+        }`}
+      >
         {children}
       </div>
     </div>

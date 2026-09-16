@@ -1,17 +1,57 @@
 [
   {
-    "id": 1,
-    "year": "2024",
-    "title": "Mastering the Learning",
-    "conference": "Pfizer Community Event 2024",
-    "location": "London, UK",
-    "date": "September 24, 2024",
-    "audience": "100+ attendees",
-    "description": "Learn and master anything along with your day job. How you can improve your learning skills and become an expert in your field.",
+    "id": 14,
+    "year": "2018",
+    "title": "Laravel in Production",
+    "conference": "LaravelLive India 2018",
+    "location": "Lal Bahadur Shastri Institute of Management, New Delhi, India",
+    "date": "March 17, 2018",
+    "audience": "150+ attendees",
+    "description": "India's first LaravelLive PHP conference, bringing the Laravel community together in New Delhi.",
     "images": [
-      "/images/events/pfizer-london-event/london-event1.jpg",
-      "/images/events/pfizer-london-event/london-event2.jpg",
-      "/images/events/pfizer-london-event/london-event3.jpg"
+      "/images/events/laravellive-delhi/laravellive-delhi-3.jpg",
+      "/images/events/laravellive-delhi/laravellive-delhi-1.jpg",
+      "/images/events/laravellive-delhi/laravellive-delhi-2.jpg",
+      "/images/events/laravellive-delhi/laravellive-delhi-4.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "year": "2019",
+    "title": "Hands-on Session with Google Developers Group",
+    "conference": "GDG Bhopal",
+    "location": "Appointy, Bhopal, India",
+    "date": "July 14, 2019",
+    "audience": "45+ attendees",
+    "description": "A full-day free training session for college students and developers, organised by Google Developers Group Bhopal and covered in the local press.",
+    "images": [
+      "/images/events/gdg-bhopal/gdg-bhopal-1.jpg",
+      "/images/events/gdg-bhopal/gdg-bhopal-talk.mp4",
+      "/images/events/gdg-bhopal/gdg-bhopal-audience.mp4",
+      "/images/events/gdg-bhopal/gdg-bhopal-2.jpg"
+    ]
+  },
+  {
+    "id": 16,
+    "year": "2019",
+    "title": "Multi Auth in Laravel",
+    "conference": "Hacktoberfest 2019",
+    "location": "Webkul Software, H-28 ARV Park, Sector 63, Noida, India",
+    "date": "October 19, 2019",
+    "audience": "Open-source contributors",
+    "description": "A Hacktoberfest 2019 session on implementing multiple authentication guards in Laravel — the ways to model multi-auth and when to reach for each, hosted at Webkul's Noida office.",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:6591364409313026048/",
+        "by": "Dheeraj Jha"
+      }
+    ],
+    "images": [
+      "/images/events/hacktoberfest-noida/hacktoberfest-noida-1.jpg",
+      "/images/events/hacktoberfest-noida/hacktoberfest-noida-2.jpg",
+      "/images/events/hacktoberfest-noida/hacktoberfest-noida-3.jpg",
+      "/images/events/hacktoberfest-noida/hacktoberfest-noida-4.jpg",
+      "/images/events/hacktoberfest-noida/hacktoberfest-noida-5.jpg"
     ]
   },
   {
@@ -23,10 +63,45 @@
     "date": "July 27, 2024",
     "audience": "100+ attendees",
     "description": "How to use Docker to deploy Laravel application",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7223522724021714944/",
     "images": [
       "/images/events/laravel-kozhikode/laravel-kozhikode-event1.jpg",
       "/images/events/laravel-kozhikode/laravel-kozhikode-event2.jpg",
       "/images/events/laravel-kozhikode/laravel-kozhikode-event3.jpg"
+    ]
+  },
+  {
+    "id": 13,
+    "year": "2024",
+    "title": "Laravel Indore Meetup",
+    "conference": "Laravel Indore",
+    "location": "GraffersID, Indore, India",
+    "date": "August 24, 2024",
+    "audience": "20+ attendees",
+    "description": "A Laravel Indore community meetup hosted at the GraffersID office.",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7231874263547273216/",
+    "images": [
+      "/images/events/laravel-indore-meetup/laravel-indore-1.jpg",
+      "/images/events/laravel-indore-meetup/laravel-indore-2.jpg",
+      "/images/events/laravel-indore-meetup/laravel-indore-3.jpg",
+      "/images/events/laravel-indore-meetup/laravel-indore-4.jpg"
+    ]
+  },
+  {
+    "id": 1,
+    "year": "2024",
+    "title": "Mastering the Learning",
+    "conference": "Pfizer Community Event 2024",
+    "location": "London, UK",
+    "date": "September 24, 2024",
+    "audience": "100+ attendees",
+    "description": "Learn and master anything along with your day job. How you can improve your learning skills and become an expert in your field.",
+    "images": [
+      "/images/events/pfizer-london-event/london-event2.jpg",
+      "/images/events/pfizer-london-event/london-event3.jpg",
+      "/images/events/pfizer-london-event/london-4.jpg",
+      "/images/events/pfizer-london-event/london-5.jpg",
+      "/images/events/pfizer-london-event/london-6.jpg"
     ]
   },
   {
@@ -38,10 +113,33 @@
     "date": "October 18, 2024",
     "audience": "20+ attendees",
     "description": "Discussing the fundamentals of AI, Prompt Engineering, and Function calling in OpenAI",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7251430398453334016/",
     "images": [
+      "/images/events/indore-ai/indore-ai-flyer.jpg",
       "/images/events/indore-ai/indore-ai-meetup1.JPG",
       "/images/events/indore-ai/indore-ai-meetup2.JPG",
       "/images/events/indore-ai/indore-ai-meetup5.JPG"
+    ]
+  },
+  {
+    "id": 12,
+    "year": "2024",
+    "title": "How to Build a Production-Level Flutter App",
+    "conference": "Flutter In Production Extended \u2014 Datacode.in",
+    "location": "GraffersID, Indore, India",
+    "date": "December 29, 2024",
+    "audience": "20+ attendees",
+    "description": "Best practices and strategies for building robust, scalable, production-ready Flutter apps \u2014 delivered at Flutter In Production Extended Indore, hosted by Datacode.in at GraffersID\u2019s office.",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7279367282835750914/",
+        "by": "Datacode.in"
+      }
+    ],
+    "images": [
+      "/images/events/graffersid-flutter-vibe-coding/graffersid-1.jpg",
+      "/images/events/graffersid-flutter-vibe-coding/graffersid-2.jpg",
+      "/images/events/graffersid-flutter-vibe-coding/graffersid-3.jpg"
     ]
   },
   {
@@ -53,6 +151,12 @@
     "date": "March 21, 2025",
     "audience": "100+ attendees",
     "description": "Discussing the fundamentals of AI and how it can be used to create content",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7309798372956147712/",
+        "by": "Rashmi Chhokar"
+      }
+    ],
     "images": [
       "/images/events/medicaps-fest/medicaps-fest1.jpg",
       "/images/events/medicaps-fest/medicaps-fest2.jpg",
@@ -65,24 +169,156 @@
     "title": "Vibe Coding with Laravel",
     "conference": "Laravel Mauritius Meetup",
     "location": "Mauritius, Africa",
-    "date": "March 28, 2025",
+    "date": "March 29, 2025",
     "audience": "20+ attendees",
     "description": "What is Vibe Coding? How to code with vibes? Let's find out in this meetup.",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7310156383574724608/",
+        "by": "Laravel Moris"
+      }
+    ],
     "images": []
   },
   {
     "id": 6,
     "year": "2025",
-    "title": "AI MASTERCLASS 2025: From Roadmap to Real-World Agents",
+    "title": "AI TRAINING 2025: From Roadmap to Real-World Agents",
     "conference": "AIBootstrapper Events",
     "location": "Titanium Building, Indore, India",
     "date": "August 23, 2025",
     "audience": "50 seats",
     "description": "Hands-On AI Transformation Journey. Building AI Agents That Actually work using OpenAI Agents SDK to build a database agent that can fetch data from a database in natural language.",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7365620995434438656/",
     "images": [
+      "/images/events/ai-bootstrapper-01/ai-bootstrapper-flyer.jpg",
       "/images/events/ai-bootstrapper-01/ai-bootstrapper-1.jpg",
       "/images/events/ai-bootstrapper-01/ai-bootstrapper-2.jpg",
       "/images/events/ai-bootstrapper-01/ai-bootstrapper-3.JPG"
+    ]
+  },
+  {
+    "id": 10,
+    "year": "2025",
+    "title": "Building AI Agents using CAgent",
+    "conference": "Docker Captain Summit 2025",
+    "location": "Istanbul, Turkey",
+    "date": "September 16, 2025",
+    "audience": "20+ Docker Captains",
+    "description": "A lightning talk introducing Cagent, delivered at the Docker Captain Summit 2025 — a gathering of Docker Captains from around the world in Istanbul.",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7389229436413505536/",
+    "images": [
+      "/images/events/docker-captain-summit-istanbul/istanbul-1.jpg",
+      "/images/events/docker-captain-summit-istanbul/istanbul-2.jpg",
+      "/images/events/docker-captain-summit-istanbul/istanbul-3.jpg",
+      "/images/events/docker-captain-summit-istanbul/istanbul-4.jpg",
+      "/images/events/docker-captain-summit-istanbul/istanbul-5.jpg",
+      "/images/events/docker-captain-summit-istanbul/istanbul-6.jpg"
+    ]
+  },
+  {
+    "id": 11,
+    "year": "2025",
+    "title": "Get Smarter with NotebookLM & AI Agents",
+    "conference": "AIBootstrapper Workshop",
+    "location": "FILMUS Productions, Bhopal, India",
+    "date": "September 27, 2025",
+    "audience": "Innovators and learners",
+    "description": "A practical workshop on Google's NotebookLM and AI agents, simplifying complex ideas into hands-on knowledge to innovate, collaborate and stay future-ready — driving the AI-first maker movement. Co-presented with Ashish Kolarkar.",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7371503096700698624/",
+        "by": "AI-BootStrapper"
+      }
+    ],
+    "images": [
+      "/images/events/notebooklm-ai-agents-bhopal/flyer.jpg"
+    ]
+  },
+  {
+    "id": 17,
+    "year": "2025",
+    "title": "AI & n8n: Automate Anything",
+    "conference": "AIBootstrapper Expert Talk",
+    "location": "Nexus Spaces, Titanium Building, Indore, India",
+    "date": "October 11, 2025",
+    "audience": "Founders, professionals and students",
+    "description": "A live demonstration of connecting AI with n8n to automate anything \u2014 real-world workflows and simple tools that let anyone, technical or not, save time and scale faster. One of three sessions at the AIBootstrapper expert talk, alongside talks on AI in SaaS and Google\u2019s NotebookLM.",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7382026952087322624/",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7383707895969832960/",
+        "by": "AI-BootStrapper"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": 9,
+    "year": "2025",
+    "title": "Scaling with n8n and RAG",
+    "conference": "AIBootstrapper Meetup — Hands-On AI Workshop",
+    "location": "Aubergine Solutions Pvt. Ltd., Ahmedabad, India",
+    "date": "November 29, 2025",
+    "audience": "20+ attendees",
+    "description": "Automate everything with ease and efficiency — an introduction to n8n and RAG for building smarter, AI-powered workflows, delivered as part of AIBootstrapper's hands-on AI workshop in Ahmedabad.",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7401523066398294016/",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7402975431727067136/",
+        "by": "AI-BootStrapper"
+      },
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7402581294297112576/",
+        "by": "Aubergine Solutions"
+      }
+    ],
+    "images": [
+      "/images/events/aibootstrapper-ahmedabad/ahmedabad-3.jpg",
+      "/images/events/aibootstrapper-ahmedabad/ahmedabad-4.jpg",
+      "/images/events/aibootstrapper-ahmedabad/ahmedabad-1.jpg",
+      "/images/events/aibootstrapper-ahmedabad/ahmedabad-2.jpg",
+      "/images/events/aibootstrapper-ahmedabad/ahmedabad-5.jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "year": "2026",
+    "title": "Vibe Coding Session",
+    "conference": "Recooty",
+    "location": "Indore, India",
+    "date": "February 8, 2026",
+    "audience": "10+ attendees",
+    "description": "A hands-on vibe coding session for the Recooty team \u2014 tricks and tips for getting more out of AI coding tools, and how the flow between developer and tool leads to cleaner builds and faster iteration.",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7426105757538045952/",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7426595771774464001/",
+        "by": "Recooty"
+      }
+    ],
+    "images": [
+      "/images/events/recooty-prompt-engineering/recooty-1.jpg",
+      "/images/events/recooty-prompt-engineering/recooty-2.jpg",
+      "/images/events/recooty-prompt-engineering/recooty-3.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "year": "2026",
+    "title": "Build Your Own Smart AI Assistant",
+    "conference": "Indore Management Association (IMA)",
+    "location": "The Park Hotel, Indore, India",
+    "date": "May 22, 2026",
+    "audience": "30+ attendees",
+    "description": "A session on building smart AI assistants that boost productivity, automate tasks and simplify everyday work, featuring a live demo of Hermes, an AI agent built for the session. Hosted by the Indore Management Association (IMA), affiliated to AIMA.",
+    "linkedin": "https://www.linkedin.com/feed/update/urn:li:activity:7463993676143321089/",
+    "images": [
+      "/images/events/ima-ai-skill-lab/ima-flyer.webp",
+      "/images/events/ima-ai-skill-lab/ima-3.jpg",
+      "/images/events/ima-ai-skill-lab/ima-1.jpg",
+      "/images/events/ima-ai-skill-lab/ima-4.jpg",
+      "/images/events/ima-ai-skill-lab/ima-2.jpg"
     ]
   }
 ]

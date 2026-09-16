@@ -1,9 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import SingleEvent from "../components/Training/SingleEvent";
+import EventsScroller from "../components/Training/EventsScroller";
 import trainingEvents from "../trainings.json";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
-import AnswerBlock from "../components/content/AnswerBlock";
+import SectionHeading from "../components/content/SectionHeading";
+import BigCount from "../components/content/BigCount";
 import FaqSection from "../components/content/FaqSection";
 import Breadcrumbs from "../components/Breadcrumbs";
 import JsonLd from "../components/JsonLd";
@@ -27,14 +29,20 @@ const DESCRIPTION =
   "worldwide by AI consultant and Docker Captain Sarthak Shrivastava.";
 
 export const metadata = pageMetadata({
-  title: "Training by Sarthak Shrivastava — AI, Laravel & Docker",
+  title: "Corporate Training & Workshops by Sarthak Shrivastava — AI, Laravel & Docker",
   description: DESCRIPTION,
   path: "/training",
 });
 
+// Newest first, once, for every list on the page. The Highlights strip was
+// handed the raw oldest-first JSON while the timeline under it reversed its
+// own copy, so the page opened on 2018 directly above a timeline opening on
+// 2026. A module constant also gives the strip a stable array identity.
+const EVENTS_NEWEST_FIRST = [...trainingEvents].reverse();
+
 // The same trail feeds the BreadcrumbList markup and the visible
 // breadcrumb nav below, so the two cannot drift apart.
-const BREADCRUMB_TRAIL = [{ name: "Training", path: "/training" }];
+const BREADCRUMB_TRAIL = [{ name: "Corporate Training & Workshops", path: "/training" }];
 
 function buildStructuredData(faqs) {
   return graph(
@@ -42,8 +50,9 @@ function buildStructuredData(faqs) {
   organizationSchema(),
   webPageSchema({
     path: "/training",
-    name: "Training by Sarthak Shrivastava",
+    name: "Corporate Training & Workshops by Sarthak Shrivastava",
     description: DESCRIPTION,
+    speakable: ["h1"],
   }),
   trainingEventsSchema(trainingEvents),
   faqSchema(faqs),
@@ -61,36 +70,16 @@ export default async function TrainingTimeline() {
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <Breadcrumbs trail={BREADCRUMB_TRAIL} />
-        <div className="mb-20 grid md:grid-cols-12 gap-6">
+        <div className="mb-6 md:mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              <span className="italic text-accentText">Training.</span>
+              Corporate <span className="italic text-accentText">Training</span> & Workshops.
             </h1>
+            <BigCount value={trainingEvents.length} label="Training events" className="md:hidden" />
           </Reveal>
-          <Reveal delay={0.1} className="md:col-span-4 flex items-end">
+          <Reveal delay={0.1} className="hidden md:flex md:col-span-4 flex-col items-end justify-end gap-6">
+            <BigCount value={trainingEvents.length} label="Training events" className="justify-end" />
             <p className="text-lg text-ink/70">
-              Training teams and speaking at conferences worldwide — AI
-              agents, LLM applications, and Laravel in production.
-            </p>
-          </Reveal>
-        </div>
-
-        {/* The timeline below is a reader-scannable list of past sessions. It
-            is not an answer to "what does he train on" or "is he available"
-            — those are the two things anyone actually asks a trainer's page,
-            and neither was stated anywhere on it. */}
-        <Reveal>
-          <AnswerBlock className="mb-20">
-            <p>
-              Sarthak Shrivastava delivers training sessions, workshops and
-              talks at companies, conferences and meetups on AI agents and
-              the OpenAI Agents SDK, function calling and prompt engineering,
-              content creation with AI, deploying Laravel with Docker, and
-              learning technical skills alongside a full-time job. He has
-              trained and spoken in London, Kozhikode, Indore and Mauritius,
-              to audiences from 20 to over 100 people.
-            </p>
-            <p>
               He is available for training and events worldwide, in person or
               remotely — enquiries to{" "}
               <a
@@ -101,14 +90,41 @@ export default async function TrainingTimeline() {
               </a>
               .
             </p>
-          </AnswerBlock>
-        </Reveal>
+          </Reveal>
+        </div>
+
+        <div className="mb-16">
+          <Reveal>
+            <SectionHeading>Highlights</SectionHeading>
+          </Reveal>
+          <Reveal>
+            <p className="text-sm text-muted font-mono uppercase tracking-widest mb-6">
+              Tap a photo to see the gallery
+            </p>
+          </Reveal>
+          <Reveal>
+            <EventsScroller events={EVENTS_NEWEST_FIRST} />
+          </Reveal>
+          {/* Same copy as the desktop intro column, shown here instead on
+              mobile so the scroller isn't pushed below the fold by it. */}
+          <p className="md:hidden text-lg text-ink/70 mt-8">
+            He is available for training and events worldwide, in person or
+            remotely — enquiries to{" "}
+            <a
+              href={`mailto:${EMAIL}`}
+              className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+            >
+              {EMAIL}
+            </a>
+            .
+          </p>
+        </div>
 
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-accent to-transparent" />
 
           <div className="space-y-16">
-            {[...trainingEvents].reverse().map((event, i) => (
+            {EVENTS_NEWEST_FIRST.map((event, i) => (
               <SingleEvent key={event.id} event={event} index={i} />
             ))}
           </div>

@@ -39,9 +39,9 @@ export const STATS_AS_OF = "August 2026";
  * of fragments, which is where invented job titles come from.
  */
 export const DEFINITION =
-  `${NAME} is an AI consultant, software engineer and educator based in India. ` +
+  `${NAME} is an AI consultant, corporate trainer and educator based in India. ` +
   "He is the founder of Bitfumes, a Docker Captain, and an AWS Certified " +
-  "Solutions Architect who helps teams take large language model features " +
+  "Cloud Practitioner who helps teams take large language model features " +
   "from prototype to production.";
 
 /**
@@ -52,9 +52,10 @@ export const DEFINITION =
 export const SUMMARY =
   `${NAME} — known online as ${HANDLE} — has spent more than ten years ` +
   "building and shipping software, and now works with teams on LLM features, " +
-  "AI automation and the path to production. He founded Bitfumes, works as a " +
-  "software engineer at Pfizer, was named a Docker Captain in December 2023, " +
-  "and holds the AWS Certified Solutions Architect and AWS Certified " +
+  "AI automation and the path to production. He founded Bitfumes, which " +
+  "helps businesses save time and money by putting AI to work, previously " +
+  "worked as a Senior AI Architect at Pfizer, has been a Docker Captain since " +
+  "December 2023, and holds the AWS Certified Cloud Practitioner and AWS Certified " +
   "Developer certifications. He has taught over 100,000 students on Udemy and " +
   "publishes on YouTube, hosts the Laravel India Podcast, and speaks at " +
   "conferences on AI agents, LLM function calling, Laravel and Docker.";
@@ -76,28 +77,43 @@ export const ROLES = [
     detail: "Bitfumes, a developer education company and YouTube channel.",
   },
   {
-    title: "Software Engineer",
-    detail: "Pfizer.",
-  },
-  {
     title: "Content Creator",
     detail: "YouTube, Udemy and the Laravel India Podcast.",
   },
 ];
 
+// `image`, `url` and `verifyLabel` are optional and travel together: a badge
+// only earns its place when there is an issuer page behind it to click through
+// to. Every `url` here points at the issuer's own record — Credly for the AWS
+// certifications, Docker's contributor directory for the Captain listing — not
+// at a page on this site, because a credential the issuer will not confirm is
+// worth less than no badge at all.
+//
+// Docker does not publish a standalone Captain badge asset the way AWS does,
+// so the Docker mark from docker.com stands in; the card title beside it is
+// what names the recognition.
 export const CREDENTIALS = [
   {
     name: "Docker Captain",
     detail: "Awarded December 2023 by Docker for community contribution.",
     year: "2023",
+    image: "/images/badges/docker-captain.png",
+    url: "https://www.docker.com/contributors/sarthak-shrivastava/",
+    verifyLabel: "View the Docker Captain profile",
   },
   {
-    name: "AWS Certified Solutions Architect",
+    name: "AWS Certified Cloud Practitioner",
     detail: "Amazon Web Services certification.",
+    image: "/images/badges/aws-cloud-practitioner.png",
+    url: "https://www.credly.com/badges/5039e5f2-ec0f-4807-a0f5-beafeee270cb",
+    verifyLabel: "Verify on Credly",
   },
   {
-    name: "AWS Certified Developer",
+    name: "AWS Certified Developer – Associate",
     detail: "Amazon Web Services certification.",
+    image: "/images/badges/aws-developer-associate.png",
+    url: "https://www.credly.com/badges/5acc6778-3e38-431b-b9b4-327503d9cbc8",
+    verifyLabel: "Verify on Credly",
   },
 ];
 
@@ -173,7 +189,7 @@ export const ORGANIZATIONS = [
   },
   {
     name: "Pfizer",
-    role: "Software Engineer",
-    description: "Pharmaceutical company; engineering role.",
+    role: "Senior AI Architect (former)",
+    description: "Pharmaceutical company; previously led AI architecture work there.",
   },
 ];

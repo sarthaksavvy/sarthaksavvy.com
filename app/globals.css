@@ -62,9 +62,9 @@ body {
 
 /* The CSS half of "Reduce motion". Framer Motion is handled in MotionProvider;
    these are the animations that run straight from the stylesheet, and they are
-   the ones that never stop on their own: the marquee scrolls the whole width of
-   the viewport forever, and the pulse loop sits in the corner of the eye for as
-   long as the page is open. WCAG asks that moving content which starts by
+   the ones that never stop on their own: the pulse loop sits in the corner of
+   the eye for as long as the page is open. (The auto-scrolling media strips
+   are JS-driven, and check the same preference in HorizontalScroller.) WCAG asks that moving content which starts by
    itself and runs past five seconds can be turned off; for a visitor who has
    said "reduce motion" at the OS level, that is exactly what they have asked
    for.
@@ -76,7 +76,6 @@ body {
     scroll-behavior: auto;
   }
 
-  .animate-marquee,
   .animate-pulse {
     animation: none;
   }

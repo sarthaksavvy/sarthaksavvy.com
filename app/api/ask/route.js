@@ -83,8 +83,8 @@ let inFlightScrape = null;
 function linkedinContent(subscribers) {
   return `
 === LinkedIn Profile Information ===
-Sarthak Shrivastava (sarthaksavvy) is a full-stack developer, Docker Captain, and founder of Bitfumes.
-He works as a Software Engineer at Pfizer and is a content creator with ${subscribers} YouTube subscribers and 100K+ Udemy students.
+Sarthak Shrivastava (sarthaksavvy) is a corporate trainer, Docker Captain, and founder of Bitfumes.
+He previously worked as a Senior AI Architect at Pfizer and is a content creator with ${subscribers} YouTube subscribers and 100K+ Udemy students.
 His expertise includes Laravel, JavaScript, Python, AWS, Docker, AI/LLMs, and he's passionate about building and automating daily tasks.
 LinkedIn: ${LINKEDIN_URL}
 `;
@@ -101,11 +101,11 @@ function fallbackContent(subscribers) {
 
   return `
 === Fallback Information about Sarthak Shrivastava ===
-Sarthak Shrivastava is an India-based founder, content creator, developer and AI consultant passionate about building and automating daily tasks.
+Sarthak Shrivastava is an India-based founder, AI consultant, content creator and corporate trainer passionate about helping businesses using AI.
 
 Professional Background:
 - Founder of Bitfumes
-- Software Engineer at Pfizer
+- Previously Senior AI Architect at Pfizer
 - Docker Captain
 - Content Creator with ${subscribers} YouTube subscribers
 - 100K+ Udemy students
@@ -129,7 +129,7 @@ Contact:
 - Email: ${EMAIL}
 - Courses: ${COURSES_URL}
 
-Side Projects:
+Products:
 ${projects}
 `;
 }

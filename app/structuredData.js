@@ -1,5 +1,6 @@
 import { SITE_URL, SITE_UPDATED, updatedFor } from "./routes";
 import { SITE_NAME, canonicalUrl } from "./seo";
+import { isVideo, posterFor } from "../lib/media";
 import {
   CREDENTIALS,
   DEFINITION,
@@ -68,8 +69,9 @@ export function personSchema() {
       name: `${LOCATION.country} (remote worldwide)`,
     },
     knowsLanguage: ["en", "hi"],
-    worksFor: [
-      { "@id": BITFUMES_ID },
+    worksFor: [{ "@id": BITFUMES_ID }],
+    // A past employer, so not `worksFor` — that property means current.
+    alumniOf: [
       {
         "@type": "Organization",
         name: "Pfizer",
@@ -164,6 +166,10 @@ export function webPageSchema({
   description,
   primaryImage,
   breadcrumb = true,
+  // Only name selectors the page actually renders. `[data-speakable]` comes
+  // from AnswerBlock; a page without one that still advertised it pointed
+  // voice assistants at nothing, which is worse than naming the h1 alone.
+  speakable = ["h1", "[data-speakable]"],
 }) {
   const url = canonicalUrl(path);
 
@@ -188,13 +194,13 @@ export function webPageSchema({
     ...(breadcrumb ? { breadcrumb: { "@id": `${url}#breadcrumb` } } : {}),
     speakable: {
       "@type": "SpeakableSpecification",
-      cssSelector: ["h1", "[data-speakable]"],
+      cssSelector: speakable,
     },
   };
 }
 
 /**
- * Breadcrumbs let a result show "sarthaksavvy.com › Side Projects › AudioBolo"
+ * Breadcrumbs let a result show "sarthaksavvy.com › Products › AudioBolo"
  * instead of a bare URL. `trail` is ordered from the root down; the home crumb
  * is added here so no caller has to remember it.
  */
@@ -288,8 +294,15 @@ export function trainingEventsSchema(events) {
           "@type": "Organization",
           name: event.conference,
         },
+        // A clip is not an `image`. Its poster frame is a real still that sits
+        // next to it, so the event keeps a valid image even when a video is
+        // listed first.
         ...(event.images?.length
-          ? { image: canonicalUrl(event.images[0]) }
+          ? {
+              image: canonicalUrl(
+                isVideo(event.images[0]) ? posterFor(event.images[0]) : event.images[0]
+              ),
+            }
           : {}),
         performer: { "@id": PERSON_ID },
       };
@@ -432,7 +445,7 @@ export function softwareApplicationSchema({
 export function projectListSchema(projects) {
   return {
     "@type": "ItemList",
-    name: "Side projects by Sarthak Shrivastava",
+    name: "Products by Sarthak Shrivastava",
     numberOfItems: projects.length,
     itemListElement: projects.map((project, i) => ({
       "@type": "ListItem",

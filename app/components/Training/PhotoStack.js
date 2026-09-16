@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Lightbox from "./Lightbox";
-
-const VIDEO_PATTERN = /\.(mp4|mpg|mov|webm)$/i;
+import { isVideo, posterFor } from "../../../lib/media";
 
 // Every photo in the timeline is a full-resolution camera JPEG — a few of them
 // are over 3MB. Rendered through next/image the 80px thumbnails download as
@@ -40,42 +40,53 @@ export default function PhotoStack({ event }) {
               type="button"
               aria-label={describe(index)}
               onClick={() => setLightboxIndex(index)}
-              className="block rounded-lg overflow-hidden border border-transparent hover:border-ink/40 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+              className="block border border-transparent hover:border-ink/40 transition-colors rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
             >
-              {VIDEO_PATTERN.test(image) ? (
-                <video
-                  src={image}
-                  muted
-                  playsInline
-                  preload="metadata"
-                  aria-hidden="true"
-                  className="h-20 w-20 object-cover"
-                />
-              ) : (
-                <Image
-                  src={image}
-                  alt=""
-                  width={THUMB_SIZE}
-                  height={THUMB_SIZE}
-                  sizes={`${THUMB_SIZE}px`}
-                  className="h-20 w-20 object-cover"
-                />
-              )}
+              {/* Shared with the matching image in the lightbox via
+                  `layoutId` — framer-motion morphs this thumbnail's box (and
+                  its rounded corners) into the full-screen frame, and back
+                  again on close, instead of the lightbox just appearing. */}
+              <motion.div
+                layoutId={`photo-${label}-${index}`}
+                className="relative h-20 w-20 overflow-hidden rounded-lg"
+              >
+                {isVideo(image) ? (
+                  <video
+                    src={image}
+                    poster={posterFor(image)}
+                    muted
+                    playsInline
+                    preload="none"
+                    aria-hidden="true"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={image}
+                    alt=""
+                    fill
+                    sizes={`${THUMB_SIZE}px`}
+                    className="object-cover"
+                  />
+                )}
+              </motion.div>
             </button>
           </li>
         ))}
       </ul>
 
-      {lightboxIndex !== null && (
-        <Lightbox
-          images={event.images}
-          index={lightboxIndex}
-          label={label}
-          describe={describe}
-          onClose={() => setLightboxIndex(null)}
-          onNavigate={setLightboxIndex}
-        />
-      )}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <Lightbox
+            images={event.images}
+            index={lightboxIndex}
+            label={label}
+            describe={describe}
+            onClose={() => setLightboxIndex(null)}
+            onNavigate={setLightboxIndex}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
