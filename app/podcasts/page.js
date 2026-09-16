@@ -23,8 +23,8 @@ import { getSubscriberCount } from "../../lib/youtube";
 
 const DESCRIPTION =
   "Conversations with the Laravel community — including Taylor Otwell, " +
-  "James Brooks and Freek Van der Herten — hosted by AI consultant Sarthak " +
-  "Shrivastava.";
+  "James Brooks, Freek Van der Herten and Nuno Maduro — hosted by AI " +
+  "consultant Sarthak Shrivastava.";
 
 export const metadata = pageMetadata({
   title: "Laravel India Podcast — Hosted by Sarthak Shrivastava",
@@ -72,6 +72,12 @@ const guests = [
     photo: "/images/podcast-guests/freek-van-der-herten.jpg",
     youtube: "https://www.youtube.com/@laravelindiapodcast",
   },
+  {
+    name: "Nuno Maduro",
+    role: "Laravel core team member, Laravel Cloud",
+    photo: "/images/podcast-guests/nuno-maduro.jpg",
+    youtube: "https://www.youtube.com/@laravelindiapodcast",
+  },
 ];
 
 // "A (x), B (y) and C (z)" — the phrasing both prose paragraphs need.
@@ -109,7 +115,8 @@ function buildStructuredData(faqs) {
     url: canonicalUrl("/podcasts"),
     description:
       "Conversations with guests from the worldwide Laravel community, " +
-      "including Taylor Otwell, James Brooks and Freek Van der Herten.",
+      "including Taylor Otwell, James Brooks, Freek Van der Herten and " +
+      "Nuno Maduro.",
     image: canonicalUrl(ogImages.podcast.url),
     inLanguage: "en",
     // Named guests are entities in their own right. A crawler that can only
@@ -221,7 +228,7 @@ export default async function Podcasts() {
             <SectionHeading>Guests</SectionHeading>
           </Reveal>
           <Reveal>
-            <div className="grid md:grid-cols-3 gap-8 mb-24">
+            <div className="grid md:grid-cols-2 gap-8 mb-24">
               {guests.map((guest) => (
                 <TiltCard
                   key={guest.name}
@@ -234,13 +241,13 @@ export default async function Podcasts() {
                     aria-label={`Watch ${guest.name} on the Laravel India Podcast YouTube channel`}
                     className="block"
                   >
-                    <div className="relative aspect-square overflow-hidden">
+                    <div className="relative aspect-video overflow-hidden">
                       <Image
                         src={guest.photo}
                         alt={guest.name}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(min-width: 768px) 33vw, 100vw"
+                        sizes="(min-width: 768px) 50vw, 100vw"
                       />
                     </div>
                     <div className="p-8">
