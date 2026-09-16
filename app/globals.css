@@ -51,11 +51,11 @@ body {
 /* The CSS half of "Reduce motion". Framer Motion is handled in MotionProvider;
    these are the animations that run straight from the stylesheet, and they are
    the ones that never stop on their own: the marquee scrolls the whole width of
-   the viewport forever, and the ping, pulse and blink loops sit in the corner
-   of the eye for as long as the page is open. WCAG asks that moving content
-   which starts by itself and runs past five seconds can be turned off; for a
-   visitor who has said "reduce motion" at the OS level, that is exactly what
-   they have asked for.
+   the viewport forever, and the pulse loop sits in the corner of the eye for as
+   long as the page is open. WCAG asks that moving content which starts by
+   itself and runs past five seconds can be turned off; for a visitor who has
+   said "reduce motion" at the OS level, that is exactly what they have asked
+   for.
 
    Placed after every @tailwind directive on purpose — these override utility
    classes of the same specificity, so source order is what decides. */
@@ -65,8 +65,6 @@ body {
   }
 
   .animate-marquee,
-  .animate-blink,
-  .animate-ping,
   .animate-pulse {
     animation: none;
   }

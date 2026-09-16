@@ -4,7 +4,6 @@ import Script from "next/script";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FloatingControls from "./components/FloatingControls";
-import EntryGate from "./components/EntryGate";
 import MotionProvider from "./components/motion/MotionProvider";
 import { SITE_URL } from "./routes";
 import { SITE_NAME, ogImages, twitterCard } from "./seo";
@@ -83,11 +82,10 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-MN3X8W00H5');
           `}
         </Script>
-        {/* Wraps everything, including the header, the footer and the entry
-            overlay, so a visitor with "Reduce motion" turned on gets a still
-            site rather than one where only the page body settled down. */}
+        {/* Wraps everything, including the header and the footer, so a
+            visitor with "Reduce motion" turned on gets a still site rather
+            than one where only the page body settled down. */}
         <MotionProvider>
-          <EntryGate />
           <div className="min-h-screen bg-paper text-ink w-full overflow-x-hidden">
             {/* Header, footer and the two floating controls sit outside the
                 main landmark on purpose: everything in here is repeated on
