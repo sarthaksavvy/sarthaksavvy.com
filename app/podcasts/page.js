@@ -1,9 +1,9 @@
-import { Clock, Youtube } from "lucide-react";
+import { Clock } from "lucide-react";
 import Image from "next/image";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
 import TiltCard from "../components/motion/TiltCard";
-import AnswerBlock from "../components/content/AnswerBlock";
+import PodcastScroller from "../components/PodcastScroller";
 import FaqSection from "../components/content/FaqSection";
 import SectionHeading from "../components/content/SectionHeading";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -58,7 +58,7 @@ const guests = [
     name: "Taylor Otwell",
     role: "Creator of Laravel",
     photo: "/images/podcast-guests/taylor-otwell.jpg",
-    youtube: "https://www.youtube.com/watch?v=7rnXSu3gfVo",
+    youtube: "https://www.youtube.com/watch?v=ytHZP1kqlIk",
   },
   {
     name: "James Brooks",
@@ -78,9 +78,51 @@ const guests = [
     photo: "/images/podcast-guests/nuno-maduro.jpg",
     youtube: "https://www.youtube.com/watch?v=auxt6OQJCPQ",
   },
+  {
+    name: "Guus Leeuw",
+    role: "DevOps consultant",
+    photo: "/images/podcast-guests/guus-leeuw.jpg",
+    youtube: "https://www.youtube.com/watch?v=OSJQpcUC5FQ",
+  },
+  {
+    name: "Gaurav Makhecha",
+    role: "Founder, FreshBits",
+    photo: "/images/podcast-guests/gaurav-makhecha.jpg",
+    youtube: "https://www.youtube.com/watch?v=jCSoqfjUMOM",
+  },
+  {
+    name: "Caneco",
+    role: "Developer and designer",
+    photo: "/images/podcast-guests/caneco.jpg",
+    youtube: "https://www.youtube.com/watch?v=SL2BXxWE4qI",
+  },
+  {
+    name: "Drishti",
+    role: "International Tech Speaker",
+    photo: "/images/podcast-guests/drishti.jpg",
+    youtube: "https://www.youtube.com/watch?v=yL7i2pKDuaI",
+  },
+  {
+    name: "Francisco Madeira",
+    role: "Co-author of Termwind",
+    photo: "/images/podcast-guests/francisco-madeira.jpg",
+    youtube: "https://www.youtube.com/watch?v=FdOAc2l-K1I",
+  },
+  {
+    name: "Joe",
+    role: "Laravel core team member",
+    photo: "/images/podcast-guests/joe.jpg",
+    youtube: "https://www.youtube.com/watch?v=3OFROaozHrs",
+  },
+  {
+    name: "Bobby Bouwmann",
+    role: "Laravel evangelist",
+    photo: "/images/podcast-guests/bobby-bouwmann.jpg",
+    youtube: "https://www.youtube.com/watch?v=aWdsH3EEoSQ",
+  },
 ];
 
-// "A (x), B (y) and C (z)" — the phrasing both prose paragraphs need.
+// "A (x), B (y) and C (z)" — the phrasing the podcast card's paragraph needs.
 function guestSentence(list) {
   return list
     .map(({ name, role }) => `${name} (${role})`)
@@ -146,13 +188,13 @@ export default async function Podcasts() {
       <JsonLd data={structuredData} />
       <div className="max-w-[1400px] mx-auto">
         <Breadcrumbs trail={BREADCRUMB_TRAIL} />
-        <div className="mb-20 grid md:grid-cols-12 gap-6">
+        <div className="mb-6 md:mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
               My <span className="italic text-accentText">Podcast.</span>
             </h1>
           </Reveal>
-          <Reveal delay={0.1} className="md:col-span-4 flex items-end">
+          <Reveal delay={0.1} className="hidden md:flex md:col-span-4 items-end">
             <p className="text-lg text-ink/70">
               Exploring web development through conversations with industry
               experts and deep dives into modern technologies.
@@ -160,34 +202,44 @@ export default async function Podcasts() {
           </Reveal>
         </div>
 
-        {/* The show's own description is inside a card, phrased for someone
-            already looking at it. This is the version that survives being
-            quoted: it names the host, the guests and where to listen. */}
-        <Reveal>
-          <AnswerBlock className="mb-16">
-            <p>
-              The Laravel India Podcast is hosted by Sarthak Shrivastava and
-              features guests from the worldwide Laravel community, including{" "}
-              {guestSentence(guests)}. There are 12 or more episodes,
-              available on Apple Podcasts, Spotify and YouTube.
+        {/* The guests were a clause inside one sentence. As named entries they
+            are three more things this page can be found by — someone searching
+            "Taylor Otwell podcast" is looking for exactly this episode list,
+            and a clause buried in a paragraph is not what gets matched. */}
+        <div className="mb-16">
+          <Reveal>
+            <SectionHeading>Guests</SectionHeading>
+          </Reveal>
+          <Reveal>
+            <p className="text-sm text-muted font-mono uppercase tracking-widest mb-6">
+              Tap a face to watch the episode
             </p>
-          </AnswerBlock>
-        </Reveal>
+          </Reveal>
+          <Reveal>
+            <PodcastScroller guests={guests} />
+          </Reveal>
+          {/* Same copy as the desktop intro column, shown here instead on
+              mobile so the scroller isn't pushed below the fold by it. */}
+          <p className="md:hidden text-lg text-ink/70 mt-8">
+            Exploring web development through conversations with industry
+            experts and deep dives into modern technologies.
+          </p>
+        </div>
 
         <Reveal>
           <TiltCard className="border border-line rounded-3xl p-8 hover:border-ink/40 transition-colors">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-              <div className="rounded-2xl overflow-hidden md:rotate-1">
+            <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-8 items-center">
+              <div className="rounded-2xl overflow-hidden sm:rotate-1 w-36 sm:w-full mx-auto">
                 <Image
                   src="/images/laravel-india-podcast.jpg"
                   alt="Latest episode cover"
                   className="object-cover w-full h-auto"
-                  width={400}
-                  height={400}
+                  width={220}
+                  height={220}
                 />
               </div>
-              <div className="space-y-6">
-                <h2 className="font-display italic text-4xl">
+              <div className="space-y-4">
+                <h2 className="font-display italic text-3xl">
                   Laravel India Podcast
                 </h2>
                 <p className="text-ink/70 leading-relaxed">
@@ -219,55 +271,7 @@ export default async function Podcasts() {
           </TiltCard>
         </Reveal>
 
-        {/* The guests were a clause inside one sentence. As named entries they
-            are three more things this page can be found by — someone searching
-            "Taylor Otwell podcast" is looking for exactly this episode list,
-            and a clause buried in a paragraph is not what gets matched. */}
         <div className="mt-24">
-          <Reveal>
-            <SectionHeading>Guests</SectionHeading>
-          </Reveal>
-          <Reveal>
-            <div className="grid md:grid-cols-2 gap-8 mb-24">
-              {guests.map((guest) => (
-                <TiltCard
-                  key={guest.name}
-                  className="group border border-line rounded-3xl overflow-hidden bg-paper hover:border-ink/40 transition-colors"
-                >
-                  <a
-                    href={guest.youtube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Watch ${guest.name} on the Laravel India Podcast YouTube channel`}
-                    className="block"
-                  >
-                    <div className="relative aspect-video overflow-hidden">
-                      <Image
-                        src={guest.photo}
-                        alt={guest.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(min-width: 768px) 50vw, 100vw"
-                      />
-                    </div>
-                    <div className="p-8">
-                      <h3 className="font-display italic text-2xl mb-3">
-                        {guest.name}
-                      </h3>
-                      <p className="text-ink/70 leading-relaxed mb-4">
-                        {guest.role}
-                      </p>
-                      <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-accentText">
-                        <Youtube size={16} />
-                        Watch on YouTube
-                      </span>
-                    </div>
-                  </a>
-                </TiltCard>
-              ))}
-            </div>
-          </Reveal>
-
           <FaqSection faqs={faqs} id="podcast-faq" />
         </div>
       </div>

@@ -36,6 +36,18 @@ body {
     font-family: var(--font-display), Georgia, serif;
   }
 
+  /* The podcast guest strip scrolls itself (JS-driven `scrollLeft`, not a
+     CSS transform) so a visitor can also grab and drag it — a native
+     scrollbar there would fight that grab affordance for no benefit. */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
   .grain::after {
     content: "";
     position: fixed;

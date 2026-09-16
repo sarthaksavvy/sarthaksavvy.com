@@ -22,6 +22,10 @@ const csp = [
   "img-src 'self' data:",
   "font-src 'self' data:",
   "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
+  // The podcast page embeds guest episodes as click-to-play YouTube iframes
+  // instead of just linking out, so youtube.com needs an explicit frame-src —
+  // without it, default-src 'self' would silently block the embed.
+  "frame-src https://www.youtube.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
