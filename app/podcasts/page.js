@@ -64,19 +64,19 @@ const guests = [
     name: "James Brooks",
     role: "Laravel core team member",
     photo: "/images/podcast-guests/james-brooks.jpg",
-    youtube: "https://www.youtube.com/@laravelindiapodcast",
+    youtube: "https://www.youtube.com/watch?v=WkDoWfW2eLI",
   },
   {
     name: "Freek Van der Herten",
     role: "Laravel developer at Spatie",
     photo: "/images/podcast-guests/freek-van-der-herten.jpg",
-    youtube: "https://www.youtube.com/@laravelindiapodcast",
+    youtube: "https://www.youtube.com/watch?v=8VTw7jeBd6g",
   },
   {
     name: "Nuno Maduro",
     role: "Laravel core team member, Laravel Cloud",
     photo: "/images/podcast-guests/nuno-maduro.jpg",
-    youtube: "https://www.youtube.com/@laravelindiapodcast",
+    youtube: "https://www.youtube.com/watch?v=auxt6OQJCPQ",
   },
 ];
 
