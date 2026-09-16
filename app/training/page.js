@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
-import SingleEvent from "../components/PublicSpeaking/SingleEvent";
-import speakingEvents from "../events.json";
+import SingleEvent from "../components/Training/SingleEvent";
+import trainingEvents from "../trainings.json";
 import Reveal from "../components/motion/Reveal";
 import MagneticButton from "../components/motion/MagneticButton";
 import AnswerBlock from "../components/content/AnswerBlock";
@@ -14,7 +14,7 @@ import {
   graph,
   organizationSchema,
   personSchema,
-  speakingEventsSchema,
+  trainingEventsSchema,
   webPageSchema,
 } from "../structuredData";
 import { faqGroup } from "../content/faqs";
@@ -22,38 +22,38 @@ import { EMAIL } from "../content/profile";
 import { getSubscriberCount } from "../../lib/youtube";
 
 const DESCRIPTION =
-  "Talks on AI agents, LLM function calling, Laravel and Docker at " +
-  "conferences worldwide, from AI consultant and Docker Captain Sarthak " +
-  "Shrivastava.";
+  "Training sessions, workshops and talks on AI agents, LLM function calling, " +
+  "Laravel and Docker, delivered at companies, meetups and conferences " +
+  "worldwide by AI consultant and Docker Captain Sarthak Shrivastava.";
 
 export const metadata = pageMetadata({
-  title: "Conference Talks by Sarthak Shrivastava — AI & Laravel",
+  title: "Training by Sarthak Shrivastava — AI, Laravel & Docker",
   description: DESCRIPTION,
-  path: "/public-speaking",
+  path: "/training",
 });
 
 // The same trail feeds the BreadcrumbList markup and the visible
 // breadcrumb nav below, so the two cannot drift apart.
-const BREADCRUMB_TRAIL = [{ name: "Public Speaking", path: "/public-speaking" }];
+const BREADCRUMB_TRAIL = [{ name: "Training", path: "/training" }];
 
 function buildStructuredData(faqs) {
   return graph(
   personSchema(),
   organizationSchema(),
   webPageSchema({
-    path: "/public-speaking",
-    name: "Conference talks by Sarthak Shrivastava",
+    path: "/training",
+    name: "Training by Sarthak Shrivastava",
     description: DESCRIPTION,
   }),
-  speakingEventsSchema(speakingEvents),
+  trainingEventsSchema(trainingEvents),
   faqSchema(faqs),
   breadcrumbSchema(BREADCRUMB_TRAIL)
   );
 }
 
-export default async function SpeakingTimeline() {
+export default async function TrainingTimeline() {
   const subscribers = await getSubscriberCount();
-  const faqs = faqGroup("speaking", subscribers).faqs;
+  const faqs = faqGroup("training", subscribers).faqs;
   const structuredData = buildStructuredData(faqs);
 
   return (
@@ -64,34 +64,35 @@ export default async function SpeakingTimeline() {
         <div className="mb-20 grid md:grid-cols-12 gap-6">
           <Reveal className="md:col-span-8">
             <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] mb-6">
-              Public <span className="italic text-accentText">Speaking.</span>
+              <span className="italic text-accentText">Training.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-4 flex items-end">
             <p className="text-lg text-ink/70">
-              Sharing knowledge at tech conferences worldwide — AI agents,
-              LLM applications, and Laravel in production.
+              Training teams and speaking at conferences worldwide — AI
+              agents, LLM applications, and Laravel in production.
             </p>
           </Reveal>
         </div>
 
-        {/* The timeline below is six events a reader can scan. It is not an
-            answer to "what does he speak about" or "is he available" — those
-            are the two things anyone actually asks a speaker page, and neither
-            was stated anywhere on it. */}
+        {/* The timeline below is a reader-scannable list of past sessions. It
+            is not an answer to "what does he train on" or "is he available"
+            — those are the two things anyone actually asks a trainer's page,
+            and neither was stated anywhere on it. */}
         <Reveal>
           <AnswerBlock className="mb-20">
             <p>
-              Sarthak Shrivastava speaks at conferences, meetups and workshops
-              on AI agents and the OpenAI Agents SDK, function calling and
-              prompt engineering, content creation with AI, deploying Laravel
-              with Docker, and learning technical skills alongside a full-time
-              job. He has spoken in London, Kozhikode, Indore and Mauritius, to
-              audiences from 20 to over 100 people.
+              Sarthak Shrivastava delivers training sessions, workshops and
+              talks at companies, conferences and meetups on AI agents and
+              the OpenAI Agents SDK, function calling and prompt engineering,
+              content creation with AI, deploying Laravel with Docker, and
+              learning technical skills alongside a full-time job. He has
+              trained and spoken in London, Kozhikode, Indore and Mauritius,
+              to audiences from 20 to over 100 people.
             </p>
             <p>
-              He is available for events worldwide, in person or remotely —
-              enquiries to{" "}
+              He is available for training and events worldwide, in person or
+              remotely — enquiries to{" "}
               <a
                 href={`mailto:${EMAIL}`}
                 className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
@@ -107,22 +108,23 @@ export default async function SpeakingTimeline() {
           <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-accent to-transparent" />
 
           <div className="space-y-16">
-            {[...speakingEvents].reverse().map((event, i) => (
+            {[...trainingEvents].reverse().map((event, i) => (
               <SingleEvent key={event.id} event={event} index={i} />
             ))}
           </div>
         </div>
 
         <div className="mt-24">
-          <FaqSection faqs={faqs} id="speaking-faq" />
+          <FaqSection faqs={faqs} id="training-faq" />
         </div>
 
         <Reveal className="text-center">
           <h2 className="font-display italic text-3xl sm:text-4xl mb-4">
-            Want me to speak at your event?
+            Want training for your team or event?
           </h2>
           <p className="text-ink/70 mb-8">
-            I&apos;m available for conferences, meetups, and workshops worldwide.
+            I&apos;m available for corporate training, conferences, meetups, and
+            workshops worldwide.
           </p>
           <MagneticButton
             href={`mailto:${EMAIL}`}

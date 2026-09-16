@@ -19,7 +19,7 @@ export const indexableRoutes = [
   { path: "/faq", changeFrequency: "monthly", priority: 0.8, updated: "2026-08-20" },
   { path: "/side-projects", changeFrequency: "monthly", priority: 0.8, updated: "2026-08-20" },
   { path: "/podcasts", changeFrequency: "monthly", priority: 0.7, updated: "2026-08-20" },
-  { path: "/public-speaking", changeFrequency: "monthly", priority: 0.7, updated: "2026-08-13" },
+  { path: "/training", changeFrequency: "monthly", priority: 0.7, updated: "2026-09-16" },
   { path: "/side-projects/backstage-cut", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
   { path: "/side-projects/audiobolo", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
   { path: "/side-projects/ginger", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
@@ -33,7 +33,7 @@ export const indexableRoutes = [
  *
  * Defined here rather than in the content layer because next.config.mjs needs
  * it to emit the Link headers, and it is loaded by plain Node — which cannot
- * follow the content layer's `import events.json` without an import attribute.
+ * follow the content layer's `import trainings.json` without an import attribute.
  * One rule, two callers, no second list of slugs to keep in step.
  */
 export function markdownSlug(path) {

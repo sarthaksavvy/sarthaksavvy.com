@@ -98,6 +98,18 @@ const nextConfig = {
   // can be defined, but /api/ is disallowed in robots.txt — so the URL that
   // gets published and crawled is the one beside the page it mirrors:
   // /about-me.md, /side-projects/audiobolo.md, /index.md for the home page.
+  // The speaking page was renamed to /training and had been indexed under its
+  // old path, so a permanent redirect is what keeps existing search results,
+  // bookmarks and inbound links from ending in a 404.
+  async redirects() {
+    return [
+      {
+        source: "/public-speaking",
+        destination: "/training",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

@@ -5,7 +5,7 @@ import { EMAIL, SOCIAL_PROFILES } from "../content/profile";
 const links = [
   { href: "/ai-consulting", label: "AI Consulting" },
   { href: "/podcasts", label: "Podcasts" },
-  { href: "/public-speaking", label: "Public Speaking" },
+  { href: "/training", label: "Training" },
   { href: "/side-projects", label: "Side Projects" },
   { href: "/about-me", label: "About Me" },
   // Not in the header — eight links do not fit that row. It belongs in the

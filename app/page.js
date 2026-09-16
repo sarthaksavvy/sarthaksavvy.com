@@ -59,10 +59,10 @@ const directions = [
       "AudioBolo, Backstage Cut, Ginger, Expensorr and Mezohub — built end to end, all live.",
   },
   {
-    href: "/public-speaking",
-    label: "Conference talks",
+    href: "/training",
+    label: "Training",
     description:
-      "Talks on AI agents, LLM function calling, Laravel and Docker, in India, the UK and Mauritius.",
+      "Training sessions and talks on AI agents, LLM function calling, Laravel and Docker, in India, the UK and Mauritius.",
   },
   {
     href: "/podcasts",
@@ -144,10 +144,10 @@ export default async function Home() {
                 </Link>
                 , and{" "}
                 <Link
-                  href="/public-speaking"
+                  href="/training"
                   className="text-accentText underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
                 >
-                  speaks at conferences
+                  delivers training
                 </Link>{" "}
                 on AI agents, LLM function calling, Laravel and Docker.{" "}
                 {LOCATION.statement}

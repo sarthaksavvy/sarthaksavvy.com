@@ -153,7 +153,7 @@ async function scrapeWebsiteContent() {
     "/ai-consulting",
     "/about-me",
     "/side-projects",
-    "/public-speaking",
+    "/training",
     "/podcasts",
     "/faq",
   ];

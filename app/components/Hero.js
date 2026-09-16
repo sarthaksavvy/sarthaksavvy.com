@@ -8,16 +8,14 @@ import { FALLBACK_SUBSCRIBERS } from "../content/profile";
 
 const ParticleImage = dynamic(() => import("./motion/ParticleImage"), { ssr: false });
 
+const TAGLINE_WORDS = ["Founder", "AI Consultant", "Builder", "Corporate Trainer"];
+
 export default function Hero({ subscribers = FALLBACK_SUBSCRIBERS }) {
   return (
     // Was a <main>. The landmark now comes from the root layout, so keeping
     // one here would nest a second one inside it and split the home page's
     // content across two landmarks with the same name.
     <section className="relative px-6 sm:px-10 max-w-[1400px] mx-auto pt-6 sm:pt-10 pb-20 min-h-[90vh]">
-      <div className="hidden md:block absolute right-[2%] top-[2%] w-[42%] h-[70vh] max-h-[640px] z-10">
-        <ParticleImage src="/images/sarthak.jpg" className="w-full h-full" />
-      </div>
-
       <div className="relative z-0 grid grid-cols-1 md:grid-cols-12 gap-6">
         <div className="md:col-span-8">
           <motion.p
@@ -25,7 +23,7 @@ export default function Hero({ subscribers = FALLBACK_SUBSCRIBERS }) {
             animate="show"
             className="font-mono text-xs sm:text-sm tracking-[0.35em] uppercase text-accentText mb-6 flex flex-wrap gap-x-2"
           >
-            {["Founder", "Builder", "AI Consultant", "10+ Years"].map((word, i) => (
+            {TAGLINE_WORDS.map((word, i) => (
               <span key={word} className="overflow-hidden inline-block">
                 <motion.span
                   className="inline-block"
@@ -43,11 +41,21 @@ export default function Hero({ subscribers = FALLBACK_SUBSCRIBERS }) {
                   }}
                 >
                   {word}
-                  {i < 3 && <span className="text-ink/30 ml-2">·</span>}
+                  {i < TAGLINE_WORDS.length - 1 && <span className="text-ink/30 ml-2">·</span>}
                 </motion.span>
               </span>
             ))}
           </motion.p>
+
+          {/* On mobile this sits in normal flow, between the tagline above
+              and the heading below. From `md` up it's pulled out of flow
+              entirely and pinned as an overlay next to the text — `absolute`
+              looks up to the nearest positioned ancestor, which is the
+              <section> above, not this column, so it doesn't disturb the
+              col-span-8 layout on desktop. */}
+          <div className="relative w-full h-[50vh] max-h-[420px] mb-8 md:mb-0 md:absolute md:right-[2%] md:top-[2%] md:w-[42%] md:h-[70vh] md:max-h-[640px] z-10">
+            <ParticleImage src="/images/sarthak.jpg" className="w-full h-full" />
+          </div>
 
           <h1 className="font-display text-6xl sm:text-8xl md:text-[7.5rem] leading-[0.95] mb-8">
             {["Hi, I am", "Sarthak"].map((line, i) => (
@@ -74,8 +82,9 @@ export default function Hero({ subscribers = FALLBACK_SUBSCRIBERS }) {
             transition={{ duration: 0.7, delay: 0.6 }}
             className="text-ink/70 text-lg sm:text-xl mb-12 max-w-lg leading-relaxed"
           >
-            India-based founder, content creator, developer and AI consultant —
-            passionate about building products and automating daily work.
+            India-based founder, content creator, developer and AI consultant
+            with 10+ years of experience — passionate about building products
+            and automating daily work.
           </motion.p>
 
           <StaggerGroup className="flex flex-wrap items-center gap-4">

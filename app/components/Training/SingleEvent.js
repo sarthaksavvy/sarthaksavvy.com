@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, ExternalLink, MapPin, Users } from "lucide-react";
+import { Calendar, ExternalLink, MapPin, Quote, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import PhotoStack from "./PhotoStack";
 
@@ -44,6 +44,19 @@ export default function SingleEvent({ event, index = 0 }) {
 
           <div className="mt-6">
             <p className="text-ink/70">{event.description}</p>
+
+            {event.testimonial && (
+              <blockquote className="mt-6 flex gap-3 border-l-2 border-accent pl-4">
+                <Quote size={18} className="shrink-0 text-accentText mt-1" />
+                <div>
+                  <p className="italic text-ink/80">{event.testimonial.quote}</p>
+                  <footer className="mt-2 text-sm text-muted font-mono not-italic">
+                    — {event.testimonial.author}
+                    {event.testimonial.role ? `, ${event.testimonial.role}` : ""}
+                  </footer>
+                </div>
+              </blockquote>
+            )}
 
             <div className="flex flex-wrap gap-4 mt-4">
               {event.slides && (

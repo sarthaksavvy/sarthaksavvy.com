@@ -16,7 +16,7 @@ export default function FloatingControls() {
     // would otherwise trap every click in the empty middle — hence
     // pointer-events-none here and pointer-events-auto on the control.
     <div className="fixed inset-x-0 bottom-0 z-50 px-6 pb-6 pointer-events-none">
-      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:gap-6">
+      <div className="flex flex-col items-end gap-3 sm:flex-row sm:gap-6">
         <FloatingChatWidget
           open={chatOpen}
           onOpenChange={setChatOpen}

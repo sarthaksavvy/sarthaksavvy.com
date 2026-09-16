@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { MessageCircle } from "lucide-react";
 
 const FOCUSABLE =
   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -157,12 +158,14 @@ export default function FloatingChatWidget({
       type="button"
       onClick={() => onOpenChange(true)}
       aria-expanded={false}
-      className={`pointer-events-auto max-w-full text-left bg-ink text-paper px-6 py-3 rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-3 ${className}`}
+      aria-label="Ask anything about Sarthak"
+      className={`pointer-events-auto max-w-full text-left bg-ink text-paper rounded-full font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-3 w-14 h-14 sm:w-auto sm:h-auto sm:justify-start sm:px-6 sm:py-3 ${className}`}
     >
-      <span>Ask anything about Sarthak</span>
+      <MessageCircle size={22} aria-hidden="true" className="sm:hidden" />
+      <span className="hidden sm:inline">Ask anything about Sarthak</span>
       <span
         aria-hidden="true"
-        className="w-2 h-2 shrink-0 bg-accent rounded-full animate-pulse"
+        className="hidden sm:block w-2 h-2 shrink-0 bg-accent rounded-full animate-pulse"
       />
     </button>
   );

@@ -252,10 +252,11 @@ export function isoDate(humanDate) {
 }
 
 /**
- * The talks on the speaking page, described as events with a performer, so a
- * conference listing and this page can be recognised as the same appearance.
+ * The sessions on the training page, described as education events with a
+ * performer, so a conference or training listing and this page can be
+ * recognised as the same appearance.
  */
-export function speakingEventsSchema(events) {
+export function trainingEventsSchema(events) {
   const today = new Date().toISOString().slice(0, 10);
 
   const items = events
@@ -264,7 +265,7 @@ export function speakingEventsSchema(events) {
       if (!startDate) return null;
 
       return {
-        "@type": "Event",
+        "@type": "EducationEvent",
         name: event.title.trim(),
         description: event.description,
         startDate,
@@ -297,7 +298,7 @@ export function speakingEventsSchema(events) {
 
   return {
     "@type": "ItemList",
-    name: "Talks by Sarthak Shrivastava",
+    name: "Training sessions and talks by Sarthak Shrivastava",
     numberOfItems: items.length,
     itemListElement: items.map((item, i) => ({
       "@type": "ListItem",

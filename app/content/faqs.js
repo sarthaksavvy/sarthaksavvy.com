@@ -132,18 +132,18 @@ export function buildFaqGroups(subscribers = FALLBACK_SUBSCRIBERS) {
       ],
     },
     {
-      id: "speaking",
-      title: "Speaking and the podcast",
+      id: "training",
+      title: "Training and the podcast",
       faqs: [
         {
-          question: "What does Sarthak Shrivastava speak about at conferences?",
+          question: "What training does Sarthak Shrivastava deliver?",
           answer:
-            "Sarthak Shrivastava speaks on AI agents and the OpenAI Agents SDK, function calling in OpenAI models, prompt engineering, content creation with AI, deploying Laravel with Docker, and learning technical skills alongside a full-time job. Talks have been given at the Pfizer Community Event in London, Laravel meetups in Kozhikode and Mauritius, the AI/ML Indore meetup, Medicaps University and AIBootstrapper events.",
+            "Sarthak Shrivastava delivers training sessions, workshops and talks on AI agents and the OpenAI Agents SDK, function calling in OpenAI models, prompt engineering, content creation with AI, deploying Laravel with Docker, and learning technical skills alongside a full-time job. Sessions have been delivered at the Pfizer Community Event in London, Laravel meetups in Kozhikode and Mauritius, the AI/ML Indore meetup, Medicaps University and AIBootstrapper events.",
         },
         {
-          question: "Is Sarthak Shrivastava available to speak at events?",
+          question: "Is Sarthak Shrivastava available for training at events or companies?",
           answer:
-            `Yes. Sarthak Shrivastava is available for conferences, meetups and workshops worldwide, in person or remotely. Speaking enquiries go to ${EMAIL}.`,
+            `Yes. Sarthak Shrivastava is available for corporate training, conferences, meetups and workshops worldwide, in person or remotely. Training enquiries go to ${EMAIL}.`,
         },
       ],
     },

@@ -1,4 +1,4 @@
-import speakingEvents from "../events.json";
+import trainingEvents from "../trainings.json";
 import { SITE_URL, indexableRoutes, markdownSlug } from "../routes";
 import { PROJECTS } from "./projects";
 import { buildFaqGroups, faqGroup } from "./faqs";
@@ -107,7 +107,7 @@ ${bullets(EXPERTISE)}
 - [AI consulting](${absolute("/ai-consulting")}) — how ${NAME} works with teams on LLM features and AI automation.
 - [About](${absolute("/about-me")}) — background, roles and credentials in full.
 - [Side projects](${absolute("/side-projects")}) — the AI products he has shipped.
-- [Public speaking](${absolute("/public-speaking")}) — conference and meetup talks.
+- [Training](${absolute("/training")}) — training sessions, workshops and conference talks.
 - [Podcasts](${absolute("/podcasts")}) — the Laravel India Podcast.
 - [FAQ](${absolute("/faq")}) — direct answers to the most common questions.
 
@@ -265,16 +265,17 @@ ${DEFINITION}
 `;
 }
 
-function speakingMarkdown({ subscribers }) {
-  const byNewest = [...speakingEvents].reverse();
+function trainingMarkdown({ subscribers }) {
+  const byNewest = [...trainingEvents].reverse();
 
-  return `# Conference talks by ${NAME}
+  return `# Training by ${NAME}
 
-${NAME} speaks at conferences, meetups and workshops on AI agents, LLM function
-calling, prompt engineering, Laravel and Docker. He is available for events
-worldwide — enquiries to ${EMAIL}.
+${NAME} delivers training sessions, workshops and talks at companies,
+conferences and meetups on AI agents, LLM function calling, prompt
+engineering, Laravel and Docker. He is available for training worldwide —
+enquiries to ${EMAIL}.
 
-## Talks
+## Sessions
 
 ${byNewest
   .map(
@@ -285,11 +286,17 @@ ${byNewest
 - Date: ${event.date}
 - Audience: ${event.audience}
 
-${event.description}`
+${event.description}${
+      event.testimonial
+        ? `\n\n> "${event.testimonial.quote}" — ${event.testimonial.author}${
+            event.testimonial.role ? `, ${event.testimonial.role}` : ""
+          }`
+        : ""
+    }`
   )
   .join("\n\n")}
 
-## Topics he speaks on
+## Topics he trains on
 
 - AI agents and the OpenAI Agents SDK
 - Function calling and prompt engineering with OpenAI models
@@ -299,7 +306,7 @@ ${event.description}`
 
 ## Frequently asked
 
-${faqMarkdown(faqGroup("speaking", subscribers).faqs)}
+${faqMarkdown(faqGroup("training", subscribers).faqs)}
 `;
 }
 
@@ -398,11 +405,11 @@ export const markdownPages = [
     build: projectsMarkdown,
   },
   {
-    path: "/public-speaking",
-    title: `Conference talks by ${NAME}`,
+    path: "/training",
+    title: `Training by ${NAME}`,
     description:
-      "Talks on AI agents, LLM function calling, Laravel and Docker at conferences and meetups worldwide.",
-    build: speakingMarkdown,
+      "Training sessions, workshops and talks on AI agents, LLM function calling, Laravel and Docker at companies, conferences and meetups worldwide.",
+    build: trainingMarkdown,
   },
   {
     path: "/podcasts",
