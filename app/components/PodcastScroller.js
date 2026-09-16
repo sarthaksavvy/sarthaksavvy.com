@@ -84,17 +84,25 @@ export default function PodcastScroller({ guests }) {
 
   // Mouse drag-to-scroll. Touch already scrolls the native overflow-x
   // container on its own, so this only wires up the mouse pointer type.
+  //
+  // Pointer capture is deferred until the pointer has actually moved past
+  // the click threshold, not grabbed on pointerdown itself: capturing a
+  // plain click (mousedown+mouseup with no movement) redirects the click
+  // event's target to this container instead of the guest's <button>,
+  // which silently ate every click and made cards unplayable with a mouse
+  // (touch was unaffected since it never enters this handler).
   function onPointerDown(e) {
     if (e.pointerType !== "mouse") return;
     const el = scrollerRef.current;
     if (!el) return;
     pause();
     dragRef.current = {
+      pointerId: e.pointerId,
       startX: e.clientX,
       startScrollLeft: el.scrollLeft,
       moved: false,
+      captured: false,
     };
-    el.setPointerCapture(e.pointerId);
   }
 
   function onPointerMove(e) {
@@ -102,13 +110,17 @@ export default function PodcastScroller({ guests }) {
     const el = scrollerRef.current;
     if (!drag || !el) return;
     const delta = e.clientX - drag.startX;
-    if (Math.abs(delta) > DRAG_CLICK_THRESHOLD) drag.moved = true;
-    el.scrollLeft = drag.startScrollLeft - delta;
+    if (!drag.moved && Math.abs(delta) > DRAG_CLICK_THRESHOLD) {
+      drag.moved = true;
+      drag.captured = true;
+      el.setPointerCapture(drag.pointerId);
+    }
+    if (drag.moved) el.scrollLeft = drag.startScrollLeft - delta;
   }
 
   function endDrag(e) {
     const el = scrollerRef.current;
-    if (dragRef.current && el) {
+    if (dragRef.current?.captured && el) {
       try {
         el.releasePointerCapture(e.pointerId);
       } catch {
