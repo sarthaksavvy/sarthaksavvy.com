@@ -3,6 +3,7 @@ import {
   COURSES_URL,
   EMAIL,
   FALLBACK_SUBSCRIBERS,
+  STATS_AS_OF,
 } from "./profile";
 
 // The questions people actually type, answered in full sentences that survive
@@ -206,7 +207,7 @@ export function buildFaqGroups(subscribers = FALLBACK_SUBSCRIBERS) {
         {
           question: "How many YouTube subscribers does Sarthak Shrivastava have?",
           answer:
-            `Sarthak Shrivastava has ${subscribers} YouTube subscribers as of August 2026, across the Bitfumes and sarthaksavvy channels. The figure shown on sarthaksavvy.com is read from YouTube directly and stays current.`,
+            `Sarthak Shrivastava has ${subscribers} YouTube subscribers as of ${STATS_AS_OF}, across the Bitfumes and sarthaksavvy channels. The figure shown on sarthaksavvy.com is read from YouTube directly and stays current.`,
         },
       ],
     },
