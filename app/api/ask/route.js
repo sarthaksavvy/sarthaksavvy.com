@@ -240,10 +240,11 @@ function getWebsiteContent() {
 }
 
 function getRateLimitKey(request) {
-  // `request.ip` is filled in by the host from the connection itself, so it is
-  // preferred over anything the caller can put in a header. The headers are
-  // the fallback for a deployment sitting behind its own proxy, and only
-  // `x-forwarded-for` was consulted before.
+  // Next.js dropped `request.ip` from `NextRequest` (it depended on a hosting
+  // provider populating a connection field Next itself never guaranteed), so
+  // the client address has to come from headers. `x-forwarded-for`'s first
+  // entry is the original client on every proxy that sets it, including
+  // Vercel's; `x-real-ip` is the fallback for a proxy that only sets that one.
   //
   // The last resort is still a single shared bucket, which throttles unrelated
   // visitors together — but a quota that protects paid calls should fail
@@ -251,12 +252,7 @@ function getRateLimitKey(request) {
   const forwarded = request.headers.get("x-forwarded-for");
   const forwardedClient = forwarded ? forwarded.split(",")[0].trim() : "";
 
-  return (
-    request.ip ||
-    request.headers.get("x-real-ip") ||
-    forwardedClient ||
-    "unknown"
-  );
+  return forwardedClient || request.headers.get("x-real-ip") || "unknown";
 }
 
 function pruneRateLimitStore(now) {
