@@ -133,7 +133,7 @@ export default async function EventPage({ params }) {
               {event.audience}
             </span>
           </div>
-          <ShareBar url={canonicalUrl(path)} title={`${title} — Sarthak Shrivastava`} />
+          <ShareBar url={canonicalUrl(path)} title={`${title} by Sarthak Shrivastava`} />
         </Reveal>
 
         <Reveal className="mt-12">

@@ -17,9 +17,3 @@ export function neighbours(event) {
   const i = eventsNewestFirst.findIndex((e) => e.id === event.id);
   return { newer: eventsNewestFirst[i - 1] ?? null, older: eventsNewestFirst[i + 1] ?? null };
 }
-
-/** The event's own words, trimmed to one sentence that fits a share card. */
-export function eventSummary(event) {
-  const title = event.title.trim();
-  return `${title} — ${event.conference}, ${event.location}, ${event.date}. A talk by Sarthak Shrivastava.`;
-}

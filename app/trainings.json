@@ -348,7 +348,7 @@
     "location": "MCCIA Trade Tower, Shivajinagar, Pune, India",
     "date": "October 21, 2026",
     "audience": "Community conference",
-    "description": "A session on building AI agents that can do useful work without being handed too much access — limiting their permissions, running them in Docker Sandboxes, and treating their actions as something to verify rather than blindly trust. Organised by Cloud Native Pune with Docker Community Pune, sponsored by NudgeBee.",
+    "description": "A session on building AI agents that can do useful work without being handed too much access. It covers limiting their permissions, running them in Docker Sandboxes, and treating their actions as something to verify rather than blindly trust. Organised by Cloud Native Pune with Docker Community Pune, sponsored by NudgeBee.",
     "coverage": [
       {
         "url": "https://www.linkedin.com/feed/update/urn:li:activity:7518324114986827777/",
