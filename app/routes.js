@@ -1,3 +1,5 @@
+import trainingEvents from "./trainings.json" with { type: "json" };
+
 export const SITE_URL = "https://sarthaksavvy.com";
 
 // Single source of truth for the site's indexable routes. Used by the
@@ -19,12 +21,22 @@ export const indexableRoutes = [
   { path: "/faq", changeFrequency: "monthly", priority: 0.8, updated: "2026-09-16" },
   { path: "/side-projects", changeFrequency: "monthly", priority: 0.8, updated: "2026-09-16" },
   { path: "/podcasts", changeFrequency: "monthly", priority: 0.7, updated: "2026-09-16" },
-  { path: "/training", changeFrequency: "monthly", priority: 0.7, updated: "2026-09-16" },
+  { path: "/training", changeFrequency: "monthly", priority: 0.7, updated: "2026-10-23" },
   { path: "/side-projects/backstage-cut", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
   { path: "/side-projects/audiobolo", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
   { path: "/side-projects/ginger", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
   { path: "/side-projects/expensorr", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
   { path: "/side-projects/mezohub", changeFrequency: "yearly", priority: 0.6, updated: "2026-08-20" },
+  // One page per training event, derived from trainings.json so a new talk is
+  // registered by adding it there, once. An event page's content is the event
+  // itself, so its lastmod is the day the talk happened unless the entry says
+  // otherwise with `updated` (a page edited after the fact).
+  ...trainingEvents.map((event) => ({
+    path: `/training/${event.slug}`,
+    changeFrequency: "yearly",
+    priority: 0.5,
+    updated: event.updated ?? new Date(`${event.date} UTC`).toISOString().slice(0, 10),
+  })),
 ];
 
 /**
@@ -33,8 +45,8 @@ export const indexableRoutes = [
  *
  * Defined here rather than in the content layer because next.config.mjs needs
  * it to emit the Link headers, and it is loaded by plain Node — which cannot
- * follow the content layer's `import trainings.json` without an import attribute.
- * One rule, two callers, no second list of slugs to keep in step.
+ * follow the content layer's `import trainings.json` without an import attribute
+ * (this file supplies one). One rule, two callers, no second list of slugs.
  */
 export function markdownSlug(path) {
   return path === "/" ? "index" : path.replace(/^\//, "");

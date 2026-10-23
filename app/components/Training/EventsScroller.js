@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Calendar, MapPin, Users } from "lucide-react";
+import { ArrowUpRight, Calendar, MapPin, Users } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import HorizontalScroller from "../HorizontalScroller";
 import Lightbox from "./Lightbox";
@@ -154,6 +155,13 @@ export default function EventsScroller({ events }) {
                     {openEvent.description}
                   </p>
                 )}
+                <Link
+                  href={`/training/${openEvent.slug}`}
+                  className="inline-flex items-center gap-1 mt-3 text-accent text-xs font-mono uppercase tracking-widest hover:underline"
+                >
+                  Event page &amp; share
+                  <ArrowUpRight size={12} aria-hidden="true" />
+                </Link>
               </div>
             }
           />

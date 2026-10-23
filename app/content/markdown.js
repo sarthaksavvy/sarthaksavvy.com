@@ -1,4 +1,5 @@
 import trainingEvents from "../trainings.json";
+import { eventPath, eventsNewestFirst } from "./trainingEvents";
 import { SITE_URL, indexableRoutes, markdownSlug } from "../routes";
 import { PROJECTS } from "./projects";
 import { buildFaqGroups, faqGroup } from "./faqs";
@@ -285,6 +286,7 @@ ${byNewest
 - Location: ${event.location}
 - Date: ${event.date}
 - Audience: ${event.audience}
+- Page: ${absolute(eventPath(event))}
 
 ${event.description}${
       event.testimonial
@@ -307,6 +309,37 @@ ${event.description}${
 ## Frequently asked
 
 ${faqMarkdown(faqGroup("training", subscribers).faqs)}
+`;
+}
+
+function eventMarkdown(event) {
+  const proof = [
+    event.linkedin && `- Sarthak's LinkedIn post: ${event.linkedin}`,
+    ...(event.coverage ?? []).map((post) => `- ${post.by} on LinkedIn: ${post.url}`),
+    event.slides && `- Slides: ${event.slides}`,
+    event.recording && `- Recording: ${event.recording}`,
+  ].filter(Boolean);
+
+  return `# ${event.title.trim()}
+
+${NAME} spoke at ${event.conference}.
+
+- Location: ${event.location}
+- Date: ${event.date}
+- Audience: ${event.audience}
+
+${event.description}${
+    event.testimonial
+      ? `\n\n> "${event.testimonial.quote}" — ${event.testimonial.author}${
+          event.testimonial.role ? `, ${event.testimonial.role}` : ""
+        }`
+      : ""
+  }
+${proof.length ? `\n## Proof it happened\n\n${proof.join("\n")}\n` : ""}
+## More
+
+- All training sessions: ${absolute("/training")}
+- Enquiries: ${EMAIL}
 `;
 }
 
@@ -418,6 +451,12 @@ export const markdownPages = [
       "Conversations with the worldwide Laravel community, including Taylor Otwell, James Brooks and Freek Van der Herten.",
     build: podcastsMarkdown,
   },
+  ...eventsNewestFirst.map((event) => ({
+    path: eventPath(event),
+    title: `${event.title.trim()} — ${event.conference}`,
+    description: event.description,
+    build: () => eventMarkdown(event),
+  })),
   ...PROJECTS.map((project) => ({
     path: project.projectLink,
     title: `${project.name} — ${project.tagline}`,

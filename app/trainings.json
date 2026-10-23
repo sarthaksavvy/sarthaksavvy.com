@@ -1,6 +1,7 @@
 [
   {
     "id": 14,
+    "slug": "laravellive-india-2018",
     "year": "2018",
     "title": "Laravel in Production",
     "conference": "LaravelLive India 2018",
@@ -17,6 +18,7 @@
   },
   {
     "id": 15,
+    "slug": "gdg-bhopal-2019",
     "year": "2019",
     "title": "Hands-on Session with Google Developers Group",
     "conference": "GDG Bhopal",
@@ -33,6 +35,7 @@
   },
   {
     "id": 16,
+    "slug": "hacktoberfest-noida-2019",
     "year": "2019",
     "title": "Multi Auth in Laravel",
     "conference": "Hacktoberfest 2019",
@@ -56,6 +59,7 @@
   },
   {
     "id": 2,
+    "slug": "laravel-kozhikode-meetup-2024",
     "year": "2024",
     "title": "Deploy Laravel with Docker ",
     "conference": "Laravel Kozhikode Meetup",
@@ -72,6 +76,7 @@
   },
   {
     "id": 13,
+    "slug": "laravel-indore-meetup-2024",
     "year": "2024",
     "title": "Laravel Indore Meetup",
     "conference": "Laravel Indore",
@@ -89,6 +94,7 @@
   },
   {
     "id": 1,
+    "slug": "pfizer-community-event-2024",
     "year": "2024",
     "title": "Mastering the Learning",
     "conference": "Pfizer Community Event 2024",
@@ -106,6 +112,7 @@
   },
   {
     "id": 3,
+    "slug": "ai-ml-indore-meetup-2024",
     "year": "2024",
     "title": "Function calling in OpenAI",
     "conference": "AI/ML Indore Meetup",
@@ -123,6 +130,7 @@
   },
   {
     "id": 12,
+    "slug": "flutter-in-production-extended-2024",
     "year": "2024",
     "title": "How to Build a Production-Level Flutter App",
     "conference": "Flutter In Production Extended \u2014 Datacode.in",
@@ -144,6 +152,7 @@
   },
   {
     "id": 4,
+    "slug": "medicaps-fest-2025",
     "year": "2025",
     "title": "Content Creation with AI",
     "conference": "Medicaps 25th Annual Fest",
@@ -165,6 +174,7 @@
   },
   {
     "id": 5,
+    "slug": "laravel-mauritius-meetup-2025",
     "year": "2025",
     "title": "Vibe Coding with Laravel",
     "conference": "Laravel Mauritius Meetup",
@@ -182,6 +192,7 @@
   },
   {
     "id": 6,
+    "slug": "aibootstrapper-ai-training-2025",
     "year": "2025",
     "title": "AI TRAINING 2025: From Roadmap to Real-World Agents",
     "conference": "AIBootstrapper Events",
@@ -199,6 +210,7 @@
   },
   {
     "id": 10,
+    "slug": "docker-captain-summit-2025",
     "year": "2025",
     "title": "Building AI Agents using CAgent",
     "conference": "Docker Captain Summit 2025",
@@ -218,6 +230,7 @@
   },
   {
     "id": 11,
+    "slug": "aibootstrapper-notebooklm-workshop-2025",
     "year": "2025",
     "title": "Get Smarter with NotebookLM & AI Agents",
     "conference": "AIBootstrapper Workshop",
@@ -237,6 +250,7 @@
   },
   {
     "id": 17,
+    "slug": "aibootstrapper-n8n-expert-talk-2025",
     "year": "2025",
     "title": "AI & n8n: Automate Anything",
     "conference": "AIBootstrapper Expert Talk",
@@ -255,6 +269,7 @@
   },
   {
     "id": 9,
+    "slug": "aibootstrapper-n8n-rag-workshop-2025",
     "year": "2025",
     "title": "Scaling with n8n and RAG",
     "conference": "AIBootstrapper Meetup — Hands-On AI Workshop",
@@ -283,6 +298,7 @@
   },
   {
     "id": 7,
+    "slug": "recooty-vibe-coding-2026",
     "year": "2026",
     "title": "Vibe Coding Session",
     "conference": "Recooty",
@@ -305,6 +321,7 @@
   },
   {
     "id": 8,
+    "slug": "ima-indore-ai-assistant-2026",
     "year": "2026",
     "title": "Build Your Own Smart AI Assistant",
     "conference": "Indore Management Association (IMA)",
@@ -319,6 +336,38 @@
       "/images/events/ima-ai-skill-lab/ima-1.jpg",
       "/images/events/ima-ai-skill-lab/ima-4.jpg",
       "/images/events/ima-ai-skill-lab/ima-2.jpg"
+    ]
+  },
+  {
+    "id": 18,
+    "slug": "cncg-pune-docker-sustainability-2026",
+    "updated": "2026-10-23",
+    "year": "2026",
+    "title": "The Safest AI Agent Is the One You DON'T Trust",
+    "conference": "CNCG Pune × Docker Community Pune Environment Sustainability Conference",
+    "location": "MCCIA Trade Tower, Shivajinagar, Pune, India",
+    "date": "October 21, 2026",
+    "audience": "Community conference",
+    "description": "A session on building AI agents that can do useful work without being handed too much access — limiting their permissions, running them in Docker Sandboxes, and treating their actions as something to verify rather than blindly trust. Organised by Cloud Native Pune with Docker Community Pune, sponsored by NudgeBee.",
+    "coverage": [
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7518324114986827777/",
+        "by": "Cloud Native Pune"
+      },
+      {
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:7518891593156927490/",
+        "by": "Docker Community Pune"
+      }
+    ],
+    "images": [
+      "/images/events/cncg-pune/cncg-flyer.jpg",
+      "/images/events/cncg-pune/cncg-1.jpg",
+      "/images/events/cncg-pune/cncg-2.jpg",
+      "/images/events/cncg-pune/cncg-3.jpg",
+      "/images/events/cncg-pune/cncg-4.jpg",
+      "/images/events/cncg-pune/cncg-5.jpg",
+      "/images/events/cncg-pune/cncg-6.jpg",
+      "/images/events/cncg-pune/cncg-7.jpg"
     ]
   }
 ]

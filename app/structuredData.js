@@ -258,56 +258,56 @@ export function isoDate(humanDate) {
 }
 
 /**
- * The sessions on the training page, described as education events with a
- * performer, so a conference or training listing and this page can be
- * recognised as the same appearance.
+ * One session, described as an education event with a performer, so a
+ * conference or training listing and the page about it can be recognised as
+ * the same appearance. Returns null for a date it cannot express as ISO.
  */
-export function trainingEventsSchema(events) {
+export function trainingEventSchema(event) {
   const today = new Date().toISOString().slice(0, 10);
+  const startDate = isoDate(event.date);
+  if (!startDate) return null;
 
-  const items = events
-    .map((event) => {
-      const startDate = isoDate(event.date);
-      if (!startDate) return null;
+  return {
+    "@type": "EducationEvent",
+    name: event.title.trim(),
+    description: event.description,
+    startDate,
+    endDate: startDate,
+    // Google never shows Event rich results for a date that has already
+    // passed, and asserting "EventScheduled" for a talk that already
+    // happened is simply false — so the field is only emitted while the
+    // event is still upcoming. Past talks keep every other field; only
+    // this one temporal claim is dropped.
+    ...(startDate >= today
+      ? { eventStatus: "https://schema.org/EventScheduled" }
+      : {}),
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: event.conference,
+      address: event.location,
+    },
+    organizer: {
+      "@type": "Organization",
+      name: event.conference,
+    },
+    // A clip is not an `image`. Its poster frame is a real still that sits
+    // next to it, so the event keeps a valid image even when a video is
+    // listed first.
+    ...(event.images?.length
+      ? {
+          image: canonicalUrl(
+            isVideo(event.images[0]) ? posterFor(event.images[0]) : event.images[0]
+          ),
+        }
+      : {}),
+    performer: { "@id": PERSON_ID },
+  };
+}
 
-      return {
-        "@type": "EducationEvent",
-        name: event.title.trim(),
-        description: event.description,
-        startDate,
-        endDate: startDate,
-        // Google never shows Event rich results for a date that has already
-        // passed, and asserting "EventScheduled" for a talk that already
-        // happened is simply false — so the field is only emitted while the
-        // event is still upcoming. Past talks keep every other field; only
-        // this one temporal claim is dropped.
-        ...(startDate >= today
-          ? { eventStatus: "https://schema.org/EventScheduled" }
-          : {}),
-        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        location: {
-          "@type": "Place",
-          name: event.conference,
-          address: event.location,
-        },
-        organizer: {
-          "@type": "Organization",
-          name: event.conference,
-        },
-        // A clip is not an `image`. Its poster frame is a real still that sits
-        // next to it, so the event keeps a valid image even when a video is
-        // listed first.
-        ...(event.images?.length
-          ? {
-              image: canonicalUrl(
-                isVideo(event.images[0]) ? posterFor(event.images[0]) : event.images[0]
-              ),
-            }
-          : {}),
-        performer: { "@id": PERSON_ID },
-      };
-    })
-    .filter(Boolean);
+/** The sessions on the training page, as an ItemList of `trainingEventSchema` nodes. */
+export function trainingEventsSchema(events) {
+  const items = events.map(trainingEventSchema).filter(Boolean);
 
   return {
     "@type": "ItemList",

@@ -1,15 +1,16 @@
 "use client";
 
-import { Calendar, ExternalLink, Linkedin, MapPin, Quote, Users } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Calendar, MapPin, Quote, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import PhotoStack from "./PhotoStack";
-
-// "Recooty" -> "Recooty's", "Aubergine Solutions" -> "Aubergine Solutions'".
-function possessive(name) {
-  return name.endsWith("s") ? `${name}’` : `${name}’s`;
-}
+import EventLinks from "./EventLinks";
 
 export default function SingleEvent({ event, index = 0 }) {
+  // Not imported from the content layer: that module pulls the whole events
+  // file into the client bundle for the sake of one template string.
+  const eventHref = `/training/${event.slug}`;
+
   return (
     <motion.div
       className="relative pl-12"
@@ -27,7 +28,11 @@ export default function SingleEvent({ event, index = 0 }) {
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h2 className="font-display italic text-2xl mb-2">{event.title}</h2>
+              <h2 className="font-display italic text-2xl mb-2">
+                <Link href={eventHref} className="hover:text-accentText transition-colors">
+                  {event.title}
+                </Link>
+              </h2>
               <p className="text-accentText font-medium mb-2">{event.conference}</p>
             </div>
           </div>
@@ -44,6 +49,13 @@ export default function SingleEvent({ event, index = 0 }) {
               <Users size={16} />
               {event.audience}
             </span>
+            <Link
+              href={eventHref}
+              className="flex items-center gap-1 text-accentText hover:underline"
+            >
+              Event page
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
           </div>
           <PhotoStack event={event} />
 
@@ -63,58 +75,7 @@ export default function SingleEvent({ event, index = 0 }) {
               </blockquote>
             )}
 
-            <div className="flex flex-wrap gap-4 mt-4">
-              {event.slides && (
-                <a
-                  href={event.slides}
-                  className="flex items-center gap-2 text-accentText hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink size={16} />
-                  View Slides
-                </a>
-              )}
-              {event.recording && (
-                <a
-                  href={event.recording}
-                  className="flex items-center gap-2 text-accentText hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink size={16} />
-                  Watch Recording
-                </a>
-              )}
-              {/* The post written at the time of the event — proof the talk
-                  actually happened, not just a claim on this page. */}
-              {event.linkedin && (
-                <a
-                  href={event.linkedin}
-                  className="flex items-center gap-2 text-accentText hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Linkedin size={16} />
-                  See the LinkedIn post
-                </a>
-              )}
-              {/* Write-ups by the host or venue. Someone else vouching for the
-                  session is stronger proof than his own post, so they get their
-                  own links rather than being folded into the one above. */}
-              {event.coverage?.map((post) => (
-                <a
-                  key={post.url}
-                  href={post.url}
-                  className="flex items-center gap-2 text-accentText hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Linkedin size={16} />
-                  {possessive(post.by)} post
-                </a>
-              ))}
-            </div>
+            <EventLinks event={event} />
           </div>
         </div>
       </div>
